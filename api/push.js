@@ -11,8 +11,49 @@
 // Import modules
 var autobahn = require("autobahn");
 
-// Push API URL
-var URL_POLONIEX_API_PUSH = "wss://api.poloniex.com";
+// Autobahn|JS connection object for push API (utilizes the WAMP protocol)
+var connection = new autobahn.Connection({
+    "url": "wss://api.poloniex.com",
+    "realm": "realm1"
+});
+
+// Current status of API connection
+var connected = false;
+
+// Handler for connection open event
+connection.onopen = (session) => {
+    // Set connected flag
+    connected = true;
+};
+
+// Handler for connection close event
+connection.onclose = (reason, details) => {
+    // Clear connected flag
+    connected = false;
+    
+};
+
+// Connects to the push API
+function connect() {
+    // Don't try to connect if already so
+    if (connected) {
+        return;
+    }
+    
+    // Open connection to push API
+    connection.open();
+}
+
+// Disconnects from the push API
+function disconnect() {
+    // Don't try to disconnect if already so
+    if (!connected) {
+        return;
+    }
+    
+    // Close connection to push API
+    connection.close();
+}
 
 // Representation of the Poloniex push API
 var apiPush = {};
