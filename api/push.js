@@ -22,7 +22,8 @@ apiPush.ticker = (callback) => {
     // TODO: Stuff goes here
 };
 
-apiPush.orders = (callback) => {
+// Order book subscription function
+apiPush.orderBook = (currencyPair, callback) => {
     // TODO: Stuff goes here
 };
 
