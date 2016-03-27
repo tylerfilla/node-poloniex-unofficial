@@ -1,19 +1,31 @@
 
 /*
  *
- * node-poloniex-unofficial
+ * poloniex-unofficial
  *
- * An unofficial wrapper for the Poloniex cryptocurrency exchange API written
- * for Node.js
+ * Yet another unofficial wrapper for the Poloniex cryptocurrency exchange APIs
+ * on Node.js
  *
  */
 
-// Import modules
-var crypto = require("crypto");
+// Subunit modules for the various APIs offered by Poloniex
+var apiMap = {
+    "push": "./api/push.js",
+    "public": "./api/public.js",
+    "trading": "./api/trading.js"
+};
 
-// TODO: Stuff goes here
-var poloniex = {};
-
-// Export module
-module.export = poloniex;
+// API selector function
+exports.api = function(type) {
+    // Get the module
+    var mod = apiMap[type];
+    
+    // Abort if module isn't, well, good... (type was probably invalid)
+    if (!mod) {
+        return;
+    }
+    
+    // Return API module stuff
+    return require(mod)();
+};
 

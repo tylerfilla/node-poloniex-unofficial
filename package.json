@@ -1,6 +1,6 @@
 {
   "name": "poloniex-unofficial",
-  "version": "1.0.0",
+  "version": "0.0.0",
   "description": "An unofficial API wrapper for the Poloniex exchange",
   "keywords": [
     "poloniex",
