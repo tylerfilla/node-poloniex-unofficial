@@ -11,7 +11,7 @@
   "bugs": {
     "url": "https://github.com/tylerfilla/node-poloniex-unofficial/issues"
   },
-  "license": "GPL-3.0",
+  "license": "MIT",
   "author": "Tyler Filla <tylerfilla@gmail.com> (https://github.com/tylerfilla)",
   "main": "index.js",
   "repository": {
