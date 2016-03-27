@@ -57,7 +57,14 @@ apiPush.orderBook = (currencyPair, callback) => {
     
     // Continue if connection is open
     if (connection.isOpen) {
-        // TODO: Stuff goes here
+        // TODO: Provide a better interface for currency pairs (to separate base from counter currency)
+        
+        // Subscribe to the order book
+        connection.session.subscribe(currencyPair, (args) => {
+            // FIXME: Yeah, do some parsing stuff here
+            //        For now, just forward the received data and assume no errors occurred
+            callback(null, args);
+        });
     }
 };
 
@@ -68,7 +75,10 @@ apiPush.trollbox = (callback) => {
     
     // Continue if connection is open
     if (connection.isOpen) {
-        // TODO: Stuff goes here
+        connection.session.subscribe("trollbox", (args) => {
+            // FIXME: Again, yeah
+            callback(null, args);
+        });
     }
 };
 
