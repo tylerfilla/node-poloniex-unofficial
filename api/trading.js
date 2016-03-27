@@ -8,3 +8,12 @@
  *
  */
 
+// Representation of the Poloniex trading API
+var apiTrading = {};
+
+// TODO: meh
+apiTrading.foo = () => "bar";
+
+// Export a function which returns apiTrading
+module.exports = () => apiTrading;
+
