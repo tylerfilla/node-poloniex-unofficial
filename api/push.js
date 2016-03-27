@@ -36,7 +36,7 @@ function connectAndRetry(retry, callback) {
 var apiPush = {};
 
 // Ticker subscription function
-apiPush.ticker = (callback) => {
+apiPush.ticker = function(callback) {
     // Try to connect to push API
     connectAndRetry(apiPush.ticker, callback);
     
@@ -51,7 +51,7 @@ apiPush.ticker = (callback) => {
 };
 
 // Order book subscription function
-apiPush.orderBook = (currencyPair, callback) => {
+apiPush.orderBook = function(currencyPair, callback) {
     // Try to connect to push API
     connectAndRetry(apiPush.orderBook, callback);
     
@@ -69,7 +69,7 @@ apiPush.orderBook = (currencyPair, callback) => {
 };
 
 // Trollbox subscription function
-apiPush.trollbox = (callback) => {
+apiPush.trollbox = function(callback) {
     // Try to connect to push API
     connectAndRetry(apiPush.trollbox, callback);
     

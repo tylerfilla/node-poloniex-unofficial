@@ -11,8 +11,10 @@
 // Representation of the Poloniex public API
 var apiPublic = {};
 
-// TODO: meh
-apiPublic.foo = () => "bar";
+apiPublic.foo = function() {
+    // TODO: meh
+    return "bar";
+}
 
 // Export a function which returns apiPublic
 module.exports = () => apiPublic;
