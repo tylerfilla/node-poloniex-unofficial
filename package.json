@@ -1,12 +1,24 @@
 {
-  "name": "node-poloniex-unofficial",
+  "name": "poloniex-unofficial",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "description": "An unofficial API wrapper for the Poloniex exchange",
+  "keywords": [
+    "poloniex",
+    "exchange",
+    "bitcoin",
+    "cryptocurrency"
+  ],
+  "bugs": {
+    "url": "https://github.com/tylerfilla/node-poloniex-unofficial/issues"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC"
+  "license": "GPL-3.0",
+  "author": "Tyler Filla <tylerfilla@gmail.com> (https://github.com/tylerfilla)",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tylerfilla/node-poloniex-unofficial.git"
+  },
+  "dependencies": {
+    "crypto": "^0.0.3"
+  }
 }
