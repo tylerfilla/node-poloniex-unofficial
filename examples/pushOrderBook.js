@@ -14,8 +14,8 @@ var polo = require("./../");
 // Get access to the push API
 var poloPush = polo.api("push");
 
-// Receive order book updates for BTC_XMR
-poloPush.orderBook("BTC_XMR", (err, response) => {
+// Receive order book updates for BTC_ETH
+poloPush.orderBook("BTC_ETH", (err, response) => {
     // Check for error
     if (err) {
         console.log("An error occurred");

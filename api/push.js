@@ -17,17 +17,88 @@ var connection = new autobahn.Connection({
     "realm": "realm1"
 });
 
-// Helper function to open connection and retry a function with a callback
-function connectAndRetry(retry, callback) {
-    // Check if connection is not yet open
-    if (!connection.isOpen) {
-        // Register a callback to retry this function
-        connection.onopen = (session) => {
-            // Retry on successful connection
-            retry(callback);
-        }
+// Internally-routed callbacks for connection events
+var cxnCallbacksOpen = new Array();
+var cxnCallbacksClose = new Array();
+
+// Handle connection open event
+connection.onopen = function(session) {
+    // Loop through all open callbacks
+    for (var i = 0; i < cxnCallbacksOpen.length; i++) {
+        cxnCallbacksOpen[i](session);
+    }
+}
+
+// Handle connection close event
+connection.onclose = function(reason, details) {
+    // Loop through all close callbacks
+    for (var i = 0; i < cxnCallbacksClose.length; i++) {
+        cxnCallbacksClose[i](reason, details);
+    }
+}
+
+/*
+ *
+ * function connect(callback)
+ *
+ * Attempts to establish a connection. Success or failure, this function will
+ * call back with a status report.
+ *
+ * Params
+ *      callback    A callback function with the following params
+ *                      error   An object of the following structure, or null
+ *                                  { msg: "error message..." }
+ *
+ */
+function connect(callback) {
+    if (connection.isOpen) {
+        // Call back if connected
+        callback(null);
+    } else {
+        // Function-to-be to clean up the following callbacks
+        var cleanup;
         
-        // Attempt to open the connection
+        // Set up handler for connection open event
+        var onOpen = function() {
+            // Cleanup
+            cleanup();
+            
+            // Connected; call back
+            callback(null);
+        };
+        
+        // Set up handler for connection close event
+        var onClose = function(reason, details) {
+            // Cleanup
+            cleanup();
+            
+            // The only reason we would have closed here is a first-time connect error (either unreachable or unsupported)
+            switch (reason) {
+            case "unreachable":
+                callback({
+                    "msg": "Poloniex push API is unreachable"
+                });
+                break;
+            case "unsupported":
+                callback({
+                    "msg": "Something is seriously wrong right now (internal Autobahn|JS error; take it up with them)"
+                });
+                break;
+            }
+        };
+        
+        // Aforementioned cleanup function
+        cleanup = function() {
+            // Remove callbacks from respective arrays
+            cxnCallbacksOpen.splice(cxnCallbacksOpen.indexOf(onOpen), 1);
+            cxnCallbacksClose.splice(cxnCallbacksClose.indexOf(onClose), 1);
+        };
+        
+        // Publish the callbacks
+        cxnCallbacksOpen.push(onOpen);
+        cxnCallbacksClose.push(onClose);
+        
+        // Try to open connection
         connection.open();
     }
 }
@@ -37,49 +108,59 @@ var apiPush = {};
 
 // Ticker subscription function
 apiPush.ticker = function(callback) {
-    // Try to connect to push API
-    connectAndRetry(apiPush.ticker, callback);
-    
-    // Continue if connection is open
-    if (connection.isOpen) {
-        // Subscribe to the ticker
-        connection.session.subscribe("ticker", (args) => {
-            // FIXME: Parse the JSON input
-            callback(null, args);
-        });
-    }
+    // Only continue once connected
+    connect((error) => {
+        if (error) {
+            // Notify caller of the error
+            callback({
+                "msg": "Error: " + error.msg
+            }, null);
+        } else {
+            // Subscribe to the ticker feed
+            connection.session.subscribe("ticker", (args) => {
+                // TODO: Process received data
+                callback(null, args);
+            });
+        }
+    });
 };
 
 // Order book subscription function
 apiPush.orderBook = function(currencyPair, callback) {
-    // Try to connect to push API
-    connectAndRetry(apiPush.orderBook, callback);
-    
-    // Continue if connection is open
-    if (connection.isOpen) {
-        // TODO: Provide a better interface for currency pairs (to separate base from counter currency)
-        
-        // Subscribe to the order book
-        connection.session.subscribe(currencyPair, (args) => {
-            // FIXME: Yeah, do some parsing stuff here
-            //        For now, just forward the received data and assume no errors occurred
-            callback(null, args);
-        });
-    }
+    // Only continue once connected
+    connect((error) => {
+        if (error) {
+            // Notify caller of the error
+            callback({
+                "msg": "Error: " + error.msg
+            }, null);
+        } else {
+            // Subscribe to the order book feed
+            connection.session.subscribe(currencyPair, (args) => {
+                // TODO: Process received data
+                callback(null, args);
+            });
+        }
+    });
 };
 
 // Trollbox subscription function
 apiPush.trollbox = function(callback) {
-    // Try to connect to push API
-    connectAndRetry(apiPush.trollbox, callback);
-    
-    // Continue if connection is open
-    if (connection.isOpen) {
-        connection.session.subscribe("trollbox", (args) => {
-            // FIXME: Again, yeah
-            callback(null, args);
-        });
-    }
+    // Only continue once connected
+    connect((error) => {
+        if (error) {
+            // Notify caller of the error
+            callback({
+                "msg": "Error: " + error.msg
+            }, null);
+        } else {
+            // Subscribe to the trollbox feed
+            connection.session.subscribe("trollbox", (args) => {
+                // TODO: Process received data
+                callback(null, args);
+            });
+        }
+    });
 };
 
 // Export a function which returns apiPush
