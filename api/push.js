@@ -72,17 +72,13 @@ function connect(callback) {
             // Cleanup
             cleanup();
             
-            // The only reason we would have closed here is a first-time connect error (either unreachable or unsupported)
+            // The only reason we might have closed here is a first-time connect error; act accordingly
             switch (reason) {
             case "unreachable":
-                callback({
-                    "msg": "Poloniex push API is unreachable"
-                });
+                callback({"msg": "Poloniex push API is unreachable"});
                 break;
             case "unsupported":
-                callback({
-                    "msg": "Something is seriously wrong right now (internal Autobahn|JS error; take it up with them)"
-                });
+                callback({"msg": "Something is seriously wrong right now (probably an Autobahn|JS error; take it up with them!)"});
                 break;
             }
         };
@@ -103,65 +99,40 @@ function connect(callback) {
     }
 }
 
+/*
+ *
+ * function subscribe(feed, callback)
+ *
+ * Subscribes to the given WAMP feed. If the connection has not yet been
+ * established, this function will utilize connect(...) to attempt to do so.
+ *
+ * Params
+ *      feed        A string specifying the desired feed
+ *      callback    A callback function with the following params
+ *                      err   An object of the following structure, or null
+ *                                  { msg: "error message..." }
+ *
+ */
+function subscribe(feed, callback) {
+    // Only continue once connected
+    connect((err) => {
+        if (err) {
+            // Notify caller of the error
+            callback({"msg": "Error: " + err.msg}, null);
+        } else {
+            // Subscribe to the given feed
+            connection.session.subscribe(feed, (args) => callback(null, args));
+        }
+    });
+}
+
 // Representation of the Poloniex push API
 var apiPush = {};
 
-// Ticker subscription function
-apiPush.ticker = function(callback) {
-    // Only continue once connected
-    connect((error) => {
-        if (error) {
-            // Notify caller of the error
-            callback({
-                "msg": "Error: " + error.msg
-            }, null);
-        } else {
-            // Subscribe to the ticker feed
-            connection.session.subscribe("ticker", (args) => {
-                // TODO: Process received data
-                callback(null, args);
-            });
-        }
-    });
-};
-
-// Order book subscription function
-apiPush.orderBook = function(currencyPair, callback) {
-    // Only continue once connected
-    connect((error) => {
-        if (error) {
-            // Notify caller of the error
-            callback({
-                "msg": "Error: " + error.msg
-            }, null);
-        } else {
-            // Subscribe to the order book feed
-            connection.session.subscribe(currencyPair, (args) => {
-                // TODO: Process received data
-                callback(null, args);
-            });
-        }
-    });
-};
-
-// Trollbox subscription function
-apiPush.trollbox = function(callback) {
-    // Only continue once connected
-    connect((error) => {
-        if (error) {
-            // Notify caller of the error
-            callback({
-                "msg": "Error: " + error.msg
-            }, null);
-        } else {
-            // Subscribe to the trollbox feed
-            connection.session.subscribe("trollbox", (args) => {
-                // TODO: Process received data
-                callback(null, args);
-            });
-        }
-    });
-};
+// Push API subscription functionality
+apiPush.ticker    = (callback)               => subscribe("ticker",     callback);
+apiPush.orderBook = (currencyPair, callback) => subscribe(currencyPair, callback);
+apiPush.trollbox  = (callback)               => subscribe("trollbox",   callback);
 
 // Export a function which returns apiPush
 module.exports = () => apiPush;
