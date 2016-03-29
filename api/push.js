@@ -236,8 +236,8 @@ apiPush.orderTrade = function(currencyPair, callback, allowBatches) {
                 callback(null, updateBatch);
             } else {
                 // Call back once per individual update
-                for (var i = 0; i < args.length; i++) {
-                    callback(null, args[i]);
+                for (var i = 0; i < updateBatch.length; i++) {
+                    callback(null, updateBatch[i]);
                 }
             }
         }
