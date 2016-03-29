@@ -20,6 +20,8 @@
   },
   "dependencies": {
     "autobahn": "^0.9.9",
-    "crypto": "^0.0.3"
+    "crypto": "^0.0.3",
+    "request": "^2.69.0",
+    "url": "^0.11.0"
   }
 }
