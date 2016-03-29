@@ -54,8 +54,9 @@ connection.onclose = function(reason, details) {
  *
  * Params
  *      callback    A callback function with the following params
- *                      error   An object of the following structure, or null
- *                                  { msg: "error message..." }
+ *                      err     An object of the following structure in the
+ *                                  event of an error, or null if no error has
+ *                                  occurred: { msg: "error message..." }
  *
  */
 function connect(callback) {
@@ -64,12 +65,14 @@ function connect(callback) {
         callback(null);
     } else {
         // Function-to-be to clean up the following callbacks
-        var cleanup;
+        var doCleanup = null;
         
         // Set up handler for connection open event
         var onOpen = function() {
-            // Cleanup
-            cleanup();
+            // Clean up
+            if (doCleanup) {
+                doCleanup();
+            }
             
             // Connected; call back
             callback(null);
@@ -77,22 +80,21 @@ function connect(callback) {
         
         // Set up handler for connection close event
         var onClose = function(reason, details) {
-            // Cleanup
-            cleanup();
+            // Clean up
+            if (doCleanup) {
+                doCleanup();
+            }
             
             // The only reason we might have closed here is a first-time connect error; act accordingly
-            switch (reason) {
-            case "unreachable":
+            if (reason == "unreachable") {
                 callback({"msg": "Poloniex push API is unreachable"});
-                break;
-            case "unsupported":
+            } else {
                 callback({"msg": "Something is seriously wrong right now (probably an Autobahn|JS error; take it up with them!)"});
-                break;
             }
         };
         
         // Aforementioned cleanup function
-        cleanup = function() {
+        doCleanup = function() {
             // Remove callbacks from respective arrays
             cxnCallbacksOpen.splice(cxnCallbacksOpen.indexOf(onOpen), 1);
             cxnCallbacksClose.splice(cxnCallbacksClose.indexOf(onClose), 1);
@@ -112,14 +114,17 @@ function connect(callback) {
  * function subscribe(feed, callback)
  *
  * Subscribes to the given WAMP feed. If the connection has not yet been
- * established, this function will utilize connect(...) to attempt to do so.
+ * established, this function will attempt to do so.
  *
  * Params
  *      feed        A string specifying the desired feed
  *      callback    A callback function with the following params
- *                      err     An object of the following structure, or null
- *                                  { msg: "error message..." }
- *                      resp    An array containing response info
+ *                      err     An object of the following structure in the
+ *                                  event of an error, or null if no error has
+ *                                  occurred: { msg: "error message..." }
+ *                      args    Directly-mapped WAMP event payload array
+ *                      kwargs  Directly-mapped WAMP event payload object
+ *                      details Directly-mapped WAMP event metadata
  *
  */
 function subscribe(feed, callback) {
@@ -169,12 +174,12 @@ apiPush.ticker = function(callback) {
 
 /*
  *
- * function orderTrade(currencyPair, callback)
+ * function orderTrade(currencyPair, callback, allowBatches)
  *
  * TODO: Write me
  *
  */
-apiPush.orderTrade = function(currencyPair, callback, singleCall) {
+apiPush.orderTrade = function(currencyPair, callback, allowBatches) {
     // Subscribe to currency pair feed (returns both new trades and order book updates)
     subscribe(currencyPair, (err, args) => {
         if (err) {
@@ -183,61 +188,57 @@ apiPush.orderTrade = function(currencyPair, callback, singleCall) {
         } else {
             // FIXME(?): I am not taking Poloniex's sequence ID into account
             // here, as WAMP is inherently ordered. If Poloniex can identify
-            // the order themselves, why would they not send them in order?
+            // the order themselves, why would they not send updates in order?
             
-            // Aggregated updates array
-            var aggrUpdates = new Array();
+            // Update batch array
+            var updateBatch = new Array();
             
             // Iterate over updates
             for (var i = 0; i < args.length; i++) {
+                // Object for raw update data
+                var update = args[i];
+                
                 // Object for parsed update data
-                var parsedUpdate = {};
+                var updateParsed = {};
                 
-                // Get basic info about update
-                var data = args[i].data;
-                var type = args[i].type;
+                // Store raw update data and type
+                updateParsed["raw"] = update;
+                updateParsed["updateType"] = update.type;
                 
-                // Store raw data
-                parsedUpdate.raw = args[i];
-                
-                // Store update type
-                parsedUpdate.updateType = type;
-                
-                // Build return object based on update type
-                switch (type) {
+                // Decipher update data based on type
+                switch (update.type) {
                 case "orderBookModify":
-                    parsedUpdate.type = data.type;
-                    parsedUpdate.rate = data.rate;
-                    parsedUpdate.amount = data.rate;
+                    updateParsed["type"] = update.data.type;
+                    updateParsed["rate"] = update.data.rate;
+                    updateParsed["amount"] = update.data.rate;
                     break;
                 case "orderBookRemove":
-                    parsedUpdate.type = data.type;
-                    parsedUpdate.rate = data.rate;
+                    updateParsed["type"] = update.data.type;
+                    updateParsed["rate"] = update.data.rate;
                     break;
                 case "newTrade":
-                    parsedUpdate.amount = data.amount;
-                    parsedUpdate.date = data.date;
-                    parsedUpdate.rate = data.rate;
-                    parsedUpdate.total = data.total;
-                    parsedUpdate.tradeID = data.tradeID;
-                    parsedUpdate.type = data.type;
+                    updateParsed["amount"] = update.data.amount;
+                    updateParsed["date"] = update.data.date;
+                    updateParsed["rate"] = update.data.rate;
+                    updateParsed["total"] = update.data.total;
+                    updateParsed["tradeID"] = update.data.tradeID;
+                    updateParsed["type"] = update.data.type;
                     break;
                 }
                 
-                // If a single call was requested
-                if (singleCall) {
-                    // Add this update to array
-                    aggrUpdates.push(parsedUpdate);
-                } else {
-                    // Call back once per individual update
-                    callback(null, parsedUpdate);
-                }
+                // Add parsed update to update batch array
+                updateBatch.push(updateParsed);
             }
             
-            // If a single call was requested
-            if (singleCall) {
-                // Call back with all parsed updates at once
-                callback(null, aggrUpdates);
+            // If batches are allowed
+            if (allowBatches) {
+                // Call back with entire update batch
+                callback(null, updateBatch);
+            } else {
+                // Call back once per individual update
+                for (var i = 0; i < args.length; i++) {
+                    callback(null, args[i]);
+                }
             }
         }
     });
@@ -264,7 +265,7 @@ apiPush.trollbox = function(callback) {
                 "messageNumber": args[1],
                 "username": args[2],
                 "message": args[3],
-                "reputation": args[4],
+                "reputation": args[4]
             });
         }
     });
