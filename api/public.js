@@ -16,9 +16,32 @@
 // Representation of the Poloniex public API
 var apiPublic = {};
 
-apiPublic.foo = function() {
-    // TODO: meh
-    return "bar";
+apiPublic.returnTicker = function() {
+    // TODO: Stuff goes here
+}
+
+apiPublic.return24Volume = function() {
+    // TODO: Stuff goes here
+}
+
+apiPublic.returnOrderBook = function() {
+    // TODO: Stuff goes here
+}
+
+apiPublic.returnTradeHistory = function() {
+    // TODO: Stuff goes here
+}
+
+apiPublic.returnChartData = function() {
+    // TODO: Stuff goes here
+}
+
+apiPublic.returnCurrencies = function() {
+    // TODO: Stuff goes here
+}
+
+apiPublic.returnLoanOrders = function() {
+    // TODO: Stuff goes here
 }
 
 // Export a function which returns apiPublic
