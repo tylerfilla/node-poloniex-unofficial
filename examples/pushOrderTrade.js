@@ -19,8 +19,8 @@ var polo = require("./../");
 // Get access to the push API
 var poloPush = polo.api("push");
 
-// Receive order book updates for BTC_ETH
-poloPush.orderBook("BTC_ETH", (err, response) => {
+// Receive order book and trade updates for BTC_ETH
+poloPush.orderTrade("BTC_ETH", (err, response) => {
     // Check for error
     if (err) {
         console.log("An error occurred");
@@ -29,5 +29,17 @@ poloPush.orderBook("BTC_ETH", (err, response) => {
     
     // Log response
     console.log(response);
+    
+    switch (response.type) {
+    case "orderBookModify":
+        // An order book entry has appeared/changed
+        break;
+    case "orderBookRemove":
+        // An order book entry has been entirely removed
+        break;
+    case "newTrade":
+        // A new trade(s) has been posted
+        break;
+    }
 });
 

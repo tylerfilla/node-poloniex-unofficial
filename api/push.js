@@ -16,6 +16,9 @@
 // Import modules
 var autobahn = require("autobahn");
 
+// Representation of the Poloniex push API
+var apiPush = {};
+
 // Autobahn|JS connection object for push API (utilizes the WAMP protocol)
 var connection = new autobahn.Connection({
     "url": "wss://api.poloniex.com",
@@ -114,8 +117,9 @@ function connect(callback) {
  * Params
  *      feed        A string specifying the desired feed
  *      callback    A callback function with the following params
- *                      err   An object of the following structure, or null
+ *                      err     An object of the following structure, or null
  *                                  { msg: "error message..." }
+ *                      resp    An array containing response info
  *
  */
 function subscribe(feed, callback) {
@@ -123,21 +127,148 @@ function subscribe(feed, callback) {
     connect((err) => {
         if (err) {
             // Notify caller of the error
-            callback({"msg": "Error: " + err.msg}, null);
+            callback({"msg": "Error: " + err.msg}, null, null, null);
         } else {
             // Subscribe to the given feed
-            connection.session.subscribe(feed, (args) => callback(null, args));
+            connection.session.subscribe(feed, (args, kwargs, details) => callback(null, args, kwargs, details));
         }
     });
 }
 
-// Representation of the Poloniex push API
-var apiPush = {};
+/*
+ *
+ * function ticker(callback)
+ *
+ * TODO: Write me
+ *
+ */
+apiPush.ticker = function(callback) {
+    // Subscribe to ticker feed
+    subscribe("ticker", (err, args) => {
+        if (err) {
+            // Call back with decoupled error info
+            callback({"msg": err.msg}, null);
+        } else {
+            // Call back with ticker data
+            callback(null, {
+                "raw": args,
+                "currencyPair": args[0],
+                "last": args[1],
+                "lowestAsk": args[2],
+                "highestBid": args[3],
+                "percentChange": args[4],
+                "baseVolume": args[5],
+                "quoteVolume": args[6],
+                "isFrozen": args[7],
+                "_24hrHigh": args[8],
+                "_24hrLow": args[9]
+            });
+        }
+    });
+}
 
-// Push API subscription functionality
-apiPush.ticker    = (callback)               => subscribe("ticker",     callback);
-apiPush.orderBook = (currencyPair, callback) => subscribe(currencyPair, callback);
-apiPush.trollbox  = (callback)               => subscribe("trollbox",   callback);
+/*
+ *
+ * function orderTrade(currencyPair, callback)
+ *
+ * TODO: Write me
+ *
+ */
+apiPush.orderTrade = function(currencyPair, callback, singleCall) {
+    // Subscribe to currency pair feed (returns both new trades and order book updates)
+    subscribe(currencyPair, (err, args) => {
+        if (err) {
+            // Call back with decoupled error info
+            callback({"msg": err.msg}, null);
+        } else {
+            // FIXME(?): I am not taking Poloniex's sequence ID into account
+            // here, as WAMP is inherently ordered. If Poloniex can identify
+            // the order themselves, why would they not send them in order?
+            
+            // Aggregated updates array
+            var aggrUpdates = new Array();
+            
+            // Iterate over updates
+            for (var i = 0; i < args.length; i++) {
+                // Object for parsed update data
+                var parsedUpdate = {};
+                
+                // Get basic info about update
+                var data = args[i].data;
+                var type = args[i].type;
+                
+                // Store raw data
+                parsedUpdate.raw = args[i];
+                
+                // Store update type
+                parsedUpdate.updateType = type;
+                
+                // Build return object based on update type
+                switch (type) {
+                case "orderBookModify":
+                    parsedUpdate.type = data.type;
+                    parsedUpdate.rate = data.rate;
+                    parsedUpdate.amount = data.rate;
+                    break;
+                case "orderBookRemove":
+                    parsedUpdate.type = data.type;
+                    parsedUpdate.rate = data.rate;
+                    break;
+                case "newTrade":
+                    parsedUpdate.amount = data.amount;
+                    parsedUpdate.date = data.date;
+                    parsedUpdate.rate = data.rate;
+                    parsedUpdate.total = data.total;
+                    parsedUpdate.tradeID = data.tradeID;
+                    parsedUpdate.type = data.type;
+                    break;
+                }
+                
+                // If a single call was requested
+                if (singleCall) {
+                    // Add this update to array
+                    aggrUpdates.push(parsedUpdate);
+                } else {
+                    // Call back once per individual update
+                    callback(null, parsedUpdate);
+                }
+            }
+            
+            // If a single call was requested
+            if (singleCall) {
+                // Call back with all parsed updates at once
+                callback(null, aggrUpdates);
+            }
+        }
+    });
+};
+
+/*
+ *
+ * function trollbox(callback)
+ *
+ * TODO: Write me
+ *
+ */
+apiPush.trollbox = function(callback) {
+    // Subscribe to the trollbox feed
+    subscribe("trollbox", (err, args) => {
+        if (err) {
+            // Call back with decoupled error info
+            callback({"msg": err.msg}, null);
+        } else {
+            // Call back with trollbox data
+            callback(null, {
+                "raw": args,
+                "type": args[0],
+                "messageNumber": args[1],
+                "username": args[2],
+                "message": args[3],
+                "reputation": args[4],
+            });
+        }
+    });
+}
 
 // Export a function which returns apiPush
 module.exports = () => apiPush;

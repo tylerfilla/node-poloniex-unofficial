@@ -28,6 +28,9 @@ poloPush.trollbox((err, response) => {
     }
     
     // Log response
-    console.log(response);
+    //console.log(response);
+    
+    // Print message
+    console.log(response.username + ": " + response.message);
 });
 
