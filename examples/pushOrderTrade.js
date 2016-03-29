@@ -2,6 +2,7 @@
 /*
  *
  * poloniex-unofficial
+ * https://git.io/polonode
  *
  * Yet another unofficial Node.js wrapper for the Poloniex cryptocurrency
  * exchange APIs.
@@ -42,4 +43,3 @@ poloPush.orderTrade("BTC_ETH", (err, response) => {
         break;
     }
 });
-

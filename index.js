@@ -2,6 +2,7 @@
 /*
  *
  * poloniex-unofficial
+ * https://git.io/polonode
  *
  * Yet another unofficial Node.js wrapper for the Poloniex cryptocurrency
  * exchange APIs.
@@ -33,4 +34,3 @@ exports.api = function(type) {
     // Return API module stuff
     return require(mod)();
 };
-

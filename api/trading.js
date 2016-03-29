@@ -2,6 +2,7 @@
 /*
  *
  * poloniex-unofficial
+ * https://git.io/polonode
  *
  * Yet another unofficial Node.js wrapper for the Poloniex cryptocurrency
  * exchange APIs.
@@ -23,4 +24,3 @@ apiTrading.foo = function() {
 
 // Export a function which returns apiTrading
 module.exports = () => apiTrading;
-

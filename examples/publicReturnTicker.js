@@ -2,6 +2,7 @@
 /*
  *
  * poloniex-unofficial
+ * https://git.io/polonode
  *
  * Yet another unofficial Node.js wrapper for the Poloniex cryptocurrency
  * exchange APIs.
@@ -21,4 +22,3 @@ var poloPublic = polo.api("public");
 
 // Demonstrate the "returnTicker" command
 poloPublic.returnTicker(); // TODO
-

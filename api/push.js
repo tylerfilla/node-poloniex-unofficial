@@ -2,6 +2,7 @@
 /*
  *
  * poloniex-unofficial
+ * https://git.io/polonode
  *
  * Yet another unofficial Node.js wrapper for the Poloniex cryptocurrency
  * exchange APIs.
@@ -273,4 +274,3 @@ apiPush.trollbox = function(callback) {
 
 // Export a function which returns apiPush
 module.exports = () => apiPush;
-

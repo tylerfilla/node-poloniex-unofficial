@@ -2,6 +2,7 @@
 /*
  *
  * poloniex-unofficial
+ * https://git.io/polonode
  *
  * Yet another unofficial Node.js wrapper for the Poloniex cryptocurrency
  * exchange APIs.
@@ -30,4 +31,3 @@ poloPush.ticker((err, response) => {
     // Log response
     console.log(response);
 });
-

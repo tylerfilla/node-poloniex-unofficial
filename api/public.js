@@ -147,4 +147,3 @@ apiPublic.returnLoanOrders = function() {
 
 // Export a function which returns apiPublic
 module.exports = () => apiPublic;
-
