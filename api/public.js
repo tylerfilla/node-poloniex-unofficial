@@ -115,35 +115,83 @@ apiPublic.return24hVolume = function(callback) {
 
 /*
  *
- * function returnOrderBook()
+ * function returnOrderBook(currencyPair, depth, callback)
  *
  * TODO: Write me
  *
  */
-apiPublic.returnOrderBook = function() {
-    // TODO: Stuff goes here
+apiPublic.returnOrderBook = function(currencyPair, depth, callback) {
+    // Build query options
+    var opts = {
+        "currencyPair": currencyPair || "all",
+        "depth": depth
+    };
+    
+    // Send returnOrderBook query
+    sendQuery("returnOrderBook", opts, (err, response) => {
+        if (err) {
+            // Call back with decoupled error info
+            callback({"msg": err.msg}, null);
+        } else {
+            // Call back with response
+            callback(null, response);
+        }
+    });
 }
 
 /*
  *
- * function returnTradeHistory()
+ * function returnTradeHistory(currencyPair, start, end, callback)
  *
  * TODO: Write me
  *
  */
-apiPublic.returnTradeHistory = function() {
-    // TODO: Stuff goes here
+apiPublic.returnTradeHistory = function(currencyPair, start, end, callback) {
+    // Build query options
+    var opts = {
+        "currencyPair": currencyPair || "all",
+        "start": start,
+        "end": end
+    };
+    
+    // Send returnTradeHistory query
+    sendQuery("returnTradeHistory", opts, (err, response) => {
+        if (err) {
+            // Call back with decoupled error info
+            callback({"msg": err.msg}, null);
+        } else {
+            // Call back with response
+            callback(null, response);
+        }
+    });
 }
 
 /*
  *
- * function returnChartData()
+ * function returnChartData(currencyPair, start, end, period, callback)
  *
  * TODO: Write me
  *
  */
-apiPublic.returnChartData = function() {
-    // TODO: Stuff goes here
+apiPublic.returnChartData = function(currencyPair, start, end, period, callback) {
+    // Build query options
+    var opts = {
+        "currencyPair": currencyPair || "all",
+        "start": start,
+        "end": end,
+        "period": period
+    };
+    
+    // Send returnChartData query
+    sendQuery("returnChartData", opts, (err, response) => {
+        if (err) {
+            // Call back with decoupled error info
+            callback({"msg": err.msg}, null);
+        } else {
+            // Call back with response
+            callback(null, response);
+        }
+    });
 }
 
 /*
@@ -168,13 +216,27 @@ apiPublic.returnCurrencies = function(callback) {
 
 /*
  *
- * function returnLoanOrders()
+ * function returnLoanOrders(currency, callback)
  *
  * TODO: Write me
  *
  */
-apiPublic.returnLoanOrders = function() {
-    // TODO: Stuff goes here
+apiPublic.returnLoanOrders = function(currency, callback) {
+    // Build query options
+    var opts = {
+        "currency": currency,
+    };
+    
+    // Send returnLoanOrders query
+    sendQuery("returnLoanOrders", opts, (err, response) => {
+        if (err) {
+            // Call back with decoupled error info
+            callback({"msg": err.msg}, null);
+        } else {
+            // Call back with response
+            callback(null, response);
+        }
+    });
 }
 
 // Export a function which returns apiPublic
