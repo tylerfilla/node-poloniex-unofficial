@@ -15,16 +15,16 @@
  */
 
 // Subunit modules for the various APIs offered by Poloniex
-var apiMap = {
+var API_MODULE_MAP = {
     "push": "./api/push.js",
     "public": "./api/public.js",
     "trading": "./api/trading.js"
 };
 
 // API selector function
-exports.api = function(type) {
+exports.api = function(name, params) {
     // Get the module
-    var mod = apiMap[type];
+    var mod = API_MODULE_MAP[name];
     
     // Abort if module isn't, well, good... (type was probably invalid)
     if (!mod) {
@@ -32,5 +32,5 @@ exports.api = function(type) {
     }
     
     // Return API module stuff
-    return require(mod)();
+    return require(mod)(params);
 };

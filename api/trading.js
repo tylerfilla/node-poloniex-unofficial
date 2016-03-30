@@ -22,6 +22,12 @@
 // Representation of the Poloniex trading API
 var apiTrading = {};
 
+// Container for authentication info (API key and secret)
+var authInfo = {
+    "key": null,
+    "secret": null
+};
+
 /*
  *
  * function sendQuery(command, params, callback)
@@ -30,6 +36,15 @@ var apiTrading = {};
  *
  */
 function sendQuery(command, params, callback) {
+    // Check for proper auth info
+    if (!authInfo.key || !authInfo.secret) {
+        // Call back with error
+        callback({"msg": "Auth info not set"}, null);
+        
+        // We're done here
+        return;
+    }
+    
     // Create query with given parameters, if applicable
     var query = params || {};
     
@@ -53,8 +68,8 @@ function sendQuery(command, params, callback) {
         "headers": {
             "User-Agent": "node-poloniex-unofficial|trading.js (+https://git.io/polonode)",
             "Content-Type": "application/x-www-form-urlencoded",
-            "Key": ""/* PUBLIC KEY */,
-            "Sign": crypto.createHmac("sha512", ""/* API SECRET */).update(queryString).digest("hex")
+            "Key": authInfo.key,
+            "Sign": crypto.createHmac("sha512", authInfo.secret).update(queryString).digest("hex")
         },
         "body": queryString
     };
@@ -80,8 +95,6 @@ function sendQuery(command, params, callback) {
     });
 }
 
-// TODO: Write a function that takes in API key and secret and stores them for later use
-
 /*
  *
  * function returnBalances(callback)
@@ -90,7 +103,16 @@ function sendQuery(command, params, callback) {
  *
  */
 apiTrading.returnBalances = function(callback) {
-    // TODO: Stuff goes here
+    // Send returnBalances query
+    sendQuery("returnBalances", null, (err, response) => {
+        if (err) {
+            // Call back with decoupled error info
+            callback({"msg": err.msg}, null);
+        } else {
+            // Call back with response
+            callback(null, response);
+        }
+    });
 }
 
 /*
@@ -380,4 +402,10 @@ apiTrading.toggleAutoRenew = function(orderNumber, callback) {
 }
 
 // Export a function which returns apiTrading
-module.exports = () => apiTrading;
+module.exports = function(params) {
+    // Get auth info from params
+    authInfo.key = params.apiKey;
+    authInfo.secret = params.apiSecret;
+    
+    return apiTrading;
+}

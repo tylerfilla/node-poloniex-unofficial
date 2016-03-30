@@ -15,7 +15,7 @@
  */
 
 // Import modules
-var polo = require("./../");
+var polo = require("./../../");
 
 // Get access to the public API
 var poloPublic = polo.api("public");

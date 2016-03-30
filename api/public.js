@@ -240,4 +240,6 @@ apiPublic.returnLoanOrders = function(currency, callback) {
 }
 
 // Export a function which returns apiPublic
-module.exports = () => apiPublic;
+module.exports = function(params) {
+    return apiPublic;
+}

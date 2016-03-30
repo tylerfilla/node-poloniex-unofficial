@@ -273,4 +273,6 @@ apiPush.trollbox = function(callback) {
 }
 
 // Export a function which returns apiPush
-module.exports = () => apiPush;
+module.exports = function(params) {
+    return apiPush;
+}
