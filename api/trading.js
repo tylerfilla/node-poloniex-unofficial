@@ -22,7 +22,63 @@
 // Representation of the Poloniex trading API
 var apiTrading = {};
 
-// TODO: Write a function that executes general queries like in public.js
+/*
+ *
+ * function sendQuery(command, params, callback)
+ *
+ * TODO: Write me
+ *
+ */
+function sendQuery(command, params, callback) {
+    // Create query with given parameters, if applicable
+    var query = params || {};
+    
+    // Add command to query
+    if (!query.command) {
+        query["command"] = command;
+    }
+    
+    // Add nonce to query
+    if (!query.nonce) {
+        query["nonce"] = Date.now(); // TODO: Add method of modifying nonce
+    }
+    
+    // A hacky way to not need any another dependencies
+    var queryString = url.format({"query": query}).substring(1);
+    
+    // Options for request
+    var opts = {
+        "url": "https://poloniex.com/tradingApi",
+        "method": "POST",
+        "headers": {
+            "User-Agent": "node-poloniex-unofficial|trading.js (+https://git.io/polonode)",
+            "Content-Type": "application/x-www-form-urlencoded",
+            "Key": ""/* PUBLIC KEY */,
+            "Sign": crypto.createHmac("sha512", ""/* API SECRET */).update(queryString).digest("hex")
+        },
+        "body": queryString
+    };
+    
+    // Send request to Poloniex
+    request(opts, function(error, response, body) {
+        if (!error && response && response.statusCode == 200) {
+            // Parse body as JSON
+            var bodyObj = JSON.parse(body);
+            
+            // Check if Poloniex returned an API error
+            if (bodyObj.error) {
+                // Call back with provided error info
+                callback({"msg": "Poloniex: " + bodyObj.error}, null);
+            } else {
+                // Call back with parsed response
+                callback(null, bodyObj);
+            }
+        } else {
+            // Call back with error info
+            callback({"msg": "Request failed", "reqError": error, "reqResponse": response}, null);
+        }
+    });
+}
 
 // TODO: Write a function that takes in API key and secret and stores them for later use
 

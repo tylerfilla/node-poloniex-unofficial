@@ -48,8 +48,8 @@ function sendQuery(command, params, callback) {
         "url": url.format(queryUrl),
         "method": "GET",
         "headers": {
-            "User-Agent": "node-poloniex-unofficial (+https://git.io/polonode)",
-        },
+            "User-Agent": "node-poloniex-unofficial|public.js (+https://git.io/polonode)"
+        }
     };
     
     // Send request to Poloniex
