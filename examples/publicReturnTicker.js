@@ -20,5 +20,13 @@ var polo = require("./../");
 // Get access to the public API
 var poloPublic = polo.api("public");
 
-// Demonstrate the "returnTicker" command
-poloPublic.returnTicker(); // TODO
+// Demonstrate the returnTicker command
+poloPublic.returnTicker((err, response) => {
+    if (err) {
+        // Log error message
+        console.log("An error occurred: " + err.msg);
+    } else {
+        // Log response
+        console.log(response);
+    }
+});

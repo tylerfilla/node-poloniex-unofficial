@@ -23,7 +23,7 @@ var apiPublic = {};
 
 /*
  *
- * function sendQuery(command, params)
+ * function sendQuery(command, params, callback)
  *
  * TODO: Write me
  *
@@ -54,9 +54,18 @@ function sendQuery(command, params, callback) {
     
     // Send request to Poloniex
     request(opts, function(error, response, body) {
-        if (!error && response.statusCode == 200) {
-            // Call back with parsed response
-            callback(null, JSON.parse(body));
+        if (!error && response && response.statusCode == 200) {
+            // Parse body as JSON
+            var bodyObj = JSON.parse(body);
+            
+            // Check if Poloniex returned an API error
+            if (bodyObj.error) {
+                // Call back with provided error info
+                callback({"msg": "Poloniex: " + bodyObj.error}, null);
+            } else {
+                // Call back with parsed response
+                callback(null, bodyObj);
+            }
         } else {
             // Call back with error info
             callback({"msg": "Request failed", "reqError": error, "reqResponse": response}, null);
@@ -66,28 +75,42 @@ function sendQuery(command, params, callback) {
 
 /*
  *
- * function returnTicker()
+ * function returnTicker(callback)
  *
  * TODO: Write me
  *
  */
-apiPublic.returnTicker = function() {
-    // TODO: Stuff goes here
-    
+apiPublic.returnTicker = function(callback) {
+    // Send returnTicker query
     sendQuery("returnTicker", null, (err, response) => {
-        console.log(response);
+        if (err) {
+            // Call back with decoupled error info
+            callback({"msg": err.msg}, null);
+        } else {
+            // Call back with response
+            callback(null, response);
+        }
     });
 }
 
 /*
  *
- * function return24Volume()
+ * function return24hVolume(callback)
  *
  * TODO: Write me
  *
  */
-apiPublic.return24Volume = function() {
-    // TODO: Stuff goes here
+apiPublic.return24hVolume = function(callback) {
+    // Send return24hVolume query
+    sendQuery("return24hVolume", null, (err, response) => {
+        if (err) {
+            // Call back with decoupled error info
+            callback({"msg": err.msg}, null);
+        } else {
+            // Call back with response
+            callback(null, response);
+        }
+    });
 }
 
 /*
@@ -125,13 +148,22 @@ apiPublic.returnChartData = function() {
 
 /*
  *
- * function returnCurrencies()
+ * function returnCurrencies(callback)
  *
  * TODO: Write me
  *
  */
-apiPublic.returnCurrencies = function() {
-    // TODO: Stuff goes here
+apiPublic.returnCurrencies = function(callback) {
+    // Send returnCurrencies query
+    sendQuery("returnCurrencies", null, (err, response) => {
+        if (err) {
+            // Call back with decoupled error info
+            callback({"msg": err.msg}, null);
+        } else {
+            // Call back with response
+            callback(null, response);
+        }
+    });
 }
 
 /*

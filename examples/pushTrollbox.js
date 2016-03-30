@@ -22,15 +22,11 @@ var poloPush = polo.api("push");
 
 // Receive trollbox updates
 poloPush.trollbox((err, response) => {
-    // Check for error
     if (err) {
-        console.log("An error occurred");
-        return;
+        // Log error message
+        console.log("An error occurred: " + err.msg);
+    } else {
+        // Print chat message
+        console.log(response.username + ": " + response.message + "\n");
     }
-    
-    // Log response
-    //console.log(response);
-    
-    // Print message
-    console.log(response.username + ": " + response.message);
 });

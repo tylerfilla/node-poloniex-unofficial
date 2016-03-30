@@ -17,11 +17,11 @@
 // Import modules
 var polo = require("./../");
 
-// Get access to the push API
-var poloPush = polo.api("push");
+// Get access to the public API
+var poloPublic = polo.api("public");
 
-// Receive ticker updates
-poloPush.ticker((err, response) => {
+// Demonstrate the returnCurrencies command
+poloPublic.returnCurrencies((err, response) => {
     if (err) {
         // Log error message
         console.log("An error occurred: " + err.msg);
