@@ -123,7 +123,16 @@ apiTrading.returnBalances = function(callback) {
  *
  */
 apiTrading.returnCompleteBalances = function(callback) {
-    // TODO: Stuff goes here
+    // Send returnCompleteBalances query
+    sendQuery("returnCompleteBalances", null, (err, response) => {
+        if (err) {
+            // Call back with decoupled error info
+            callback({"msg": err.msg}, null);
+        } else {
+            // Call back with response
+            callback(null, response);
+        }
+    });
 }
 
 /*
@@ -134,7 +143,16 @@ apiTrading.returnCompleteBalances = function(callback) {
  *
  */
 apiTrading.returnDepositAddresses = function(callback) {
-    // TODO: Stuff goes here
+    // Send returnDepositAddresses query
+    sendQuery("returnDepositAddresses", null, (err, response) => {
+        if (err) {
+            // Call back with decoupled error info
+            callback({"msg": err.msg}, null);
+        } else {
+            // Call back with response
+            callback(null, response);
+        }
+    });
 }
 
 /*
@@ -255,7 +273,16 @@ apiTrading.withdraw = function(currency, amount, address, paymentId, callback) {
  *
  */
 apiTrading.returnFeeInfo = function(callback) {
-    // TODO: Stuff goes here
+    // Send returnFeeInfo query
+    sendQuery("returnFeeInfo", null, (err, response) => {
+        if (err) {
+            // Call back with decoupled error info
+            callback({"msg": err.msg}, null);
+        } else {
+            // Call back with response
+            callback(null, response);
+        }
+    });
 }
 
 /*
@@ -277,7 +304,16 @@ apiTrading.returnAvailableAccountBalances = function(account, callback) {
  *
  */
 apiTrading.returnTradableBalances = function(callback) {
-    // TODO: Stuff goes here
+    // Send returnTradableBalances query
+    sendQuery("returnTradableBalances", null, (err, response) => {
+        if (err) {
+            // Call back with decoupled error info
+            callback({"msg": err.msg}, null);
+        } else {
+            // Call back with response
+            callback(null, response);
+        }
+    });
 }
 
 /*
@@ -299,7 +335,16 @@ apiTrading.transferBalance = function(currency, amount, fromAccount, toAccount, 
  *
  */
 apiTrading.returnMarginAccountSummary = function(callback) {
-    // TODO: Stuff goes here
+    // Send returnMarginAccountSummary query
+    sendQuery("returnMarginAccountSummary", null, (err, response) => {
+        if (err) {
+            // Call back with decoupled error info
+            callback({"msg": err.msg}, null);
+        } else {
+            // Call back with response
+            callback(null, response);
+        }
+    });
 }
 
 /*
@@ -376,7 +421,16 @@ apiTrading.cancelLoanOffer = function(orderNumber, callback) {
  *
  */
 apiTrading.returnOpenLoanOffers = function(callback) {
-    // TODO: Stuff goes here
+    // Send returnOpenLoanOffers query
+    sendQuery("returnOpenLoanOffers", null, (err, response) => {
+        if (err) {
+            // Call back with decoupled error info
+            callback({"msg": err.msg}, null);
+        } else {
+            // Call back with response
+            callback(null, response);
+        }
+    });
 }
 
 /*
@@ -387,7 +441,16 @@ apiTrading.returnOpenLoanOffers = function(callback) {
  *
  */
 apiTrading.returnActiveLoans = function(callback) {
-    // TODO: Stuff goes here
+    // Send returnActiveLoans query
+    sendQuery("returnActiveLoans", null, (err, response) => {
+        if (err) {
+            // Call back with decoupled error info
+            callback({"msg": err.msg}, null);
+        } else {
+            // Call back with response
+            callback(null, response);
+        }
+    });
 }
 
 /*
