@@ -239,7 +239,13 @@ apiPublic.returnLoanOrders = function(currency, callback) {
     });
 }
 
-// Export a function which returns apiPublic
+/*
+ *
+ * function exports(params)
+ *
+ * Exposes the public API wrapper.
+ *
+ */
 module.exports = function(params) {
     return apiPublic;
 }

@@ -163,7 +163,21 @@ apiTrading.returnDepositAddresses = function(callback) {
  *
  */
 apiTrading.generateNewAddress = function(currency, callback) {
-    // TODO: Stuff goes here
+    // Build query options
+    var opts = {
+        "currency": currency
+    };
+    
+    // Send generateNewAddress query
+    sendQuery("generateNewAddress", opts, (err, response) => {
+        if (err) {
+            // Call back with decoupled error info
+            callback({"msg": err.msg}, null);
+        } else {
+            // Call back with response
+            callback(null, response);
+        }
+    });
 }
 
 /*
@@ -174,7 +188,22 @@ apiTrading.generateNewAddress = function(currency, callback) {
  *
  */
 apiTrading.returnDepositsWithdrawals = function(start, end, callback) {
-    // TODO: Stuff goes here
+    // Build query options
+    var opts = {
+        "start": start,
+        "end": end
+    };
+    
+    // Send returnDepositsWithdrawals query
+    sendQuery("returnDepositsWithdrawals", opts, (err, response) => {
+        if (err) {
+            // Call back with decoupled error info
+            callback({"msg": err.msg}, null);
+        } else {
+            // Call back with response
+            callback(null, response);
+        }
+    });
 }
 
 /*
@@ -185,7 +214,21 @@ apiTrading.returnDepositsWithdrawals = function(start, end, callback) {
  *
  */
 apiTrading.returnOpenOrders = function(currencyPair, callback) {
-    // TODO: Stuff goes here
+    // Build query options
+    var opts = {
+        "currencyPair": currencyPair
+    };
+    
+    // Send returnOpenOrders query
+    sendQuery("returnOpenOrders", opts, (err, response) => {
+        if (err) {
+            // Call back with decoupled error info
+            callback({"msg": err.msg}, null);
+        } else {
+            // Call back with response
+            callback(null, response);
+        }
+    });
 }
 
 /*
@@ -196,7 +239,23 @@ apiTrading.returnOpenOrders = function(currencyPair, callback) {
  *
  */
 apiTrading.returnTradeHistory = function(currencyPair, start, end, callback) {
-    // TODO: Stuff goes here
+    // Build query options
+    var opts = {
+        "currencyPair": currencyPair,
+        "start": start,
+        "end": end
+    };
+    
+    // Send returnTradeHistory query
+    sendQuery("returnTradeHistory", opts, (err, response) => {
+        if (err) {
+            // Call back with decoupled error info
+            callback({"msg": err.msg}, null);
+        } else {
+            // Call back with response
+            callback(null, response);
+        }
+    });
 }
 
 /*
@@ -207,7 +266,21 @@ apiTrading.returnTradeHistory = function(currencyPair, start, end, callback) {
  *
  */
 apiTrading.returnOrderTrades = function(orderNumber, callback) {
-    // TODO: Stuff goes here
+    // Build query options
+    var opts = {
+        "orderNumber": orderNumber
+    };
+    
+    // Send returnOrderTrades query
+    sendQuery("returnOrderTrades", opts, (err, response) => {
+        if (err) {
+            // Call back with decoupled error info
+            callback({"msg": err.msg}, null);
+        } else {
+            // Call back with response
+            callback(null, response);
+        }
+    });
 }
 
 /*
@@ -218,7 +291,25 @@ apiTrading.returnOrderTrades = function(orderNumber, callback) {
  *
  */
 apiTrading.buy = function(currencyPair, rate, amount, fillOrKill, immediateOrCancel, callback) {
-    // TODO: Stuff goes here
+    // Build query options
+    var opts = {
+        "currencyPair": currencyPair,
+        "rate": rate,
+        "amount": amount,
+        "fillOrKill": fillOrKill,
+        "immediateOrCancel": immediateOrCancel
+    };
+    
+    // Send buy query
+    sendQuery("buy", opts, (err, response) => {
+        if (err) {
+            // Call back with decoupled error info
+            callback({"msg": err.msg}, null);
+        } else {
+            // Call back with response
+            callback(null, response);
+        }
+    });
 }
 
 /*
@@ -229,7 +320,25 @@ apiTrading.buy = function(currencyPair, rate, amount, fillOrKill, immediateOrCan
  *
  */
 apiTrading.sell = function(currencyPair, rate, amount, fillOrKill, immediateOrCancel, callback) {
-    // TODO: Stuff goes here
+    // Build query options
+    var opts = {
+        "currencyPair": currencyPair,
+        "rate": rate,
+        "amount": amount,
+        "fillOrKill": fillOrKill,
+        "immediateOrCancel": immediateOrCancel
+    };
+    
+    // Send sell query
+    sendQuery("sell", opts, (err, response) => {
+        if (err) {
+            // Call back with decoupled error info
+            callback({"msg": err.msg}, null);
+        } else {
+            // Call back with response
+            callback(null, response);
+        }
+    });
 }
 
 /*
@@ -240,7 +349,21 @@ apiTrading.sell = function(currencyPair, rate, amount, fillOrKill, immediateOrCa
  *
  */
 apiTrading.cancelOrder = function(orderNumber, callback) {
-    // TODO: Stuff goes here
+    // Build query options
+    var opts = {
+        "orderNumber": orderNumber
+    };
+    
+    // Send cancelOrder query
+    sendQuery("cancelOrder", opts, (err, response) => {
+        if (err) {
+            // Call back with decoupled error info
+            callback({"msg": err.msg}, null);
+        } else {
+            // Call back with response
+            callback(null, response);
+        }
+    });
 }
 
 /*
@@ -251,7 +374,23 @@ apiTrading.cancelOrder = function(orderNumber, callback) {
  *
  */
 apiTrading.moveOrder = function(orderNumber, rate, amount, callback) {
-    // TODO: Stuff goes here
+    // Build query options
+    var opts = {
+        "orderNumber": orderNumber,
+        "rate": rate,
+        "amount": amount
+    };
+    
+    // Send moveOrder query
+    sendQuery("moveOrder", opts, (err, response) => {
+        if (err) {
+            // Call back with decoupled error info
+            callback({"msg": err.msg}, null);
+        } else {
+            // Call back with response
+            callback(null, response);
+        }
+    });
 }
 
 /*
@@ -262,7 +401,24 @@ apiTrading.moveOrder = function(orderNumber, rate, amount, callback) {
  *
  */
 apiTrading.withdraw = function(currency, amount, address, paymentId, callback) {
-    // TODO: Stuff goes here
+    // Build query options
+    var opts = {
+        "currency": currency,
+        "amount": amount,
+        "address": address,
+        "paymentId": paymentId
+    };
+    
+    // Send withdraw query
+    sendQuery("withdraw", opts, (err, response) => {
+        if (err) {
+            // Call back with decoupled error info
+            callback({"msg": err.msg}, null);
+        } else {
+            // Call back with response
+            callback(null, response);
+        }
+    });
 }
 
 /*
@@ -293,7 +449,21 @@ apiTrading.returnFeeInfo = function(callback) {
  *
  */
 apiTrading.returnAvailableAccountBalances = function(account, callback) {
-    // TODO: Stuff goes here
+    // Build query options
+    var opts = {
+        "account": account
+    };
+    
+    // Send returnAvailableAccountBalances query
+    sendQuery("returnAvailableAccountBalances", opts, (err, response) => {
+        if (err) {
+            // Call back with decoupled error info
+            callback({"msg": err.msg}, null);
+        } else {
+            // Call back with response
+            callback(null, response);
+        }
+    });
 }
 
 /*
@@ -324,7 +494,24 @@ apiTrading.returnTradableBalances = function(callback) {
  *
  */
 apiTrading.transferBalance = function(currency, amount, fromAccount, toAccount, callback) {
-    // TODO: Stuff goes here
+    // Build query options
+    var opts = {
+        "currency": currency,
+        "amount": amount,
+        "fromAccount": fromAccount,
+        "toAccount": toAccount
+    };
+    
+    // Send transferBalance query
+    sendQuery("transferBalance", opts, (err, response) => {
+        if (err) {
+            // Call back with decoupled error info
+            callback({"msg": err.msg}, null);
+        } else {
+            // Call back with response
+            callback(null, response);
+        }
+    });
 }
 
 /*
@@ -355,7 +542,24 @@ apiTrading.returnMarginAccountSummary = function(callback) {
  *
  */
 apiTrading.marginBuy = function(currencyPair, rate, amount, lendingRate, callback) {
-    // TODO: Stuff goes here
+    // Build query options
+    var opts = {
+        "currencyPair": currencyPair,
+        "rate": rate,
+        "amount": amount,
+        "lendingRate": lendingRate
+    };
+    
+    // Send marginBuy query
+    sendQuery("marginBuy", opts, (err, response) => {
+        if (err) {
+            // Call back with decoupled error info
+            callback({"msg": err.msg}, null);
+        } else {
+            // Call back with response
+            callback(null, response);
+        }
+    });
 }
 
 /*
@@ -366,7 +570,24 @@ apiTrading.marginBuy = function(currencyPair, rate, amount, lendingRate, callbac
  *
  */
 apiTrading.marginSell = function(currencyPair, rate, amount, lendingRate, callback) {
-    // TODO: Stuff goes here
+    // Build query options
+    var opts = {
+        "currencyPair": currencyPair,
+        "rate": rate,
+        "amount": amount,
+        "lendingRate": lendingRate
+    };
+    
+    // Send marginSell query
+    sendQuery("marginSell", opts, (err, response) => {
+        if (err) {
+            // Call back with decoupled error info
+            callback({"msg": err.msg}, null);
+        } else {
+            // Call back with response
+            callback(null, response);
+        }
+    });
 }
 
 /*
@@ -377,7 +598,21 @@ apiTrading.marginSell = function(currencyPair, rate, amount, lendingRate, callba
  *
  */
 apiTrading.getMarginPosition = function(currencyPair, callback) {
-    // TODO: Stuff goes here
+    // Build query options
+    var opts = {
+        "currencyPair": currencyPair
+    };
+    
+    // Send getMarginPosition query
+    sendQuery("getMarginPosition", opts, (err, response) => {
+        if (err) {
+            // Call back with decoupled error info
+            callback({"msg": err.msg}, null);
+        } else {
+            // Call back with response
+            callback(null, response);
+        }
+    });
 }
 
 /*
@@ -388,7 +623,21 @@ apiTrading.getMarginPosition = function(currencyPair, callback) {
  *
  */
 apiTrading.closeMarginPosition = function(currencyPair, callback) {
-    // TODO: Stuff goes here
+    // Build query options
+    var opts = {
+        "currencyPair": currencyPair
+    };
+    
+    // Send closeMarginPosition query
+    sendQuery("closeMarginPosition", opts, (err, response) => {
+        if (err) {
+            // Call back with decoupled error info
+            callback({"msg": err.msg}, null);
+        } else {
+            // Call back with response
+            callback(null, response);
+        }
+    });
 }
 
 /*
@@ -399,7 +648,25 @@ apiTrading.closeMarginPosition = function(currencyPair, callback) {
  *
  */
 apiTrading.createLoanOffer = function(currency, amount, duration, autoRenew, lendingRate, callback) {
-    // TODO: Stuff goes here
+    // Build query options
+    var opts = {
+        "currency": currency,
+        "amount": amount,
+        "duration": duration,
+        "autoRenew": autoRenew,
+        "lendingRate": lendingRate
+    };
+    
+    // Send createLoanOffer query
+    sendQuery("createLoanOffer", opts, (err, response) => {
+        if (err) {
+            // Call back with decoupled error info
+            callback({"msg": err.msg}, null);
+        } else {
+            // Call back with response
+            callback(null, response);
+        }
+    });
 }
 
 /*
@@ -410,7 +677,21 @@ apiTrading.createLoanOffer = function(currency, amount, duration, autoRenew, len
  *
  */
 apiTrading.cancelLoanOffer = function(orderNumber, callback) {
-    // TODO: Stuff goes here
+    // Build query options
+    var opts = {
+        "orderNumber": orderNumber
+    };
+    
+    // Send cancelLoanOffer query
+    sendQuery("cancelLoanOffer", opts, (err, response) => {
+        if (err) {
+            // Call back with decoupled error info
+            callback({"msg": err.msg}, null);
+        } else {
+            // Call back with response
+            callback(null, response);
+        }
+    });
 }
 
 /*
@@ -461,10 +742,30 @@ apiTrading.returnActiveLoans = function(callback) {
  *
  */
 apiTrading.toggleAutoRenew = function(orderNumber, callback) {
-    // TODO: Stuff goes here
+    // Build query options
+    var opts = {
+        "orderNumber": orderNumber
+    };
+    
+    // Send toggleAutoRenew query
+    sendQuery("toggleAutoRenew", opts, (err, response) => {
+        if (err) {
+            // Call back with decoupled error info
+            callback({"msg": err.msg}, null);
+        } else {
+            // Call back with response
+            callback(null, response);
+        }
+    });
 }
 
-// Export a function which returns apiTrading
+/*
+ *
+ * function exports(params)
+ *
+ * Accepts API authentication info and exposes the trading API wrapper.
+ *
+ */
 module.exports = function(params) {
     // Get auth info from params
     authInfo.key = params.apiKey;

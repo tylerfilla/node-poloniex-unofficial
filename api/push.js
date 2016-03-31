@@ -272,7 +272,13 @@ apiPush.trollbox = function(callback) {
     });
 }
 
-// Export a function which returns apiPush
+/*
+ *
+ * function exports(params)
+ *
+ * Exposes the push API wrapper.
+ *
+ */
 module.exports = function(params) {
     return apiPush;
 }
