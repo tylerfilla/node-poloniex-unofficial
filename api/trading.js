@@ -768,8 +768,8 @@ apiTrading.toggleAutoRenew = function(orderNumber, callback) {
  */
 module.exports = function(params) {
     // Get auth info from params (FIXME: do not put auth params in global scope; one might want to access multiple accounts)
-    authInfo.key = params.apiKey;
-    authInfo.secret = params.apiSecret;
+    authInfo.key = params.key;
+    authInfo.secret = params.secret;
 
     return apiTrading;
 }

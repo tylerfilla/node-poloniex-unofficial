@@ -4,9 +4,9 @@ node-poloniex-unofficial
 Yet another unofficial Node.js wrapper for the Poloniex cryptocurrency exchange APIs. I put a lot of thought into the name, can't you tell?
 
 Just a clarification for others, as I've confused myself more than I care to admit:  
-`node-poloniex-unofficial` is the name of the project, repository, and product as a whole  
-`poloniex-unofficial` is the name of the Node.js package (a subset thereof)   
-`polonode` (as in https://git.io/polonode) is an acceptable alternative to `node-poloniex-unofficial`
+`node-poloniex-unofficial` is the name of the project, repository, and product as a whole.  
+`poloniex-unofficial` is the name of the Node.js package (a subset thereof).  
+`polonode` (as in https://git.io/polonode) is an acceptable alternative to `node-poloniex-unofficial`.
 
 Installation
 ------------
@@ -18,7 +18,7 @@ However, npm will allow you to clone the GitHub repo and install in one command,
 $ npm install tylerfilla/node-poloniex-unofficial
 ```
 
-This will install `poloniex-unofficial` to your current directory straight from the repo, wherein you can fire up `node` and start tinkering with it immediately.
+This will install `poloniex-unofficial` to your current directory straight from the repo, wherein you can fire up node and start tinkering with it immediately.
 
 Usage
 -----
@@ -40,8 +40,8 @@ var apiPublic = polo.api("public");
 
 // And finally the trading API
 var apiTrading = polo.api("trading", {
-    "apiKey": "MY-POLONIEX-API-KEY",
-    "apiSecret": "mypoloniexapisecret"
+    "key": "MY-POLONIEX-API-KEY",
+    "secret": "mypoloniexapisecret"
 });
 ```
 
