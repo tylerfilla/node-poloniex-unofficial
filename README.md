@@ -31,25 +31,9 @@ var polo = require("poloniex-unofficial");
 
 From there, you'll need to pick an API to work with. Poloniex has three of them: push, public, and trading.
 
-```javascript
-// Get wrapper for the push API
-var apiPush = polo.api("push");
-
-// Then for the public API
-var apiPublic = polo.api("public");
-
-// And finally the trading API
-var apiTrading = polo.api("trading", {
-    "key": "MY-POLONIEX-API-KEY",
-    "secret": "mypoloniexapisecret"
-});
-```
-
-The above code demonstrates uses of the API selector function (the `.api(...)` call) for accessing the different wrappers provided by this software.
-
 ### The Push API ###
 
-The push API is by far the fastest and simplest interface to Poloniex, which makes it the most well-suited of the three for fast-paced trading decisions. Its `poloniex-unofficial` wrapper will give you access to trade and order book updates, price tickers, and the infamous trollbox. All of this is delivered to your own code via speedy, real-time WebSocket connections, courtesy of [Autobahn|JS](http://autobahn.ws/js/).
+The push API is by far the fastest and simplest interface to Poloniex, which makes it the most well-suited of the three for making fast-paced trading decisions. Its `poloniex-unofficial` wrapper will give you access to trade and order book updates, price tickers, and the infamous trollbox. All of this is delivered to your own code via speedy, real-time WebSocket connections, courtesy of [Autobahn|JS](http://autobahn.ws/js/).
 
 Take this one out for a spin:
 
@@ -96,7 +80,7 @@ apiPush.ticker((err, response) => {
 });
 ```
 
-This is using the `ticker` push API wrapper function to stream real-time info like the last price, lowest ask, highest bid, volume, and the 24h high/low for *every* currency listed at Poloniex. Neat, huh?
+This is using the `ticker` push API wrapper function to stream real-time info like the last price, lowest ask, highest bid, volume, and the 24h high/low for *every* currency pair listed at Poloniex. Neat, huh?
 
 With a little logic, we can sift through the data and just watch our favorite currencies.
 
@@ -127,7 +111,7 @@ apiPush.ticker((err, response) => {
 
 ### The Public API ###
 
-The public API really comes in handy when you need to retrieve large chunks of data for analysis, or when setting up a baseline before switching to the push API in a trading bot, for instance. The communication is not as fast, as all data must be explicitly requested, with each request yielding exactly one response. As of writing this document, Poloniex allows a maximum average of three public API calls per second in any one-minute period.
+The public API comes in handy when you need to retrieve large chunks of data for analysis, or when setting up a baseline before switching to the push API in a trading bot, for instance. The communication is not as fast, as all data must be explicitly requested, with each request yielding exactly one response. As of writing this document, Poloniex allows a maximum average of three public API calls per second in any one-minute period.
 
 Poloniex's responses from the public API are provided in JSON, so there isn't much the wrapper needs to do other than handle communication. I therefore recommend reading Poloniex's official [API docs](https://poloniex.com/support/api/) for information on how to interpret the responses.
 
@@ -158,7 +142,7 @@ Read more about the various commands offered in the official [API docs](https://
 
 ### The Trading API ###
 
-The trading API is nearly identical in operation to the public API, with authentication being the real difference. When using the selector function to access the trading API wrapper, your Poloniex API key and secret need to be bundled into an object and passed in with the module name (in this case, `"trading"`), as in the following snippet.
+The trading API is nearly identical in operation to the public API, with authentication being the real difference. This library aims to make authenticating as painless as possible. When using the selector function to access the trading API wrapper, your Poloniex API key and secret simply need to be bundled into an object and passed in alongside the module name, as in the following snippet.
 
 ```javascript
 // Import the module
@@ -166,16 +150,20 @@ var polo = require("poloniex-unofficial");
 
 // Get access to the trading API
 var apiTrading = polo.api("trading", {
-    "apiKey": "MY-POLONIEX-API-KEY",
-    "apiSecret": "mypoloniexapisecret"
+    "key": "MY-POLONIEX-API-KEY",
+    "secret": "mypoloniexapisecret"
 });
+
+// TODO: Do stuff with it here
 ```
+
+I do not recommend hard-coding your API key and/or secret into your scripts, simply on general security principle. I, personally, recommend providing this info on-demand to your scripts via a user interface or, at the very least, through command-line arguments (which will probably be logged someplace, anyway).
 
 Read about the various commands offered in the official [API docs](https://poloniex.com/support/api/).
 
 ### Some Nifty Stuff ###
 
-The architecture of this library makes for some cool one-liners, too.
+The architecture of this library (particularly for the push API wrapper) makes for some cool one-liners, too.
 
 Read the trollbox from the comfort of your own terminal.
 
@@ -189,12 +177,13 @@ Log any price changes in the supported currencies.
 $ node --eval "require('poloniex-unofficial').api('push').ticker((e, r) => console.log(e ? 'Error: ' + e.msg : new Date() + '\t' + r.currencyPair + ' \t' + r.last))"
 ```
 
-On a GNU system, the command above can be modified to log to a file, filter for a certain pair, or even both.
+On a GNU system, the command above can be modified to log to a file, filter for a certain currency pair, or even both.
 
 ```sh
 $ node --eval "..." > last.log
 $ node --eval "..." | grep BTC_ETH
 $ node --eval "..." | grep --line-buffered BTC_ETH > eth_last.log
+$ echo "Yes, I may have cheated with the ellipses. Meh"
 ```
 
 License
