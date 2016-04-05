@@ -13,7 +13,7 @@
  * license. See the LICENSE file for details.
  *
  */
- 
+
  // Import modules
  var crypto = require("crypto");
  var request = require("request");
@@ -40,27 +40,27 @@ function sendQuery(command, params, callback) {
     if (!authInfo.key || !authInfo.secret) {
         // Call back with error
         callback({"msg": "Auth info not set"}, null);
-        
+
         // We're done here
         return;
     }
-    
+
     // Create query with given parameters, if applicable
     var query = params || {};
-    
+
     // Add command to query
     if (!query.command) {
         query["command"] = command;
     }
-    
+
     // Add nonce to query
     if (!query.nonce) {
         query["nonce"] = Date.now(); // TODO: Add method of modifying nonce
     }
-    
+
     // A hacky way to not need any another dependencies
     var queryString = url.format({"query": query}).substring(1);
-    
+
     // Options for request
     var opts = {
         "url": "https://poloniex.com/tradingApi",
@@ -73,13 +73,13 @@ function sendQuery(command, params, callback) {
         },
         "body": queryString
     };
-    
+
     // Send request to Poloniex
     request(opts, function(error, response, body) {
         if (!error && response && response.statusCode == 200) {
             // Parse body as JSON
             var bodyObj = JSON.parse(body);
-            
+
             // Check if Poloniex returned an API error
             if (bodyObj.error) {
                 // Call back with provided error info
@@ -167,7 +167,7 @@ apiTrading.generateNewAddress = function(currency, callback) {
     var opts = {
         "currency": currency
     };
-    
+
     // Send generateNewAddress query
     sendQuery("generateNewAddress", opts, (err, response) => {
         if (err) {
@@ -193,7 +193,7 @@ apiTrading.returnDepositsWithdrawals = function(start, end, callback) {
         "start": start,
         "end": end
     };
-    
+
     // Send returnDepositsWithdrawals query
     sendQuery("returnDepositsWithdrawals", opts, (err, response) => {
         if (err) {
@@ -218,7 +218,7 @@ apiTrading.returnOpenOrders = function(currencyPair, callback) {
     var opts = {
         "currencyPair": currencyPair
     };
-    
+
     // Send returnOpenOrders query
     sendQuery("returnOpenOrders", opts, (err, response) => {
         if (err) {
@@ -245,7 +245,7 @@ apiTrading.returnTradeHistory = function(currencyPair, start, end, callback) {
         "start": start,
         "end": end
     };
-    
+
     // Send returnTradeHistory query
     sendQuery("returnTradeHistory", opts, (err, response) => {
         if (err) {
@@ -270,7 +270,7 @@ apiTrading.returnOrderTrades = function(orderNumber, callback) {
     var opts = {
         "orderNumber": orderNumber
     };
-    
+
     // Send returnOrderTrades query
     sendQuery("returnOrderTrades", opts, (err, response) => {
         if (err) {
@@ -299,7 +299,7 @@ apiTrading.buy = function(currencyPair, rate, amount, fillOrKill, immediateOrCan
         "fillOrKill": fillOrKill,
         "immediateOrCancel": immediateOrCancel
     };
-    
+
     // Send buy query
     sendQuery("buy", opts, (err, response) => {
         if (err) {
@@ -328,7 +328,7 @@ apiTrading.sell = function(currencyPair, rate, amount, fillOrKill, immediateOrCa
         "fillOrKill": fillOrKill,
         "immediateOrCancel": immediateOrCancel
     };
-    
+
     // Send sell query
     sendQuery("sell", opts, (err, response) => {
         if (err) {
@@ -353,7 +353,7 @@ apiTrading.cancelOrder = function(orderNumber, callback) {
     var opts = {
         "orderNumber": orderNumber
     };
-    
+
     // Send cancelOrder query
     sendQuery("cancelOrder", opts, (err, response) => {
         if (err) {
@@ -380,7 +380,7 @@ apiTrading.moveOrder = function(orderNumber, rate, amount, callback) {
         "rate": rate,
         "amount": amount
     };
-    
+
     // Send moveOrder query
     sendQuery("moveOrder", opts, (err, response) => {
         if (err) {
@@ -408,7 +408,7 @@ apiTrading.withdraw = function(currency, amount, address, paymentId, callback) {
         "address": address,
         "paymentId": paymentId
     };
-    
+
     // Send withdraw query
     sendQuery("withdraw", opts, (err, response) => {
         if (err) {
@@ -453,7 +453,7 @@ apiTrading.returnAvailableAccountBalances = function(account, callback) {
     var opts = {
         "account": account
     };
-    
+
     // Send returnAvailableAccountBalances query
     sendQuery("returnAvailableAccountBalances", opts, (err, response) => {
         if (err) {
@@ -501,7 +501,7 @@ apiTrading.transferBalance = function(currency, amount, fromAccount, toAccount, 
         "fromAccount": fromAccount,
         "toAccount": toAccount
     };
-    
+
     // Send transferBalance query
     sendQuery("transferBalance", opts, (err, response) => {
         if (err) {
@@ -549,7 +549,7 @@ apiTrading.marginBuy = function(currencyPair, rate, amount, lendingRate, callbac
         "amount": amount,
         "lendingRate": lendingRate
     };
-    
+
     // Send marginBuy query
     sendQuery("marginBuy", opts, (err, response) => {
         if (err) {
@@ -577,7 +577,7 @@ apiTrading.marginSell = function(currencyPair, rate, amount, lendingRate, callba
         "amount": amount,
         "lendingRate": lendingRate
     };
-    
+
     // Send marginSell query
     sendQuery("marginSell", opts, (err, response) => {
         if (err) {
@@ -602,7 +602,7 @@ apiTrading.getMarginPosition = function(currencyPair, callback) {
     var opts = {
         "currencyPair": currencyPair
     };
-    
+
     // Send getMarginPosition query
     sendQuery("getMarginPosition", opts, (err, response) => {
         if (err) {
@@ -627,7 +627,7 @@ apiTrading.closeMarginPosition = function(currencyPair, callback) {
     var opts = {
         "currencyPair": currencyPair
     };
-    
+
     // Send closeMarginPosition query
     sendQuery("closeMarginPosition", opts, (err, response) => {
         if (err) {
@@ -656,7 +656,7 @@ apiTrading.createLoanOffer = function(currency, amount, duration, autoRenew, len
         "autoRenew": autoRenew,
         "lendingRate": lendingRate
     };
-    
+
     // Send createLoanOffer query
     sendQuery("createLoanOffer", opts, (err, response) => {
         if (err) {
@@ -681,7 +681,7 @@ apiTrading.cancelLoanOffer = function(orderNumber, callback) {
     var opts = {
         "orderNumber": orderNumber
     };
-    
+
     // Send cancelLoanOffer query
     sendQuery("cancelLoanOffer", opts, (err, response) => {
         if (err) {
@@ -746,7 +746,7 @@ apiTrading.toggleAutoRenew = function(orderNumber, callback) {
     var opts = {
         "orderNumber": orderNumber
     };
-    
+
     // Send toggleAutoRenew query
     sendQuery("toggleAutoRenew", opts, (err, response) => {
         if (err) {
@@ -767,9 +767,9 @@ apiTrading.toggleAutoRenew = function(orderNumber, callback) {
  *
  */
 module.exports = function(params) {
-    // Get auth info from params
+    // Get auth info from params (FIXME: do not put auth params in global scope; one might want to access multiple accounts)
     authInfo.key = params.apiKey;
     authInfo.secret = params.apiSecret;
-    
+
     return apiTrading;
 }
