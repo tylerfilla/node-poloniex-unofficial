@@ -25,12 +25,12 @@ var API_MODULE_MAP = {
 exports.api = function(name, params) {
     // Get the module
     var mod = API_MODULE_MAP[name];
-    
+
     // Abort if module isn't, well, good... (type was probably invalid)
     if (!mod) {
         return;
     }
-    
+
     // Return API module stuff
     return require(mod)(params);
 };

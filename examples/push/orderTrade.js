@@ -28,7 +28,7 @@ poloPush.orderTrade("BTC_ETH", (err, response) => {
     } else {
         // Log response
         console.log(response);
-        
+
         switch (response.type) {
         case "orderBookModify":
             // An order book entry has appeared/changed

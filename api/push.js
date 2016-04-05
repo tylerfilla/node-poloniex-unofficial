@@ -67,25 +67,25 @@ function connect(callback) {
     } else {
         // Function-to-be to clean up the following callbacks
         var doCleanup = null;
-        
+
         // Set up handler for connection open event
         var onOpen = function() {
             // Clean up
             if (doCleanup) {
                 doCleanup();
             }
-            
+
             // Connected; call back
             callback(null);
         };
-        
+
         // Set up handler for connection close event
         var onClose = function(reason, details) {
             // Clean up
             if (doCleanup) {
                 doCleanup();
             }
-            
+
             // The only reason we might have closed here is a first-time connect error; act accordingly
             if (reason == "unreachable") {
                 callback({"msg": "Poloniex push API is unreachable"});
@@ -93,18 +93,18 @@ function connect(callback) {
                 callback({"msg": "Something is seriously wrong right now (probably an Autobahn|JS error; take it up with them!)"});
             }
         };
-        
+
         // Aforementioned cleanup function
         doCleanup = function() {
             // Remove callbacks from respective arrays
             cxnCallbacksOpen.splice(cxnCallbacksOpen.indexOf(onOpen), 1);
             cxnCallbacksClose.splice(cxnCallbacksClose.indexOf(onClose), 1);
         };
-        
+
         // Publish the callbacks
         cxnCallbacksOpen.push(onOpen);
         cxnCallbacksClose.push(onClose);
-        
+
         // Try to open connection
         connection.open();
     }
@@ -190,22 +190,22 @@ apiPush.orderTrade = function(currencyPair, callback, allowBatches) {
             // FIXME(?): I am not taking Poloniex's sequence ID into account
             // here, as WAMP is inherently ordered. If Poloniex can identify
             // the order themselves, why would they not send updates in order?
-            
+
             // Update batch array
             var updateBatch = new Array();
-            
+
             // Iterate over updates
             for (var i = 0; i < args.length; i++) {
                 // Object for raw update data
                 var update = args[i];
-                
+
                 // Object for parsed update data
                 var updateParsed = {};
-                
+
                 // Store raw update data and type
                 updateParsed["raw"] = update;
                 updateParsed["updateType"] = update.type;
-                
+
                 // Decipher update data based on type
                 switch (update.type) {
                 case "orderBookModify":
@@ -226,11 +226,11 @@ apiPush.orderTrade = function(currencyPair, callback, allowBatches) {
                     updateParsed["type"] = update.data.type;
                     break;
                 }
-                
+
                 // Add parsed update to update batch array
                 updateBatch.push(updateParsed);
             }
-            
+
             // If batches are allowed
             if (allowBatches) {
                 // Call back with entire update batch

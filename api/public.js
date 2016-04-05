@@ -31,18 +31,18 @@ var apiPublic = {};
 function sendQuery(command, params, callback) {
     // Create query with given parameters, if applicable
     var query = params || {};
-    
+
     // Add command to query
     if (!query.command) {
         query["command"] = command;
     }
-    
+
     // Parse public API URL
     var queryUrl = url.parse("https://poloniex.com/public");
-    
+
     // Add query to URL
     queryUrl.query = query;
-    
+
     // Build options for request
     var opts = {
         "url": url.format(queryUrl),
@@ -51,13 +51,13 @@ function sendQuery(command, params, callback) {
             "User-Agent": "node-poloniex-unofficial|public.js (+https://git.io/polonode)"
         }
     };
-    
+
     // Send request to Poloniex
     request(opts, function(error, response, body) {
         if (!error && response && response.statusCode == 200) {
             // Parse body as JSON
             var bodyObj = JSON.parse(body);
-            
+
             // Check if Poloniex returned an API error
             if (bodyObj.error) {
                 // Call back with provided error info
@@ -126,7 +126,7 @@ apiPublic.returnOrderBook = function(currencyPair, depth, callback) {
         "currencyPair": currencyPair || "all",
         "depth": depth
     };
-    
+
     // Send returnOrderBook query
     sendQuery("returnOrderBook", opts, (err, response) => {
         if (err) {
@@ -153,7 +153,7 @@ apiPublic.returnTradeHistory = function(currencyPair, start, end, callback) {
         "start": start,
         "end": end
     };
-    
+
     // Send returnTradeHistory query
     sendQuery("returnTradeHistory", opts, (err, response) => {
         if (err) {
@@ -181,7 +181,7 @@ apiPublic.returnChartData = function(currencyPair, start, end, period, callback)
         "end": end,
         "period": period
     };
-    
+
     // Send returnChartData query
     sendQuery("returnChartData", opts, (err, response) => {
         if (err) {
@@ -226,7 +226,7 @@ apiPublic.returnLoanOrders = function(currency, callback) {
     var opts = {
         "currency": currency,
     };
-    
+
     // Send returnLoanOrders query
     sendQuery("returnLoanOrders", opts, (err, response) => {
         if (err) {
