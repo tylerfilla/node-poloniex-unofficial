@@ -26,9 +26,16 @@ var connection = new autobahn.Connection({
     "realm": "realm1"
 });
 
-// Internally-routed callbacks for connection events
+// Internally-routed callback sets for connection management events
 var cxnCallbacksOpen = new Array();
 var cxnCallbacksClose = new Array();
+
+// Internal lookup table for linking subscriptions to callbacks
+var subLinks = {};
+var subLinksId = 0;
+
+// Number of currently active subscriptions
+var activeSubs = 0;
 
 // Handle connection open event
 connection.onopen = function(session) {
@@ -129,14 +136,51 @@ function connect(callback) {
  *
  */
 function subscribe(feed, callback) {
-    // Only continue once connected
+    // A unique-enough ID for this subscription
+    var id = ++subLinksId;
+
+    // Attempt to connect to push API
     connect((err) => {
         if (err) {
-            // Notify caller of the error
+            // Notify caller of the connection error
             callback({"msg": "Error: " + err.msg}, null, null, null);
         } else {
+            // Proxy for user-supplied callback
+            var callbackProxy = (args, kwargs, details) => {
+                // Execute user callback, checking return value for kill signal (anything not false)
+                if (callback(null, args, kwargs, details)) {
+                    console.log("Unsubscribing");
+                    // Unsubscribe
+                    connection.session.unsubscribe(subLinks[id]);
+
+                    // Remove internal reference
+                    delete subLinks[id];
+
+                    // Decrement active subscription counter
+                    activeSubs--;
+
+                    // If no subscriptions remain
+                    if (activeSubs == 0) {
+                        // Close the entire connection (allows program to exit naturally; can be reopened if needed)
+                        connection.close();
+                    }
+                }
+            };
+
             // Subscribe to the given feed
-            connection.session.subscribe(feed, (args, kwargs, details) => callback(null, args, kwargs, details));
+            connection.session.subscribe(feed, callbackProxy).then(
+                (subscription) => {
+                    // Register subscription
+                    subLinks[id] = subscription;
+
+                    // Increment active subscription counter
+                    activeSubs++;
+                },
+                (err) => {
+                    // Call back with error
+                    callback({"msg": "Error: " + err}, null, null, null);
+                }
+            );
         }
     });
 }
@@ -153,10 +197,10 @@ apiPush.ticker = function(callback) {
     subscribe("ticker", (err, args) => {
         if (err) {
             // Call back with decoupled error info
-            callback({"msg": err.msg}, null);
+            return callback({"msg": err.msg}, null);
         } else {
             // Call back with ticker data
-            callback(null, {
+            return callback(null, {
                 "raw": args,
                 "currencyPair": args[0],
                 "last": args[1],
@@ -166,8 +210,10 @@ apiPush.ticker = function(callback) {
                 "baseVolume": args[5],
                 "quoteVolume": args[6],
                 "isFrozen": args[7],
-                "_24hrHigh": args[8],
-                "_24hrLow": args[9]
+                "24hrHigh": args[8],    //
+                "24hrLow": args[9],     // NOTE: Actual names are syntactically
+                "_24hrHigh": args[8],   // inaccessible via dot notation
+                "_24hrLow": args[9]     //
             });
         }
     });
@@ -185,7 +231,7 @@ apiPush.orderTrade = function(currencyPair, callback, allowBatches) {
     subscribe(currencyPair, (err, args) => {
         if (err) {
             // Call back with decoupled error info
-            callback({"msg": err.msg}, null);
+            return callback({"msg": err.msg}, null);
         } else {
             // FIXME(?): I am not taking Poloniex's sequence ID into account
             // here, as WAMP is inherently ordered. If Poloniex can identify
@@ -234,12 +280,16 @@ apiPush.orderTrade = function(currencyPair, callback, allowBatches) {
             // If batches are allowed
             if (allowBatches) {
                 // Call back with entire update batch
-                callback(null, updateBatch);
+                return callback(null, updateBatch);
             } else {
+                var retval;
+
                 // Call back once per individual update
                 for (var i = 0; i < updateBatch.length; i++) {
-                    callback(null, updateBatch[i]);
+                    retval = retval || callback(null, updateBatch[i]);
                 }
+
+                return retval;
             }
         }
     });
@@ -257,10 +307,10 @@ apiPush.trollbox = function(callback) {
     subscribe("trollbox", (err, args) => {
         if (err) {
             // Call back with decoupled error info
-            callback({"msg": err.msg}, null);
+            return callback({"msg": err.msg}, null);
         } else {
             // Call back with trollbox data
-            callback(null, {
+            return callback(null, {
                 "raw": args,
                 "type": args[0],
                 "messageNumber": args[1],
