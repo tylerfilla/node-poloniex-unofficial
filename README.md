@@ -50,6 +50,9 @@ apiPush.trollbox((err, response) => {
     if (err) {
         // Log the error message
         console.log("An error occurred: " + err.msg);
+
+        // Send kill signal
+        return true;
     } else {
         // Format and log the chat message
         console.log(response.username + ": " + response.message);
@@ -58,6 +61,8 @@ apiPush.trollbox((err, response) => {
 ```
 
 The above code uses the `trollbox` function to subscribe to the "trollbox" [WAMP](https://en.wikipedia.org/wiki/Web_Application_Messaging_Protocol) feed on `wss://api.poloniex.com/`.
+
+Notice the `return true;` on line 15. Returning true from a push API wrapper function callback function (try saying that three times fast) indicates that you no longer wish to receive updates from the respective feed, internally prompting Autobahn|JS to unsubscribe from the respective WAMP feed. The API connection will be maintained by the library as long as there is at least one active subscription (at least one wrapper function receiving data) at any given time. Once the final subscription terminates, the API connection will be closed. The connection can and will be transparently reestablished the moment another feed is requested, but this behavior both saves resources and allows your program to gracefully exit.
 
 Arguably more important is the, you know, money-related stuff. The following snippet will monitor the prices of each currency and log them.
 
@@ -73,6 +78,9 @@ apiPush.ticker((err, response) => {
     if (err) {
         // Log error message
         console.log("An error occurred: " + err.msg);
+
+        // Send kill signal
+        return true;
     } else {
         // Log the last price and what pair it was for
         console.log(response.currencyPair + ": " + response.last);
@@ -99,6 +107,9 @@ apiPush.ticker((err, response) => {
     if (err) {
         // Log error message
         console.log("An error occurred: " + err.msg);
+
+        // Send kill signal
+        return true;
     } else {
         // Check if this currency is interesting
         if (watchList.indexOf(response.currencyPair) > -1) {
