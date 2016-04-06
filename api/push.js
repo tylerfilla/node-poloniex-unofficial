@@ -149,7 +149,6 @@ function subscribe(feed, callback) {
             var callbackProxy = (args, kwargs, details) => {
                 // Execute user callback, checking return value for kill signal (anything not false)
                 if (callback(null, args, kwargs, details)) {
-                    console.log("Unsubscribing");
                     // Unsubscribe
                     connection.session.unsubscribe(subLinks[id]);
 

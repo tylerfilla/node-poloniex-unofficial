@@ -19,16 +19,15 @@ var polo = require("./../../");
 
 // Get access to the push API
 var poloPush = polo.api("push");
-var i = 0;
+
 // Receive trollbox updates
 poloPush.trollbox((err, response) => {
-    if (++i > 3) {
-        console.log("meh");
-        return true;
-    }
     if (err) {
         // Log error message
         console.log("An error occurred: " + err.msg);
+
+        // Send kill signal
+        return true;
     } else {
         // Print chat message
         console.log(response.username + ": " + response.message + "\n");

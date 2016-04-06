@@ -25,6 +25,9 @@ poloPush.orderTrade("BTC_ETH", (err, response) => {
     if (err) {
         // Log error message
         console.log("An error occurred: " + err.msg);
+
+        // Send kill signal
+        return true;
     } else {
         // Log response
         console.log(response);
