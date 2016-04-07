@@ -1,6 +1,8 @@
 node-poloniex-unofficial
 ========================
 
+[![NPM](https://nodei.co/npm/poloniex-unofficial.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/poloniex-unofficial/)
+
 Yet another unofficial Node.js wrapper for the Poloniex cryptocurrency exchange APIs. I put a lot of thought into the name, can't you tell?
 
 Just a clarification for others, as I've confused myself more than I care to admit:  
@@ -11,14 +13,11 @@ Just a clarification for others, as I've confused myself more than I care to adm
 Installation
 ------------
 
-This project is currently not available directly from npm. There is no stable release at the moment, so the best way to get the code now is straight from `master`, though I recommend using it strictly for evaluation until things mature a bit.
+This project is now available on npm! Installation couldn't be any simpler; just run the following and be on your merry way.
 
-However, npm will allow you to clone the GitHub repo and install in one command, just as follows.
 ```sh
-$ npm install tylerfilla/node-poloniex-unofficial
+$ npm install poloniex-unofficial
 ```
-
-This will install `poloniex-unofficial` to your current directory straight from the repo, wherein you can fire up node and start tinkering with it immediately.
 
 Usage
 -----
