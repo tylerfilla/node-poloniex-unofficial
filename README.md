@@ -1,9 +1,9 @@
 node-poloniex-unofficial
 ========================
 
-[![NPM](https://nodei.co/npm/poloniex-unofficial.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/poloniex-unofficial/)
-
 Yet another unofficial Node.js wrapper for the Poloniex cryptocurrency exchange APIs. I put a lot of thought into the name, can't you tell?
+
+[![NPM](https://nodei.co/npm/poloniex-unofficial.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/poloniex-unofficial/)
 
 Just a clarification for others, as I've confused myself more than I care to admit:  
 `node-poloniex-unofficial` is the name of the project, repository, and product as a whole.  
