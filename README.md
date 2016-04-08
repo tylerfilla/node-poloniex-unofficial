@@ -202,6 +202,6 @@ License
 Copyright (c) 2016 Tyler Filla   
 This software may be modified and distributed under the terms of [the MIT license](https://opensource.org/licenses/MIT). See the [LICENSE](https://github.com/tylerfilla/node-poloniex-unofficial/blob/master/LICENSE) file for details.
 
-Disclaimer: I just want to be clear about some of the legalese in the LICENSE file (which shall not be superseded by this loose interpretation). By using this software, you acknowledge that any damages incurred, which most probably means financial loss in this context, are not the responsibility of any contributors to the project. While the entire purpose of the project is to enable access to its users' assets according to strict protocol, things can happen. That said, I hope to be able to rely more strongly on this software in the short term.
+Disclaimer: I just want to be clear about some of the legalese in the LICENSE file (which shall not be superseded by this loose interpretation). By using this software, you acknowledge that any damages incurred, which most probably means financial loss in this context, are not the responsibility of any contributors to the project. While the entire purpose of the project is to enable access to its users' assets according to strict protocol, things can happen.
 
 The `node-poloniex-unofficial` project is not affiliated in any way with Poloniex. It's literally in the name. "Unofficial."
