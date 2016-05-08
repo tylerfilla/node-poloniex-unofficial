@@ -84,15 +84,22 @@ function connect(callback) {
             // Try again at a later time
             var trials = 0;
             var retryInterval = setInterval(function() {
-                trials++;
-
                 // Check if session is currently open
                 if (connection.session.isOpen) {
-                    // Stop the interval
+                    // Clear the interval
                     clearInterval(retryInterval);
 
                     // Report back to caller
                     callback(null);
+                } else {
+                    // Check trial limit
+                    if (++trials >= SESSION_WAIT_TEST_LIMIT) {
+                        // Clear the interval
+                        clearInterval(retryInterval);
+
+                        // Notify caller of error
+                        callback({"msg": "The session did not open in a timely manner"});
+                    }
                 }
             }, SESSION_WAIT_TEST_INTERVAL);
         }
