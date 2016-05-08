@@ -14,6 +14,12 @@
  *
  */
 
+// Interval (in ms) for testing openness of a session after a connection has been established
+const SESSION_WAIT_TEST_INTERVAL = 250;
+
+// Number of tries to wait for openness of a session
+const SESSION_WAIT_TEST_LIMIT = 4;
+
 // Import modules
 var autobahn = require("autobahn");
 
@@ -68,9 +74,28 @@ connection.onclose = function(reason, details) {
  *
  */
 function connect(callback) {
-    if (connection.isOpen) {
-        // Call back if connected
-        callback(null);
+    // Check if currently connected
+    if (connection.isConnected) {
+        // Check if session is currently open
+        if (connection.session.isOpen) {
+            // Call back if connected
+            callback(null);
+        } else {
+            // Try again at a later time
+            var trials = 0;
+            var retryInterval = setInterval(function() {
+                trials++;
+
+                // Check if session is currently open
+                if (connection.session.isOpen) {
+                    // Stop the interval
+                    clearInterval(retryInterval);
+
+                    // Report back to caller
+                    callback(null);
+                }
+            }, SESSION_WAIT_TEST_INTERVAL);
+        }
     } else {
         // Function-to-be to clean up the following callbacks
         var doCleanup = null;
