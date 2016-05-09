@@ -13,7 +13,7 @@ Just a clarification for others, as I've confused myself more than I care to adm
 Installation
 ------------
 
-This project is now available on npm! Installation couldn't be any simpler; just run the following and be on your merry way.
+This project is available on npm. Just run the following and be on your merry way.
 
 ```sh
 $ npm install poloniex-unofficial
