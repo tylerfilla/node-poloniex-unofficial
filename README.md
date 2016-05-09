@@ -195,7 +195,6 @@ On a GNU system, the command above can be modified to log to a file, filter for 
 $ node --eval "..." > last.log
 $ node --eval "..." | grep BTC_ETH
 $ node --eval "..." | grep --line-buffered BTC_ETH > eth_last.log
-$ echo "Yes, I may have cheated with the ellipses. Meh"
 ```
 
 License
