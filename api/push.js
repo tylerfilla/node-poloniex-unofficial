@@ -220,7 +220,14 @@ function subscribe(feed, callback) {
  *
  * function ticker(callback)
  *
- * TODO: Write me
+ * Subscribes to the ticker feed. All connection details are handled internally.
+ *
+ * Params
+ *      callback    A callback function with the following params
+ *                      err     An object of the following structure in the
+ *                                  event of an error, or null if no error has
+ *                                  occurred: { msg: "error message..." }
+ *                      data    An object containing parsed ticker data
  *
  */
 apiPush.ticker = function(callback) {
@@ -254,7 +261,22 @@ apiPush.ticker = function(callback) {
  *
  * function orderTrade(currencyPair, callback, allowBatches)
  *
- * TODO: Write me
+ * Subscribes to the order book and trade update feed for a specified trading
+ * pair. All connection details are handled internally.
+ *
+ * Params
+ *      currencyPair    A string containing a valid Poloniex trading pair
+ *      callback        A callback function with the following params
+ *                          err     An object of the following structure in the
+ *                                      event of an error, or null if no error
+ *                                      has occurred:
+ *                                          { msg: "error message..." }
+ *                          data    An object containing parsed order book and
+ *                                      trade data
+ *      allowBatches    A boolean value indicating whether updates may be
+ *                          delivered in batches; that is, arrays of updates;
+ *                          this behavior is opt-in and might increase
+ *                          efficiency in certain cases
  *
  */
 apiPush.orderTrade = function(currencyPair, callback, allowBatches) {
@@ -264,9 +286,11 @@ apiPush.orderTrade = function(currencyPair, callback, allowBatches) {
             // Call back with decoupled error info
             return callback({"msg": err.msg}, null);
         } else {
-            // FIXME(?): I am not taking Poloniex's sequence ID into account
-            // here, as WAMP is inherently ordered. If Poloniex can identify
-            // the order themselves, why would they not send updates in order?
+            /*
+             * FIXME(?): I am not taking Poloniex's sequence ID into account
+             * here, as WAMP is inherently ordered. If Poloniex can identify the
+             * order themselves, why would they not send updates in order?
+             */
 
             // Update batch array
             var updateBatch = new Array();
@@ -313,6 +337,7 @@ apiPush.orderTrade = function(currencyPair, callback, allowBatches) {
                 // Call back with entire update batch
                 return callback(null, updateBatch);
             } else {
+                // Cumulative OR of iterated callback returns (any one callback may unsubscribe)
                 var retval;
 
                 // Call back once per individual update
@@ -330,7 +355,15 @@ apiPush.orderTrade = function(currencyPair, callback, allowBatches) {
  *
  * function trollbox(callback)
  *
- * TODO: Write me
+ * Subscribes to the trollbox feed. All connection details are handled
+ * internally.
+ *
+ * Params
+ *      callback    A callback function with the following params
+ *                      err     An object of the following structure in the
+ *                                  event of an error, or null if no error has
+ *                                  occurred: { msg: "error message..." }
+ *                      data    An object containing parsed trollbox data
  *
  */
 apiPush.trollbox = function(callback) {
@@ -357,7 +390,7 @@ apiPush.trollbox = function(callback) {
  *
  * function exports(params)
  *
- * Exposes the push API wrapper.
+ * Exposes the push API wrapper. This function is not meant for external use.
  *
  */
 module.exports = function(params) {
