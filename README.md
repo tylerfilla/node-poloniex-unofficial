@@ -52,10 +52,10 @@ apiPush.trollbox((err, response) => {
 
         // Send kill signal
         return true;
-    } else {
-        // Format and log the chat message
-        console.log(response.username + ": " + response.message);
     }
+
+    // Format and log the chat message
+    console.log(response.username + ": " + response.message);
 });
 ```
 
@@ -80,10 +80,10 @@ apiPush.ticker((err, response) => {
 
         // Send kill signal
         return true;
-    } else {
-        // Log the last price and what pair it was for
-        console.log(response.currencyPair + ": " + response.last);
     }
+
+    // Log the last price and what pair it was for
+    console.log(response.currencyPair + ": " + response.last);
 });
 ```
 
@@ -109,12 +109,12 @@ apiPush.ticker((err, response) => {
 
         // Send kill signal
         return true;
-    } else {
-        // Check if this currency is interesting
-        if (watchList.indexOf(response.currencyPair) > -1) {
-            // Log the last price and what pair it was for
-            console.log(response.currencyPair + ": " + response.last);
-        }
+    }
+
+    // Check if this currency is interesting
+    if (watchList.indexOf(response.currencyPair) > -1) {
+        // Log the last price and what pair it was for
+        console.log(response.currencyPair + ": " + response.last);
     }
 });
 ```
@@ -139,10 +139,12 @@ poloPublic.returnCurrencies((err, response) => {
     if (err) {
         // Log error message
         console.log("An error occurred: " + err.msg);
-    } else {
-        // Log response
-        console.log(response);
+
+        return;
     }
+
+    // Log response
+    console.log(response);
 });
 ```
 
