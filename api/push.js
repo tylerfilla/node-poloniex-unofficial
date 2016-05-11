@@ -312,7 +312,7 @@ apiPush.orderTrade = function(currencyPair, callback, allowBatches) {
                 case "orderBookModify":
                     updateParsed["type"] = update.data.type;
                     updateParsed["rate"] = update.data.rate;
-                    updateParsed["amount"] = update.data.rate;
+                    updateParsed["amount"] = update.data.amount;
                     break;
                 case "orderBookRemove":
                     updateParsed["type"] = update.data.type;
