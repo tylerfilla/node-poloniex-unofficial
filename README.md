@@ -36,7 +36,7 @@ The push API is by far the fastest and simplest interface to Poloniex, which mak
 
 Take this one out for a spin:
 
-```javascript
+```js
 // Import the module
 var polo = require("poloniex-unofficial");
 
@@ -65,7 +65,7 @@ Notice the `return true;` on line 15. Returning true from a push API wrapper fun
 
 Arguably more important is the, you know, money-related stuff. The following snippet will monitor the prices of each currency and log them.
 
-```javascript
+```js
 // Import the module
 var polo = require("poloniex-unofficial");
 
@@ -91,7 +91,7 @@ This is using the `ticker` push API wrapper function to stream real-time info li
 
 With a little logic, we can sift through the data and just watch our favorite currencies.
 
-```javascript
+```js
 // Import the module
 var polo = require("poloniex-unofficial");
 
@@ -127,7 +127,7 @@ Poloniex's responses from the public API are provided in JSON, so there isn't mu
 
 Each function provided by the public API wrapper corresponds to exactly one command available via the public API. An effort was made to name the wrapper functions after their associated commands, but this pattern cannot be guaranteed for any commands Poloniex may add in the future.
 
-```javascript
+```js
 // Import the module
 var polo = require("poloniex-unofficial");
 
@@ -156,7 +156,7 @@ Read more about the various commands offered in the official [API docs](https://
 
 The trading API is nearly identical in operation to the public API, with authentication being the real difference. This library aims to make authenticating as painless as possible. When using the selector function to access the trading API wrapper, your Poloniex API key and secret simply need to be bundled into an object and passed in alongside the module name, as in the following snippet.
 
-```javascript
+```js
 // Import the module
 var polo = require("poloniex-unofficial");
 
