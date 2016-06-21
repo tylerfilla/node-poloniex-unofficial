@@ -28,7 +28,18 @@ var poloTrading = polo.api("trading", {
 });
 
 // Demonstrate the returnCompleteBalances command
-poloTrading.returnCompleteBalances((err, response) => {
+poloTrading.returnCompleteBalances(null, (err, response) => {
+    if (err) {
+        // Log error message
+        console.log("An error occurred: " + err.msg);
+    } else {
+        // Log response
+        console.log(response);
+    }
+});
+
+// Demonstrate the returnCompleteBalances with all accounts included (lending and margin) command
+poloTrading.returnCompleteBalances("all", (err, response) => {
     if (err) {
         // Log error message
         console.log("An error occurred: " + err.msg);
