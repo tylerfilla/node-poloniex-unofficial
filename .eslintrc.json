@@ -20,6 +20,14 @@
         "semi": [
             "error",
             "always"
+        ],
+        "no-unused-vars": [
+            "warn",
+            "always"
+        ],
+        "no-redeclare": [
+            "warn",
+            "always"
         ]
     }
 }
