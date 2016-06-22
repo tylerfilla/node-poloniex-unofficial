@@ -49,7 +49,7 @@ connection.onopen = function(session) {
     for (var i = 0; i < cxnCallbacksOpen.length; i++) {
         cxnCallbacksOpen[i](session);
     }
-}
+};
 
 // Handle connection close event
 connection.onclose = function(reason, details) {
@@ -57,7 +57,7 @@ connection.onclose = function(reason, details) {
     for (var i = 0; i < cxnCallbacksClose.length; i++) {
         cxnCallbacksClose[i](reason, details);
     }
-}
+};
 
 /*
  *
@@ -255,7 +255,7 @@ apiPush.ticker = function(callback) {
             });
         }
     });
-}
+};
 
 /*
  *
@@ -384,7 +384,7 @@ apiPush.trollbox = function(callback) {
             });
         }
     });
-}
+};
 
 /*
  *
@@ -395,4 +395,4 @@ apiPush.trollbox = function(callback) {
  */
 module.exports = function(params) {
     return apiPush;
-}
+};

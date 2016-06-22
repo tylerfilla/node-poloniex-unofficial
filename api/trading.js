@@ -14,10 +14,10 @@
  *
  */
 
- // Import modules
- var crypto = require("crypto");
- var request = require("request");
- var url = require("url");
+// Import modules
+var crypto = require("crypto");
+var request = require("request");
+var url = require("url");
 
 // Representation of the Poloniex trading API
 var apiTrading = {};
@@ -113,7 +113,7 @@ apiTrading.returnBalances = function(callback) {
             callback(null, response);
         }
     });
-}
+};
 
 /*
  *
@@ -133,7 +133,7 @@ apiTrading.returnCompleteBalances = function(callback) {
             callback(null, response);
         }
     });
-}
+};
 
 /*
  *
@@ -153,7 +153,7 @@ apiTrading.returnDepositAddresses = function(callback) {
             callback(null, response);
         }
     });
-}
+};
 
 /*
  *
@@ -178,7 +178,7 @@ apiTrading.generateNewAddress = function(currency, callback) {
             callback(null, response);
         }
     });
-}
+};
 
 /*
  *
@@ -204,7 +204,7 @@ apiTrading.returnDepositsWithdrawals = function(start, end, callback) {
             callback(null, response);
         }
     });
-}
+};
 
 /*
  *
@@ -229,7 +229,7 @@ apiTrading.returnOpenOrders = function(currencyPair, callback) {
             callback(null, response);
         }
     });
-}
+};
 
 /*
  *
@@ -256,7 +256,7 @@ apiTrading.returnTradeHistory = function(currencyPair, start, end, callback) {
             callback(null, response);
         }
     });
-}
+};
 
 /*
  *
@@ -281,7 +281,7 @@ apiTrading.returnOrderTrades = function(orderNumber, callback) {
             callback(null, response);
         }
     });
-}
+};
 
 /*
  *
@@ -310,7 +310,7 @@ apiTrading.buy = function(currencyPair, rate, amount, fillOrKill, immediateOrCan
             callback(null, response);
         }
     });
-}
+};
 
 /*
  *
@@ -339,7 +339,7 @@ apiTrading.sell = function(currencyPair, rate, amount, fillOrKill, immediateOrCa
             callback(null, response);
         }
     });
-}
+};
 
 /*
  *
@@ -364,7 +364,7 @@ apiTrading.cancelOrder = function(orderNumber, callback) {
             callback(null, response);
         }
     });
-}
+};
 
 /*
  *
@@ -391,7 +391,7 @@ apiTrading.moveOrder = function(orderNumber, rate, amount, callback) {
             callback(null, response);
         }
     });
-}
+};
 
 /*
  *
@@ -419,7 +419,7 @@ apiTrading.withdraw = function(currency, amount, address, paymentId, callback) {
             callback(null, response);
         }
     });
-}
+};
 
 /*
  *
@@ -439,7 +439,7 @@ apiTrading.returnFeeInfo = function(callback) {
             callback(null, response);
         }
     });
-}
+};
 
 /*
  *
@@ -464,7 +464,7 @@ apiTrading.returnAvailableAccountBalances = function(account, callback) {
             callback(null, response);
         }
     });
-}
+};
 
 /*
  *
@@ -484,7 +484,7 @@ apiTrading.returnTradableBalances = function(callback) {
             callback(null, response);
         }
     });
-}
+};
 
 /*
  *
@@ -512,7 +512,7 @@ apiTrading.transferBalance = function(currency, amount, fromAccount, toAccount, 
             callback(null, response);
         }
     });
-}
+};
 
 /*
  *
@@ -532,7 +532,7 @@ apiTrading.returnMarginAccountSummary = function(callback) {
             callback(null, response);
         }
     });
-}
+};
 
 /*
  *
@@ -560,7 +560,7 @@ apiTrading.marginBuy = function(currencyPair, rate, amount, lendingRate, callbac
             callback(null, response);
         }
     });
-}
+};
 
 /*
  *
@@ -588,7 +588,7 @@ apiTrading.marginSell = function(currencyPair, rate, amount, lendingRate, callba
             callback(null, response);
         }
     });
-}
+};
 
 /*
  *
@@ -613,7 +613,7 @@ apiTrading.getMarginPosition = function(currencyPair, callback) {
             callback(null, response);
         }
     });
-}
+};
 
 /*
  *
@@ -638,7 +638,7 @@ apiTrading.closeMarginPosition = function(currencyPair, callback) {
             callback(null, response);
         }
     });
-}
+};
 
 /*
  *
@@ -667,7 +667,7 @@ apiTrading.createLoanOffer = function(currency, amount, duration, autoRenew, len
             callback(null, response);
         }
     });
-}
+};
 
 /*
  *
@@ -692,7 +692,7 @@ apiTrading.cancelLoanOffer = function(orderNumber, callback) {
             callback(null, response);
         }
     });
-}
+};
 
 /*
  *
@@ -712,7 +712,7 @@ apiTrading.returnOpenLoanOffers = function(callback) {
             callback(null, response);
         }
     });
-}
+};
 
 /*
  *
@@ -732,7 +732,7 @@ apiTrading.returnActiveLoans = function(callback) {
             callback(null, response);
         }
     });
-}
+};
 
 /*
  *
@@ -757,7 +757,7 @@ apiTrading.toggleAutoRenew = function(orderNumber, callback) {
             callback(null, response);
         }
     });
-}
+};
 
 /*
  *
@@ -772,4 +772,4 @@ module.exports = function(params) {
     authInfo.secret = params.secret;
 
     return apiTrading;
-}
+};

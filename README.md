@@ -5,6 +5,8 @@ Yet another unofficial Node.js wrapper for the Poloniex cryptocurrency exchange 
 
 [![NPM](https://nodei.co/npm/poloniex-unofficial.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/poloniex-unofficial/)
 
+[![Build Status](https://travis-ci.org/tylerfilla/node-poloniex-unofficial.svg?branch=master)](https://travis-ci.org/tylerfilla/node-poloniex-unofficial)
+
 Just a clarification for others, as I've confused myself more than I care to admit:  
 `node-poloniex-unofficial` is the name of the project, repository, and product as a whole.  
 `poloniex-unofficial` is the name of the Node.js package (a subset thereof).  
