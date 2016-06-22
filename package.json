@@ -1,6 +1,6 @@
 {
   "name": "poloniex-unofficial",
-  "version": "1.0.3",
+  "version": "1.0.3-dev",
   "description": "Yet another unofficial Node.js wrapper for the Poloniex cryptocurrency exchange APIs",
   "keywords": [
     "poloniex",
