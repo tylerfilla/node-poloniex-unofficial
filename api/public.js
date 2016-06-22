@@ -91,7 +91,7 @@ apiPublic.returnTicker = function(callback) {
             callback(null, response);
         }
     });
-}
+};
 
 /*
  *
@@ -111,7 +111,7 @@ apiPublic.return24hVolume = function(callback) {
             callback(null, response);
         }
     });
-}
+};
 
 /*
  *
@@ -137,7 +137,7 @@ apiPublic.returnOrderBook = function(currencyPair, depth, callback) {
             callback(null, response);
         }
     });
-}
+};
 
 /*
  *
@@ -164,7 +164,7 @@ apiPublic.returnTradeHistory = function(currencyPair, start, end, callback) {
             callback(null, response);
         }
     });
-}
+};
 
 /*
  *
@@ -192,7 +192,7 @@ apiPublic.returnChartData = function(currencyPair, start, end, period, callback)
             callback(null, response);
         }
     });
-}
+};
 
 /*
  *
@@ -212,7 +212,7 @@ apiPublic.returnCurrencies = function(callback) {
             callback(null, response);
         }
     });
-}
+};
 
 /*
  *
@@ -224,7 +224,7 @@ apiPublic.returnCurrencies = function(callback) {
 apiPublic.returnLoanOrders = function(currency, callback) {
     // Build query options
     var opts = {
-        "currency": currency,
+        "currency": currency
     };
 
     // Send returnLoanOrders query
@@ -237,7 +237,7 @@ apiPublic.returnLoanOrders = function(currency, callback) {
             callback(null, response);
         }
     });
-}
+};
 
 /*
  *
@@ -248,4 +248,4 @@ apiPublic.returnLoanOrders = function(currency, callback) {
  */
 module.exports = function(params) {
     return apiPublic;
-}
+};

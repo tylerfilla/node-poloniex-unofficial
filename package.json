@@ -15,7 +15,9 @@
     "author": "Tyler Filla <tylerfilla@gmail.com> (https://github.com/tylerfilla)",
     "main": "index.js",
     "scripts": {
-        "pretest": "eslint ."
+        "lint": "eslint .",
+        "pretest": "npm run lint",
+        "test": "echo \"No formal API tests yet\" && exit 0"
     },
     "repository": {
         "type": "git",
