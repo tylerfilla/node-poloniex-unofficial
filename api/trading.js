@@ -122,9 +122,16 @@ apiTrading.returnBalances = function(callback) {
  * TODO: Write me
  *
  */
-apiTrading.returnCompleteBalances = function(callback) {
+apiTrading.returnCompleteBalances = function(account, callback) {
+    // Build query options
+    if(account != null) {
+        var opts = {
+            "account": account
+        };
+    }
+
     // Send returnCompleteBalances query
-    sendQuery("returnCompleteBalances", null, (err, response) => {
+    sendQuery("returnCompleteBalances", opts, (err, response) => {
         if (err) {
             // Call back with decoupled error info
             callback({"msg": err.msg}, null);
