@@ -22,10 +22,7 @@ var apiKey = process.argv[2];
 var apiSecret = process.argv[3];
 
 // Get access to the trading API
-var poloTrading = polo.api("trading", {
-    "key": apiKey,
-    "secret": apiSecret
-});
+var poloTrading = polo.api("trading", new polo.Auth(apiKey, apiSecret));
 
 // Demonstrate the returnOpenLoanOffers command
 poloTrading.returnOpenLoanOffers((err, response) => {

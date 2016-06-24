@@ -21,12 +21,14 @@ var API_MODULE_MAP = {
     "trading": "./api/trading.js"
 };
 
-// API selector function
+/*
+ * Legacy API selector function.
+ */
 exports.api = function(name, params) {
     // Get the module
     var mod = API_MODULE_MAP[name];
 
-    // Abort if module isn't, well, good... (type was probably invalid)
+    // Abort if module isn't available
     if (!mod) {
         return;
     }
@@ -34,3 +36,26 @@ exports.api = function(name, params) {
     // Return API module stuff
     return require(mod)(params);
 };
+
+/*
+ * Accessor for push API wrapper.
+ */
+exports.push = function() {
+    return exports.api("push");
+};
+
+/*
+ * Accessor for public API wrapper.
+ */
+exports.public = function() {
+    return exports.api("public");
+};
+
+/*
+ * Accessor for trading API wrapper.
+ */
+exports.trading = function(auth) {
+    return exports.api("trading");
+};
+
+exports.Auth = require("./lib/auth");
