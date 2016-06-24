@@ -296,7 +296,7 @@ apiTrading.returnOrderTrades = function(orderNumber, callback) {
 
 /*
  *
- * function buy(currencyPair, rate, amount, fillOrKill, immediateOrCancel, callback)
+ * function buy(currencyPair, rate, amount, fillOrKill, immediateOrCancel, postOnly, callback)
  *
  * TODO: Write me
  *
@@ -332,19 +332,26 @@ apiTrading.buy = function(currencyPair, rate, amount, fillOrKill, immediateOrCan
 
 /*
  *
- * function sell(currencyPair, rate, amount, fillOrKill, immediateOrCancel, callback)
+ * function sell(currencyPair, rate, amount, fillOrKill, immediateOrCancel, postOnly, callback)
  *
  * TODO: Write me
  *
  */
-apiTrading.sell = function(currencyPair, rate, amount, fillOrKill, immediateOrCancel, callback) {
+apiTrading.sell = function(currencyPair, rate, amount, fillOrKill, immediateOrCancel, postOnly, callback) {
+    // Backwards-incompatibility workaround
+    if (typeof postOnly === "function") {
+        callback = postOnly;
+        postOnly = null;
+    }
+
     // Build query options
     var opts = {
         "currencyPair": currencyPair,
         "rate": rate,
         "amount": amount,
         "fillOrKill": fillOrKill,
-        "immediateOrCancel": immediateOrCancel
+        "immediateOrCancel": immediateOrCancel,
+        "postOnly": postOnly
     };
 
     // Send sell query
