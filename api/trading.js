@@ -117,18 +117,22 @@ apiTrading.returnBalances = function(callback) {
 
 /*
  *
- * function returnCompleteBalances(callback)
+ * function returnCompleteBalances(account, callback)
  *
  * TODO: Write me
  *
  */
 apiTrading.returnCompleteBalances = function(account, callback) {
-    // Build query options
-    if(account != null) {
-        var opts = {
-            "account": account
-        };
+    // Preserve backwards-compatibility since change introduced in commit cb7c40f
+    if (typeof account === "function") {
+        callback = account;
+        account = null;
     }
+
+    // Build query options
+    var opts = {
+        "account": account
+    };
 
     // Send returnCompleteBalances query
     sendQuery("returnCompleteBalances", opts, (err, response) => {
