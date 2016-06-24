@@ -301,14 +301,21 @@ apiTrading.returnOrderTrades = function(orderNumber, callback) {
  * TODO: Write me
  *
  */
-apiTrading.buy = function(currencyPair, rate, amount, fillOrKill, immediateOrCancel, callback) {
+apiTrading.buy = function(currencyPair, rate, amount, fillOrKill, immediateOrCancel, postOnly, callback) {
+    // Backwards-incompatibility workaround
+    if (typeof postOnly === "function") {
+        callback = postOnly;
+        postOnly = null;
+    }
+
     // Build query options
     var opts = {
         "currencyPair": currencyPair,
         "rate": rate,
         "amount": amount,
         "fillOrKill": fillOrKill,
-        "immediateOrCancel": immediateOrCancel
+        "immediateOrCancel": immediateOrCancel,
+        "postOnly": postOnly
     };
 
     // Send buy query
