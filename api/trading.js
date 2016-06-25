@@ -19,25 +19,22 @@ var crypto = require("crypto");
 var request = require("request");
 var url = require("url");
 
-// Representation of the Poloniex trading API
-var apiTrading = {};
-
-// Container for authentication info (API key and secret)
-var authInfo = {
-    "key": null,
-    "secret": null
+// Trading API wrapper constructor
+var api = function(apiKey, apiSecret) {
+    this.apiKey = apiKey;
+    this.apiSecret = apiSecret;
 };
 
 /*
  *
- * function sendQuery(command, params, callback)
+ * function sendQuery(api, command, params, callback)
  *
  * TODO: Write me
  *
  */
-function sendQuery(command, params, callback) {
-    // Check for proper auth info
-    if (!authInfo.key || !authInfo.secret) {
+function sendQuery(api, command, params, callback) {
+    // Check for auth info
+    if (!api.apiKey || !api.apiSecret) {
         // Call back with error
         callback({"msg": "Auth info not set"}, null);
 
@@ -68,8 +65,8 @@ function sendQuery(command, params, callback) {
         "headers": {
             "User-Agent": "node-poloniex-unofficial|trading.js (+https://git.io/polonode)",
             "Content-Type": "application/x-www-form-urlencoded",
-            "Key": authInfo.key,
-            "Sign": crypto.createHmac("sha512", authInfo.secret).update(queryString).digest("hex")
+            "Key": api.apiKey,
+            "Sign": crypto.createHmac("sha512", api.apiSecret).update(queryString).digest("hex")
         },
         "body": queryString
     };
@@ -102,9 +99,9 @@ function sendQuery(command, params, callback) {
  * TODO: Write me
  *
  */
-apiTrading.returnBalances = function(callback) {
+api.prototype.returnBalances = function(callback) {
     // Send returnBalances query
-    sendQuery("returnBalances", null, (err, response) => {
+    sendQuery(this, "returnBalances", null, (err, response) => {
         if (err) {
             // Call back with decoupled error info
             callback({"msg": err.msg}, null);
@@ -122,7 +119,7 @@ apiTrading.returnBalances = function(callback) {
  * TODO: Write me
  *
  */
-apiTrading.returnCompleteBalances = function(account, callback) {
+api.prototype.returnCompleteBalances = function(account, callback) {
     // Preserve backwards-compatibility since change introduced in commit cb7c40f
     if (typeof account === "function") {
         callback = account;
@@ -135,7 +132,7 @@ apiTrading.returnCompleteBalances = function(account, callback) {
     };
 
     // Send returnCompleteBalances query
-    sendQuery("returnCompleteBalances", opts, (err, response) => {
+    sendQuery(this, "returnCompleteBalances", opts, (err, response) => {
         if (err) {
             // Call back with decoupled error info
             callback({"msg": err.msg}, null);
@@ -153,9 +150,9 @@ apiTrading.returnCompleteBalances = function(account, callback) {
  * TODO: Write me
  *
  */
-apiTrading.returnDepositAddresses = function(callback) {
+api.prototype.returnDepositAddresses = function(callback) {
     // Send returnDepositAddresses query
-    sendQuery("returnDepositAddresses", null, (err, response) => {
+    sendQuery(this, "returnDepositAddresses", null, (err, response) => {
         if (err) {
             // Call back with decoupled error info
             callback({"msg": err.msg}, null);
@@ -173,14 +170,14 @@ apiTrading.returnDepositAddresses = function(callback) {
  * TODO: Write me
  *
  */
-apiTrading.generateNewAddress = function(currency, callback) {
+api.prototype.generateNewAddress = function(currency, callback) {
     // Build query options
     var opts = {
         "currency": currency
     };
 
     // Send generateNewAddress query
-    sendQuery("generateNewAddress", opts, (err, response) => {
+    sendQuery(this, "generateNewAddress", opts, (err, response) => {
         if (err) {
             // Call back with decoupled error info
             callback({"msg": err.msg}, null);
@@ -198,7 +195,7 @@ apiTrading.generateNewAddress = function(currency, callback) {
  * TODO: Write me
  *
  */
-apiTrading.returnDepositsWithdrawals = function(start, end, callback) {
+api.prototype.returnDepositsWithdrawals = function(start, end, callback) {
     // Build query options
     var opts = {
         "start": start,
@@ -206,7 +203,7 @@ apiTrading.returnDepositsWithdrawals = function(start, end, callback) {
     };
 
     // Send returnDepositsWithdrawals query
-    sendQuery("returnDepositsWithdrawals", opts, (err, response) => {
+    sendQuery(this, "returnDepositsWithdrawals", opts, (err, response) => {
         if (err) {
             // Call back with decoupled error info
             callback({"msg": err.msg}, null);
@@ -224,14 +221,14 @@ apiTrading.returnDepositsWithdrawals = function(start, end, callback) {
  * TODO: Write me
  *
  */
-apiTrading.returnOpenOrders = function(currencyPair, callback) {
+api.prototype.returnOpenOrders = function(currencyPair, callback) {
     // Build query options
     var opts = {
         "currencyPair": currencyPair
     };
 
     // Send returnOpenOrders query
-    sendQuery("returnOpenOrders", opts, (err, response) => {
+    sendQuery(this, "returnOpenOrders", opts, (err, response) => {
         if (err) {
             // Call back with decoupled error info
             callback({"msg": err.msg}, null);
@@ -249,7 +246,7 @@ apiTrading.returnOpenOrders = function(currencyPair, callback) {
  * TODO: Write me
  *
  */
-apiTrading.returnTradeHistory = function(currencyPair, start, end, callback) {
+api.prototype.returnTradeHistory = function(currencyPair, start, end, callback) {
     // Build query options
     var opts = {
         "currencyPair": currencyPair,
@@ -258,7 +255,7 @@ apiTrading.returnTradeHistory = function(currencyPair, start, end, callback) {
     };
 
     // Send returnTradeHistory query
-    sendQuery("returnTradeHistory", opts, (err, response) => {
+    sendQuery(this, "returnTradeHistory", opts, (err, response) => {
         if (err) {
             // Call back with decoupled error info
             callback({"msg": err.msg}, null);
@@ -276,14 +273,14 @@ apiTrading.returnTradeHistory = function(currencyPair, start, end, callback) {
  * TODO: Write me
  *
  */
-apiTrading.returnOrderTrades = function(orderNumber, callback) {
+api.prototype.returnOrderTrades = function(orderNumber, callback) {
     // Build query options
     var opts = {
         "orderNumber": orderNumber
     };
 
     // Send returnOrderTrades query
-    sendQuery("returnOrderTrades", opts, (err, response) => {
+    sendQuery(this, "returnOrderTrades", opts, (err, response) => {
         if (err) {
             // Call back with decoupled error info
             callback({"msg": err.msg}, null);
@@ -301,7 +298,7 @@ apiTrading.returnOrderTrades = function(orderNumber, callback) {
  * TODO: Write me
  *
  */
-apiTrading.buy = function(currencyPair, rate, amount, fillOrKill, immediateOrCancel, postOnly, callback) {
+api.prototype.buy = function(currencyPair, rate, amount, fillOrKill, immediateOrCancel, postOnly, callback) {
     // Backwards-incompatibility workaround
     if (typeof postOnly === "function") {
         callback = postOnly;
@@ -319,7 +316,7 @@ apiTrading.buy = function(currencyPair, rate, amount, fillOrKill, immediateOrCan
     };
 
     // Send buy query
-    sendQuery("buy", opts, (err, response) => {
+    sendQuery(this, "buy", opts, (err, response) => {
         if (err) {
             // Call back with decoupled error info
             callback({"msg": err.msg}, null);
@@ -337,7 +334,7 @@ apiTrading.buy = function(currencyPair, rate, amount, fillOrKill, immediateOrCan
  * TODO: Write me
  *
  */
-apiTrading.sell = function(currencyPair, rate, amount, fillOrKill, immediateOrCancel, postOnly, callback) {
+api.prototype.sell = function(currencyPair, rate, amount, fillOrKill, immediateOrCancel, postOnly, callback) {
     // Backwards-incompatibility workaround
     if (typeof postOnly === "function") {
         callback = postOnly;
@@ -355,7 +352,7 @@ apiTrading.sell = function(currencyPair, rate, amount, fillOrKill, immediateOrCa
     };
 
     // Send sell query
-    sendQuery("sell", opts, (err, response) => {
+    sendQuery(this, "sell", opts, (err, response) => {
         if (err) {
             // Call back with decoupled error info
             callback({"msg": err.msg}, null);
@@ -373,14 +370,14 @@ apiTrading.sell = function(currencyPair, rate, amount, fillOrKill, immediateOrCa
  * TODO: Write me
  *
  */
-apiTrading.cancelOrder = function(orderNumber, callback) {
+api.prototype.cancelOrder = function(orderNumber, callback) {
     // Build query options
     var opts = {
         "orderNumber": orderNumber
     };
 
     // Send cancelOrder query
-    sendQuery("cancelOrder", opts, (err, response) => {
+    sendQuery(this, "cancelOrder", opts, (err, response) => {
         if (err) {
             // Call back with decoupled error info
             callback({"msg": err.msg}, null);
@@ -398,7 +395,7 @@ apiTrading.cancelOrder = function(orderNumber, callback) {
  * TODO: Write me
  *
  */
-apiTrading.moveOrder = function(orderNumber, rate, amount, callback) {
+api.prototype.moveOrder = function(orderNumber, rate, amount, callback) {
     // Build query options
     var opts = {
         "orderNumber": orderNumber,
@@ -407,7 +404,7 @@ apiTrading.moveOrder = function(orderNumber, rate, amount, callback) {
     };
 
     // Send moveOrder query
-    sendQuery("moveOrder", opts, (err, response) => {
+    sendQuery(this, "moveOrder", opts, (err, response) => {
         if (err) {
             // Call back with decoupled error info
             callback({"msg": err.msg}, null);
@@ -425,7 +422,7 @@ apiTrading.moveOrder = function(orderNumber, rate, amount, callback) {
  * TODO: Write me
  *
  */
-apiTrading.withdraw = function(currency, amount, address, paymentId, callback) {
+api.prototype.withdraw = function(currency, amount, address, paymentId, callback) {
     // Build query options
     var opts = {
         "currency": currency,
@@ -435,7 +432,7 @@ apiTrading.withdraw = function(currency, amount, address, paymentId, callback) {
     };
 
     // Send withdraw query
-    sendQuery("withdraw", opts, (err, response) => {
+    sendQuery(this, "withdraw", opts, (err, response) => {
         if (err) {
             // Call back with decoupled error info
             callback({"msg": err.msg}, null);
@@ -453,9 +450,9 @@ apiTrading.withdraw = function(currency, amount, address, paymentId, callback) {
  * TODO: Write me
  *
  */
-apiTrading.returnFeeInfo = function(callback) {
+api.prototype.returnFeeInfo = function(callback) {
     // Send returnFeeInfo query
-    sendQuery("returnFeeInfo", null, (err, response) => {
+    sendQuery(this, "returnFeeInfo", null, (err, response) => {
         if (err) {
             // Call back with decoupled error info
             callback({"msg": err.msg}, null);
@@ -473,14 +470,14 @@ apiTrading.returnFeeInfo = function(callback) {
  * TODO: Write me
  *
  */
-apiTrading.returnAvailableAccountBalances = function(account, callback) {
+api.prototype.returnAvailableAccountBalances = function(account, callback) {
     // Build query options
     var opts = {
         "account": account
     };
 
     // Send returnAvailableAccountBalances query
-    sendQuery("returnAvailableAccountBalances", opts, (err, response) => {
+    sendQuery(this, "returnAvailableAccountBalances", opts, (err, response) => {
         if (err) {
             // Call back with decoupled error info
             callback({"msg": err.msg}, null);
@@ -498,9 +495,9 @@ apiTrading.returnAvailableAccountBalances = function(account, callback) {
  * TODO: Write me
  *
  */
-apiTrading.returnTradableBalances = function(callback) {
+api.prototype.returnTradableBalances = function(callback) {
     // Send returnTradableBalances query
-    sendQuery("returnTradableBalances", null, (err, response) => {
+    sendQuery(this, "returnTradableBalances", null, (err, response) => {
         if (err) {
             // Call back with decoupled error info
             callback({"msg": err.msg}, null);
@@ -518,7 +515,7 @@ apiTrading.returnTradableBalances = function(callback) {
  * TODO: Write me
  *
  */
-apiTrading.transferBalance = function(currency, amount, fromAccount, toAccount, callback) {
+api.prototype.transferBalance = function(currency, amount, fromAccount, toAccount, callback) {
     // Build query options
     var opts = {
         "currency": currency,
@@ -528,7 +525,7 @@ apiTrading.transferBalance = function(currency, amount, fromAccount, toAccount, 
     };
 
     // Send transferBalance query
-    sendQuery("transferBalance", opts, (err, response) => {
+    sendQuery(this, "transferBalance", opts, (err, response) => {
         if (err) {
             // Call back with decoupled error info
             callback({"msg": err.msg}, null);
@@ -546,9 +543,9 @@ apiTrading.transferBalance = function(currency, amount, fromAccount, toAccount, 
  * TODO: Write me
  *
  */
-apiTrading.returnMarginAccountSummary = function(callback) {
+api.prototype.returnMarginAccountSummary = function(callback) {
     // Send returnMarginAccountSummary query
-    sendQuery("returnMarginAccountSummary", null, (err, response) => {
+    sendQuery(this, "returnMarginAccountSummary", null, (err, response) => {
         if (err) {
             // Call back with decoupled error info
             callback({"msg": err.msg}, null);
@@ -566,7 +563,7 @@ apiTrading.returnMarginAccountSummary = function(callback) {
  * TODO: Write me
  *
  */
-apiTrading.marginBuy = function(currencyPair, rate, amount, lendingRate, callback) {
+api.prototype.marginBuy = function(currencyPair, rate, amount, lendingRate, callback) {
     // Build query options
     var opts = {
         "currencyPair": currencyPair,
@@ -576,7 +573,7 @@ apiTrading.marginBuy = function(currencyPair, rate, amount, lendingRate, callbac
     };
 
     // Send marginBuy query
-    sendQuery("marginBuy", opts, (err, response) => {
+    sendQuery(this, "marginBuy", opts, (err, response) => {
         if (err) {
             // Call back with decoupled error info
             callback({"msg": err.msg}, null);
@@ -594,7 +591,7 @@ apiTrading.marginBuy = function(currencyPair, rate, amount, lendingRate, callbac
  * TODO: Write me
  *
  */
-apiTrading.marginSell = function(currencyPair, rate, amount, lendingRate, callback) {
+api.prototype.marginSell = function(currencyPair, rate, amount, lendingRate, callback) {
     // Build query options
     var opts = {
         "currencyPair": currencyPair,
@@ -604,7 +601,7 @@ apiTrading.marginSell = function(currencyPair, rate, amount, lendingRate, callba
     };
 
     // Send marginSell query
-    sendQuery("marginSell", opts, (err, response) => {
+    sendQuery(this, "marginSell", opts, (err, response) => {
         if (err) {
             // Call back with decoupled error info
             callback({"msg": err.msg}, null);
@@ -622,14 +619,14 @@ apiTrading.marginSell = function(currencyPair, rate, amount, lendingRate, callba
  * TODO: Write me
  *
  */
-apiTrading.getMarginPosition = function(currencyPair, callback) {
+api.prototype.getMarginPosition = function(currencyPair, callback) {
     // Build query options
     var opts = {
         "currencyPair": currencyPair
     };
 
     // Send getMarginPosition query
-    sendQuery("getMarginPosition", opts, (err, response) => {
+    sendQuery(this, "getMarginPosition", opts, (err, response) => {
         if (err) {
             // Call back with decoupled error info
             callback({"msg": err.msg}, null);
@@ -647,14 +644,14 @@ apiTrading.getMarginPosition = function(currencyPair, callback) {
  * TODO: Write me
  *
  */
-apiTrading.closeMarginPosition = function(currencyPair, callback) {
+api.prototype.closeMarginPosition = function(currencyPair, callback) {
     // Build query options
     var opts = {
         "currencyPair": currencyPair
     };
 
     // Send closeMarginPosition query
-    sendQuery("closeMarginPosition", opts, (err, response) => {
+    sendQuery(this, "closeMarginPosition", opts, (err, response) => {
         if (err) {
             // Call back with decoupled error info
             callback({"msg": err.msg}, null);
@@ -672,7 +669,7 @@ apiTrading.closeMarginPosition = function(currencyPair, callback) {
  * TODO: Write me
  *
  */
-apiTrading.createLoanOffer = function(currency, amount, duration, autoRenew, lendingRate, callback) {
+api.prototype.createLoanOffer = function(currency, amount, duration, autoRenew, lendingRate, callback) {
     // Build query options
     var opts = {
         "currency": currency,
@@ -683,7 +680,7 @@ apiTrading.createLoanOffer = function(currency, amount, duration, autoRenew, len
     };
 
     // Send createLoanOffer query
-    sendQuery("createLoanOffer", opts, (err, response) => {
+    sendQuery(this, "createLoanOffer", opts, (err, response) => {
         if (err) {
             // Call back with decoupled error info
             callback({"msg": err.msg}, null);
@@ -701,14 +698,14 @@ apiTrading.createLoanOffer = function(currency, amount, duration, autoRenew, len
  * TODO: Write me
  *
  */
-apiTrading.cancelLoanOffer = function(orderNumber, callback) {
+api.prototype.cancelLoanOffer = function(orderNumber, callback) {
     // Build query options
     var opts = {
         "orderNumber": orderNumber
     };
 
     // Send cancelLoanOffer query
-    sendQuery("cancelLoanOffer", opts, (err, response) => {
+    sendQuery(this, "cancelLoanOffer", opts, (err, response) => {
         if (err) {
             // Call back with decoupled error info
             callback({"msg": err.msg}, null);
@@ -726,9 +723,9 @@ apiTrading.cancelLoanOffer = function(orderNumber, callback) {
  * TODO: Write me
  *
  */
-apiTrading.returnOpenLoanOffers = function(callback) {
+api.prototype.returnOpenLoanOffers = function(callback) {
     // Send returnOpenLoanOffers query
-    sendQuery("returnOpenLoanOffers", null, (err, response) => {
+    sendQuery(this, "returnOpenLoanOffers", null, (err, response) => {
         if (err) {
             // Call back with decoupled error info
             callback({"msg": err.msg}, null);
@@ -746,9 +743,9 @@ apiTrading.returnOpenLoanOffers = function(callback) {
  * TODO: Write me
  *
  */
-apiTrading.returnActiveLoans = function(callback) {
+api.prototype.returnActiveLoans = function(callback) {
     // Send returnActiveLoans query
-    sendQuery("returnActiveLoans", null, (err, response) => {
+    sendQuery(this, "returnActiveLoans", null, (err, response) => {
         if (err) {
             // Call back with decoupled error info
             callback({"msg": err.msg}, null);
@@ -766,14 +763,14 @@ apiTrading.returnActiveLoans = function(callback) {
  * TODO: Write me
  *
  */
-apiTrading.toggleAutoRenew = function(orderNumber, callback) {
+api.prototype.toggleAutoRenew = function(orderNumber, callback) {
     // Build query options
     var opts = {
         "orderNumber": orderNumber
     };
 
     // Send toggleAutoRenew query
-    sendQuery("toggleAutoRenew", opts, (err, response) => {
+    sendQuery(this, "toggleAutoRenew", opts, (err, response) => {
         if (err) {
             // Call back with decoupled error info
             callback({"msg": err.msg}, null);
@@ -784,17 +781,4 @@ apiTrading.toggleAutoRenew = function(orderNumber, callback) {
     });
 };
 
-/*
- *
- * function exports(params)
- *
- * Accepts API authentication info and exposes the trading API wrapper.
- *
- */
-module.exports = function(params) {
-    // Get auth info from params (FIXME: do not put auth params in global scope; one might want to access multiple accounts)
-    authInfo.key = params.key;
-    authInfo.secret = params.secret;
-
-    return apiTrading;
-};
+module.exports = api;

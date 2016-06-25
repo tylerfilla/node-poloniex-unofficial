@@ -18,17 +18,17 @@
 var request = require("request");
 var url = require("url");
 
-// Representation of the Poloniex public API
-var apiPublic = {};
+// Public API wrapper constructor
+var api = function() {};
 
 /*
  *
- * function sendQuery(command, params, callback)
+ * function sendQuery(api, command, params, callback)
  *
  * TODO: Write me
  *
  */
-function sendQuery(command, params, callback) {
+function sendQuery(api, command, params, callback) {
     // Create query with given parameters, if applicable
     var query = params || {};
 
@@ -80,9 +80,9 @@ function sendQuery(command, params, callback) {
  * TODO: Write me
  *
  */
-apiPublic.returnTicker = function(callback) {
+api.prototype.returnTicker = function(callback) {
     // Send returnTicker query
-    sendQuery("returnTicker", null, (err, response) => {
+    sendQuery(this, "returnTicker", null, (err, response) => {
         if (err) {
             // Call back with decoupled error info
             callback({"msg": err.msg}, null);
@@ -100,9 +100,9 @@ apiPublic.returnTicker = function(callback) {
  * TODO: Write me
  *
  */
-apiPublic.return24hVolume = function(callback) {
+api.prototype.return24hVolume = function(callback) {
     // Send return24hVolume query
-    sendQuery("return24hVolume", null, (err, response) => {
+    sendQuery(this, "return24hVolume", null, (err, response) => {
         if (err) {
             // Call back with decoupled error info
             callback({"msg": err.msg}, null);
@@ -120,7 +120,7 @@ apiPublic.return24hVolume = function(callback) {
  * TODO: Write me
  *
  */
-apiPublic.returnOrderBook = function(currencyPair, depth, callback) {
+api.prototype.returnOrderBook = function(currencyPair, depth, callback) {
     // Build query options
     var opts = {
         "currencyPair": currencyPair || "all",
@@ -128,7 +128,7 @@ apiPublic.returnOrderBook = function(currencyPair, depth, callback) {
     };
 
     // Send returnOrderBook query
-    sendQuery("returnOrderBook", opts, (err, response) => {
+    sendQuery(this, "returnOrderBook", opts, (err, response) => {
         if (err) {
             // Call back with decoupled error info
             callback({"msg": err.msg}, null);
@@ -146,7 +146,7 @@ apiPublic.returnOrderBook = function(currencyPair, depth, callback) {
  * TODO: Write me
  *
  */
-apiPublic.returnTradeHistory = function(currencyPair, start, end, callback) {
+api.prototype.returnTradeHistory = function(currencyPair, start, end, callback) {
     // Build query options
     var opts = {
         "currencyPair": currencyPair || "all",
@@ -155,7 +155,7 @@ apiPublic.returnTradeHistory = function(currencyPair, start, end, callback) {
     };
 
     // Send returnTradeHistory query
-    sendQuery("returnTradeHistory", opts, (err, response) => {
+    sendQuery(this, "returnTradeHistory", opts, (err, response) => {
         if (err) {
             // Call back with decoupled error info
             callback({"msg": err.msg}, null);
@@ -173,7 +173,7 @@ apiPublic.returnTradeHistory = function(currencyPair, start, end, callback) {
  * TODO: Write me
  *
  */
-apiPublic.returnChartData = function(currencyPair, start, end, period, callback) {
+api.prototype.returnChartData = function(currencyPair, start, end, period, callback) {
     // Build query options
     var opts = {
         "currencyPair": currencyPair || "all",
@@ -183,7 +183,7 @@ apiPublic.returnChartData = function(currencyPair, start, end, period, callback)
     };
 
     // Send returnChartData query
-    sendQuery("returnChartData", opts, (err, response) => {
+    sendQuery(this, "returnChartData", opts, (err, response) => {
         if (err) {
             // Call back with decoupled error info
             callback({"msg": err.msg}, null);
@@ -201,9 +201,9 @@ apiPublic.returnChartData = function(currencyPair, start, end, period, callback)
  * TODO: Write me
  *
  */
-apiPublic.returnCurrencies = function(callback) {
+api.prototype.returnCurrencies = function(callback) {
     // Send returnCurrencies query
-    sendQuery("returnCurrencies", null, (err, response) => {
+    sendQuery(this, "returnCurrencies", null, (err, response) => {
         if (err) {
             // Call back with decoupled error info
             callback({"msg": err.msg}, null);
@@ -221,14 +221,14 @@ apiPublic.returnCurrencies = function(callback) {
  * TODO: Write me
  *
  */
-apiPublic.returnLoanOrders = function(currency, callback) {
+api.prototype.returnLoanOrders = function(currency, callback) {
     // Build query options
     var opts = {
         "currency": currency
     };
 
     // Send returnLoanOrders query
-    sendQuery("returnLoanOrders", opts, (err, response) => {
+    sendQuery(this, "returnLoanOrders", opts, (err, response) => {
         if (err) {
             // Call back with decoupled error info
             callback({"msg": err.msg}, null);
@@ -239,13 +239,4 @@ apiPublic.returnLoanOrders = function(currency, callback) {
     });
 };
 
-/*
- *
- * function exports(params)
- *
- * Exposes the public API wrapper.
- *
- */
-module.exports = function(params) {
-    return apiPublic;
-};
+module.exports = api;

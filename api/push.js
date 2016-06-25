@@ -14,17 +14,17 @@
  *
  */
 
+// Import modules
+var autobahn = require("autobahn");
+
 // Interval (in ms) for testing openness of a session after a connection has been established
 const SESSION_WAIT_TEST_INTERVAL = 250;
 
 // Number of tries to wait for openness of a session
 const SESSION_WAIT_TEST_LIMIT = 4;
 
-// Import modules
-var autobahn = require("autobahn");
-
-// Representation of the Poloniex push API
-var apiPush = {};
+// Push API wrapper constructor
+var api = function() {};
 
 // Autobahn|JS connection object for push API (utilizes the WAMP protocol)
 var connection = new autobahn.Connection({
@@ -61,19 +61,20 @@ connection.onclose = function(reason, details) {
 
 /*
  *
- * function connect(callback)
+ * function connect(api, callback)
  *
  * Attempts to establish a connection. Success or failure, this function will
  * call back with a status report.
  *
  * Params
+ *      api         Push wrapper instance being operated on
  *      callback    A callback function with the following params
  *                      err     An object of the following structure in the
  *                                  event of an error, or null if no error has
  *                                  occurred: { msg: "error message..." }
  *
  */
-function connect(callback) {
+function connect(api, callback) {
     // Check if currently connected
     if (connection.isConnected) {
         // Check if session is currently open
@@ -151,12 +152,13 @@ function connect(callback) {
 
 /*
  *
- * function subscribe(feed, callback)
+ * function subscribe(api, feed, callback)
  *
  * Subscribes to the given WAMP feed. If the connection has not yet been
  * established, this function will attempt to do so.
  *
  * Params
+ *      api         Push wrapper instance being operated on
  *      feed        A string specifying the desired feed
  *      callback    A callback function with the following params
  *                      err     An object of the following structure in the
@@ -167,12 +169,12 @@ function connect(callback) {
  *                      details Directly-mapped WAMP event metadata
  *
  */
-function subscribe(feed, callback) {
+function subscribe(api, feed, callback) {
     // A unique-enough ID for this subscription
     var id = ++subLinksId;
 
     // Attempt to connect to push API
-    connect((err) => {
+    connect(api, (err) => {
         if (err) {
             // Notify caller of the connection error
             callback({"msg": "Error: " + err.msg}, null, null, null);
@@ -230,9 +232,9 @@ function subscribe(feed, callback) {
  *                      data    An object containing parsed ticker data
  *
  */
-apiPush.ticker = function(callback) {
+api.prototype.ticker = function(callback) {
     // Subscribe to ticker feed
-    subscribe("ticker", (err, args) => {
+    subscribe(this, "ticker", (err, args) => {
         if (err) {
             // Call back with decoupled error info
             return callback({"msg": err.msg}, null);
@@ -279,7 +281,7 @@ apiPush.ticker = function(callback) {
  *                          efficiency in certain cases
  *
  */
-apiPush.orderTrade = function(currencyPair, callback, allowBatches) {
+api.prototype.orderTrade = function(currencyPair, callback, allowBatches) {
     // Subscribe to currency pair feed (returns both new trades and order book updates)
     subscribe(currencyPair, (err, args) => {
         if (err) {
@@ -366,9 +368,9 @@ apiPush.orderTrade = function(currencyPair, callback, allowBatches) {
  *                      data    An object containing parsed trollbox data
  *
  */
-apiPush.trollbox = function(callback) {
+api.prototype.trollbox = function(callback) {
     // Subscribe to the trollbox feed
-    subscribe("trollbox", (err, args) => {
+    subscribe(this, "trollbox", (err, args) => {
         if (err) {
             // Call back with decoupled error info
             return callback({"msg": err.msg}, null);
@@ -386,13 +388,4 @@ apiPush.trollbox = function(callback) {
     });
 };
 
-/*
- *
- * function exports(params)
- *
- * Exposes the push API wrapper. This function is not meant for external use.
- *
- */
-module.exports = function(params) {
-    return apiPush;
-};
+module.exports = api;

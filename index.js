@@ -14,48 +14,53 @@
  *
  */
 
+const MOD_ID_WRAPPER_PUSH = "./api/push.js";
+const MOD_ID_WRAPPER_PUBLIC = "./api/public.js";
+const MOD_ID_WRAPPER_TRADING = "./api/trading.js";
+
 // Subunit modules for the various APIs offered by Poloniex
-var API_MODULE_MAP = {
-    "push": "./api/push.js",
-    "public": "./api/public.js",
-    "trading": "./api/trading.js"
+var API_MODULE_ID_MAP = {
+    "push": MOD_ID_WRAPPER_PUSH,
+    "public": MOD_ID_WRAPPER_PUBLIC,
+    "trading": MOD_ID_WRAPPER_TRADING
 };
 
 /*
- * Legacy API selector function.
+ * Legacy API selector function. Deprecated.
  */
 exports.api = function(name, params) {
-    // Get the module
-    var mod = API_MODULE_MAP[name];
+    // Retrieve the module ID
+    var modId = API_MODULE_ID_MAP[name];
 
     // Abort if module isn't available
-    if (!mod) {
+    if (!modId) {
         return;
     }
 
-    // Return API module stuff
-    return require(mod)(params);
+    // Get the API wrapper constructor
+    var wrapper = require(modId);
+
+    // If params were supplied
+    if (params) {
+        // Instantiate wrapper with authentication parameters
+        return new wrapper(params.key, params.secret);
+    } else {
+        // Instantiate wrapper without authentication parameters
+        return new wrapper();
+    }
 };
 
 /*
- * Accessor for push API wrapper.
+ * Push API wrapper constructor.
  */
-exports.push = function() {
-    return exports.api("push");
-};
+exports.PushWrapper = require(MOD_ID_WRAPPER_PUSH);
 
 /*
- * Accessor for public API wrapper.
+ * Public API wrapper constructor.
  */
-exports.public = function() {
-    return exports.api("public");
-};
+exports.PublicWrapper = require(MOD_ID_WRAPPER_PUBLIC);
 
 /*
- * Accessor for trading API wrapper.
+ * Trading API wrapper constructor.
  */
-exports.trading = function(auth) {
-    return exports.api("trading");
-};
-
-exports.Auth = require("./lib/auth");
+exports.TradingWrapper = require(MOD_ID_WRAPPER_TRADING);
