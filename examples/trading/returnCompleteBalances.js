@@ -37,7 +37,7 @@ poloTrading.returnCompleteBalances((err, response) => {
     console.log(response);
 });
 
-// Demonstrate the returnCompleteBalances with account parameter
+// Demonstrate the returnCompleteBalances command with account parameter
 poloTrading.returnCompleteBalances("all", (err, response) => {
     if (err) {
         // Log error message
