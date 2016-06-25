@@ -29,8 +29,10 @@ poloTrading.returnBalances((err, response) => {
     if (err) {
         // Log error message
         console.log("An error occurred: " + err.msg);
-    } else {
-        // Log response
-        console.log(response);
+
+        return;
     }
+
+    // Log response
+    console.log(response);
 });
