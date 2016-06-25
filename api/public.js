@@ -25,8 +25,6 @@ var api = function() {};
  *
  * function sendQuery(api, command, params, callback)
  *
- * TODO: Write me
- *
  */
 function sendQuery(api, command, params, callback) {
     // Create query with given parameters, if applicable
@@ -77,14 +75,12 @@ function sendQuery(api, command, params, callback) {
  *
  * function returnTicker(callback)
  *
- * TODO: Write me
- *
  */
 api.prototype.returnTicker = function(callback) {
     // Send returnTicker query
     sendQuery(this, "returnTicker", null, (err, response) => {
         if (err) {
-            // Call back with decoupled error info
+            // Call back with error info
             callback({"msg": err.msg}, null);
         } else {
             // Call back with response
@@ -97,14 +93,12 @@ api.prototype.returnTicker = function(callback) {
  *
  * function return24hVolume(callback)
  *
- * TODO: Write me
- *
  */
 api.prototype.return24hVolume = function(callback) {
     // Send return24hVolume query
     sendQuery(this, "return24hVolume", null, (err, response) => {
         if (err) {
-            // Call back with decoupled error info
+            // Call back with error info
             callback({"msg": err.msg}, null);
         } else {
             // Call back with response
@@ -117,8 +111,6 @@ api.prototype.return24hVolume = function(callback) {
  *
  * function returnOrderBook(currencyPair, depth, callback)
  *
- * TODO: Write me
- *
  */
 api.prototype.returnOrderBook = function(currencyPair, depth, callback) {
     // Build query options
@@ -130,7 +122,7 @@ api.prototype.returnOrderBook = function(currencyPair, depth, callback) {
     // Send returnOrderBook query
     sendQuery(this, "returnOrderBook", opts, (err, response) => {
         if (err) {
-            // Call back with decoupled error info
+            // Call back with error info
             callback({"msg": err.msg}, null);
         } else {
             // Call back with response
@@ -142,8 +134,6 @@ api.prototype.returnOrderBook = function(currencyPair, depth, callback) {
 /*
  *
  * function returnTradeHistory(currencyPair, start, end, callback)
- *
- * TODO: Write me
  *
  */
 api.prototype.returnTradeHistory = function(currencyPair, start, end, callback) {
@@ -157,7 +147,7 @@ api.prototype.returnTradeHistory = function(currencyPair, start, end, callback) 
     // Send returnTradeHistory query
     sendQuery(this, "returnTradeHistory", opts, (err, response) => {
         if (err) {
-            // Call back with decoupled error info
+            // Call back with error info
             callback({"msg": err.msg}, null);
         } else {
             // Call back with response
@@ -169,8 +159,6 @@ api.prototype.returnTradeHistory = function(currencyPair, start, end, callback) 
 /*
  *
  * function returnChartData(currencyPair, start, end, period, callback)
- *
- * TODO: Write me
  *
  */
 api.prototype.returnChartData = function(currencyPair, start, end, period, callback) {
@@ -185,7 +173,7 @@ api.prototype.returnChartData = function(currencyPair, start, end, period, callb
     // Send returnChartData query
     sendQuery(this, "returnChartData", opts, (err, response) => {
         if (err) {
-            // Call back with decoupled error info
+            // Call back with error info
             callback({"msg": err.msg}, null);
         } else {
             // Call back with response
@@ -198,14 +186,12 @@ api.prototype.returnChartData = function(currencyPair, start, end, period, callb
  *
  * function returnCurrencies(callback)
  *
- * TODO: Write me
- *
  */
 api.prototype.returnCurrencies = function(callback) {
     // Send returnCurrencies query
     sendQuery(this, "returnCurrencies", null, (err, response) => {
         if (err) {
-            // Call back with decoupled error info
+            // Call back with error info
             callback({"msg": err.msg}, null);
         } else {
             // Call back with response
@@ -218,8 +204,6 @@ api.prototype.returnCurrencies = function(callback) {
  *
  * function returnLoanOrders(currency, callback)
  *
- * TODO: Write me
- *
  */
 api.prototype.returnLoanOrders = function(currency, callback) {
     // Build query options
@@ -230,7 +214,7 @@ api.prototype.returnLoanOrders = function(currency, callback) {
     // Send returnLoanOrders query
     sendQuery(this, "returnLoanOrders", opts, (err, response) => {
         if (err) {
-            // Call back with decoupled error info
+            // Call back with error info
             callback({"msg": err.msg}, null);
         } else {
             // Call back with response

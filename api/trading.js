@@ -29,8 +29,6 @@ var api = function(apiKey, apiSecret) {
  *
  * function sendQuery(api, command, params, callback)
  *
- * TODO: Write me
- *
  */
 function sendQuery(api, command, params, callback) {
     // Check for auth info
@@ -96,14 +94,12 @@ function sendQuery(api, command, params, callback) {
  *
  * function returnBalances(callback)
  *
- * TODO: Write me
- *
  */
 api.prototype.returnBalances = function(callback) {
     // Send returnBalances query
     sendQuery(this, "returnBalances", null, (err, response) => {
         if (err) {
-            // Call back with decoupled error info
+            // Call back with error info
             callback({"msg": err.msg}, null);
         } else {
             // Call back with response
@@ -115,8 +111,6 @@ api.prototype.returnBalances = function(callback) {
 /*
  *
  * function returnCompleteBalances(account, callback)
- *
- * TODO: Write me
  *
  */
 api.prototype.returnCompleteBalances = function(account, callback) {
@@ -134,7 +128,7 @@ api.prototype.returnCompleteBalances = function(account, callback) {
     // Send returnCompleteBalances query
     sendQuery(this, "returnCompleteBalances", opts, (err, response) => {
         if (err) {
-            // Call back with decoupled error info
+            // Call back with error info
             callback({"msg": err.msg}, null);
         } else {
             // Call back with response
@@ -147,14 +141,12 @@ api.prototype.returnCompleteBalances = function(account, callback) {
  *
  * function returnDepositAddresses(callback)
  *
- * TODO: Write me
- *
  */
 api.prototype.returnDepositAddresses = function(callback) {
     // Send returnDepositAddresses query
     sendQuery(this, "returnDepositAddresses", null, (err, response) => {
         if (err) {
-            // Call back with decoupled error info
+            // Call back with error info
             callback({"msg": err.msg}, null);
         } else {
             // Call back with response
@@ -167,8 +159,6 @@ api.prototype.returnDepositAddresses = function(callback) {
  *
  * function generateNewAddress(currency, callback)
  *
- * TODO: Write me
- *
  */
 api.prototype.generateNewAddress = function(currency, callback) {
     // Build query options
@@ -179,7 +169,7 @@ api.prototype.generateNewAddress = function(currency, callback) {
     // Send generateNewAddress query
     sendQuery(this, "generateNewAddress", opts, (err, response) => {
         if (err) {
-            // Call back with decoupled error info
+            // Call back with error info
             callback({"msg": err.msg}, null);
         } else {
             // Call back with response
@@ -192,8 +182,6 @@ api.prototype.generateNewAddress = function(currency, callback) {
  *
  * function returnDepositsWithdrawals(start, end, callback)
  *
- * TODO: Write me
- *
  */
 api.prototype.returnDepositsWithdrawals = function(start, end, callback) {
     // Build query options
@@ -205,7 +193,7 @@ api.prototype.returnDepositsWithdrawals = function(start, end, callback) {
     // Send returnDepositsWithdrawals query
     sendQuery(this, "returnDepositsWithdrawals", opts, (err, response) => {
         if (err) {
-            // Call back with decoupled error info
+            // Call back with error info
             callback({"msg": err.msg}, null);
         } else {
             // Call back with response
@@ -218,8 +206,6 @@ api.prototype.returnDepositsWithdrawals = function(start, end, callback) {
  *
  * function returnOpenOrders(currencyPair, callback)
  *
- * TODO: Write me
- *
  */
 api.prototype.returnOpenOrders = function(currencyPair, callback) {
     // Build query options
@@ -230,7 +216,7 @@ api.prototype.returnOpenOrders = function(currencyPair, callback) {
     // Send returnOpenOrders query
     sendQuery(this, "returnOpenOrders", opts, (err, response) => {
         if (err) {
-            // Call back with decoupled error info
+            // Call back with error info
             callback({"msg": err.msg}, null);
         } else {
             // Call back with response
@@ -242,8 +228,6 @@ api.prototype.returnOpenOrders = function(currencyPair, callback) {
 /*
  *
  * function returnTradeHistory(currencyPair, start, end, callback)
- *
- * TODO: Write me
  *
  */
 api.prototype.returnTradeHistory = function(currencyPair, start, end, callback) {
@@ -257,7 +241,7 @@ api.prototype.returnTradeHistory = function(currencyPair, start, end, callback) 
     // Send returnTradeHistory query
     sendQuery(this, "returnTradeHistory", opts, (err, response) => {
         if (err) {
-            // Call back with decoupled error info
+            // Call back with error info
             callback({"msg": err.msg}, null);
         } else {
             // Call back with response
@@ -270,8 +254,6 @@ api.prototype.returnTradeHistory = function(currencyPair, start, end, callback) 
  *
  * function returnOrderTrades(orderNumber, callback)
  *
- * TODO: Write me
- *
  */
 api.prototype.returnOrderTrades = function(orderNumber, callback) {
     // Build query options
@@ -282,7 +264,7 @@ api.prototype.returnOrderTrades = function(orderNumber, callback) {
     // Send returnOrderTrades query
     sendQuery(this, "returnOrderTrades", opts, (err, response) => {
         if (err) {
-            // Call back with decoupled error info
+            // Call back with error info
             callback({"msg": err.msg}, null);
         } else {
             // Call back with response
@@ -294,8 +276,6 @@ api.prototype.returnOrderTrades = function(orderNumber, callback) {
 /*
  *
  * function buy(currencyPair, rate, amount, fillOrKill, immediateOrCancel, postOnly, callback)
- *
- * TODO: Write me
  *
  */
 api.prototype.buy = function(currencyPair, rate, amount, fillOrKill, immediateOrCancel, postOnly, callback) {
@@ -318,7 +298,7 @@ api.prototype.buy = function(currencyPair, rate, amount, fillOrKill, immediateOr
     // Send buy query
     sendQuery(this, "buy", opts, (err, response) => {
         if (err) {
-            // Call back with decoupled error info
+            // Call back with error info
             callback({"msg": err.msg}, null);
         } else {
             // Call back with response
@@ -330,8 +310,6 @@ api.prototype.buy = function(currencyPair, rate, amount, fillOrKill, immediateOr
 /*
  *
  * function sell(currencyPair, rate, amount, fillOrKill, immediateOrCancel, postOnly, callback)
- *
- * TODO: Write me
  *
  */
 api.prototype.sell = function(currencyPair, rate, amount, fillOrKill, immediateOrCancel, postOnly, callback) {
@@ -354,7 +332,7 @@ api.prototype.sell = function(currencyPair, rate, amount, fillOrKill, immediateO
     // Send sell query
     sendQuery(this, "sell", opts, (err, response) => {
         if (err) {
-            // Call back with decoupled error info
+            // Call back with error info
             callback({"msg": err.msg}, null);
         } else {
             // Call back with response
@@ -367,8 +345,6 @@ api.prototype.sell = function(currencyPair, rate, amount, fillOrKill, immediateO
  *
  * function cancelOrder(orderNumber, callback)
  *
- * TODO: Write me
- *
  */
 api.prototype.cancelOrder = function(orderNumber, callback) {
     // Build query options
@@ -379,7 +355,7 @@ api.prototype.cancelOrder = function(orderNumber, callback) {
     // Send cancelOrder query
     sendQuery(this, "cancelOrder", opts, (err, response) => {
         if (err) {
-            // Call back with decoupled error info
+            // Call back with error info
             callback({"msg": err.msg}, null);
         } else {
             // Call back with response
@@ -391,8 +367,6 @@ api.prototype.cancelOrder = function(orderNumber, callback) {
 /*
  *
  * function moveOrder(orderNumber, rate, amount, callback)
- *
- * TODO: Write me
  *
  */
 api.prototype.moveOrder = function(orderNumber, rate, amount, callback) {
@@ -406,7 +380,7 @@ api.prototype.moveOrder = function(orderNumber, rate, amount, callback) {
     // Send moveOrder query
     sendQuery(this, "moveOrder", opts, (err, response) => {
         if (err) {
-            // Call back with decoupled error info
+            // Call back with error info
             callback({"msg": err.msg}, null);
         } else {
             // Call back with response
@@ -418,8 +392,6 @@ api.prototype.moveOrder = function(orderNumber, rate, amount, callback) {
 /*
  *
  * function withdraw(currency, amount, address, paymentId, callback)
- *
- * TODO: Write me
  *
  */
 api.prototype.withdraw = function(currency, amount, address, paymentId, callback) {
@@ -434,7 +406,7 @@ api.prototype.withdraw = function(currency, amount, address, paymentId, callback
     // Send withdraw query
     sendQuery(this, "withdraw", opts, (err, response) => {
         if (err) {
-            // Call back with decoupled error info
+            // Call back with error info
             callback({"msg": err.msg}, null);
         } else {
             // Call back with response
@@ -447,14 +419,12 @@ api.prototype.withdraw = function(currency, amount, address, paymentId, callback
  *
  * function returnFeeInfo(callback)
  *
- * TODO: Write me
- *
  */
 api.prototype.returnFeeInfo = function(callback) {
     // Send returnFeeInfo query
     sendQuery(this, "returnFeeInfo", null, (err, response) => {
         if (err) {
-            // Call back with decoupled error info
+            // Call back with error info
             callback({"msg": err.msg}, null);
         } else {
             // Call back with response
@@ -467,8 +437,6 @@ api.prototype.returnFeeInfo = function(callback) {
  *
  * function returnAvailableAccountBalances(account, callback)
  *
- * TODO: Write me
- *
  */
 api.prototype.returnAvailableAccountBalances = function(account, callback) {
     // Build query options
@@ -479,7 +447,7 @@ api.prototype.returnAvailableAccountBalances = function(account, callback) {
     // Send returnAvailableAccountBalances query
     sendQuery(this, "returnAvailableAccountBalances", opts, (err, response) => {
         if (err) {
-            // Call back with decoupled error info
+            // Call back with error info
             callback({"msg": err.msg}, null);
         } else {
             // Call back with response
@@ -492,14 +460,12 @@ api.prototype.returnAvailableAccountBalances = function(account, callback) {
  *
  * function returnTradableBalances(callback)
  *
- * TODO: Write me
- *
  */
 api.prototype.returnTradableBalances = function(callback) {
     // Send returnTradableBalances query
     sendQuery(this, "returnTradableBalances", null, (err, response) => {
         if (err) {
-            // Call back with decoupled error info
+            // Call back with error info
             callback({"msg": err.msg}, null);
         } else {
             // Call back with response
@@ -511,8 +477,6 @@ api.prototype.returnTradableBalances = function(callback) {
 /*
  *
  * function transferBalance(currency, amount, fromAccount, toAccount, callback)
- *
- * TODO: Write me
  *
  */
 api.prototype.transferBalance = function(currency, amount, fromAccount, toAccount, callback) {
@@ -527,7 +491,7 @@ api.prototype.transferBalance = function(currency, amount, fromAccount, toAccoun
     // Send transferBalance query
     sendQuery(this, "transferBalance", opts, (err, response) => {
         if (err) {
-            // Call back with decoupled error info
+            // Call back with error info
             callback({"msg": err.msg}, null);
         } else {
             // Call back with response
@@ -540,14 +504,12 @@ api.prototype.transferBalance = function(currency, amount, fromAccount, toAccoun
  *
  * function returnMarginAccountSummary(callback)
  *
- * TODO: Write me
- *
  */
 api.prototype.returnMarginAccountSummary = function(callback) {
     // Send returnMarginAccountSummary query
     sendQuery(this, "returnMarginAccountSummary", null, (err, response) => {
         if (err) {
-            // Call back with decoupled error info
+            // Call back with error info
             callback({"msg": err.msg}, null);
         } else {
             // Call back with response
@@ -559,8 +521,6 @@ api.prototype.returnMarginAccountSummary = function(callback) {
 /*
  *
  * function marginBuy(currencyPair, rate, amount, lendingRate, callback)
- *
- * TODO: Write me
  *
  */
 api.prototype.marginBuy = function(currencyPair, rate, amount, lendingRate, callback) {
@@ -575,7 +535,7 @@ api.prototype.marginBuy = function(currencyPair, rate, amount, lendingRate, call
     // Send marginBuy query
     sendQuery(this, "marginBuy", opts, (err, response) => {
         if (err) {
-            // Call back with decoupled error info
+            // Call back with error info
             callback({"msg": err.msg}, null);
         } else {
             // Call back with response
@@ -587,8 +547,6 @@ api.prototype.marginBuy = function(currencyPair, rate, amount, lendingRate, call
 /*
  *
  * function marginSell(currencyPair, rate, amount, lendingRate, callback)
- *
- * TODO: Write me
  *
  */
 api.prototype.marginSell = function(currencyPair, rate, amount, lendingRate, callback) {
@@ -603,7 +561,7 @@ api.prototype.marginSell = function(currencyPair, rate, amount, lendingRate, cal
     // Send marginSell query
     sendQuery(this, "marginSell", opts, (err, response) => {
         if (err) {
-            // Call back with decoupled error info
+            // Call back with error info
             callback({"msg": err.msg}, null);
         } else {
             // Call back with response
@@ -616,8 +574,6 @@ api.prototype.marginSell = function(currencyPair, rate, amount, lendingRate, cal
  *
  * function getMarginPosition(currencyPair, callback)
  *
- * TODO: Write me
- *
  */
 api.prototype.getMarginPosition = function(currencyPair, callback) {
     // Build query options
@@ -628,7 +584,7 @@ api.prototype.getMarginPosition = function(currencyPair, callback) {
     // Send getMarginPosition query
     sendQuery(this, "getMarginPosition", opts, (err, response) => {
         if (err) {
-            // Call back with decoupled error info
+            // Call back with error info
             callback({"msg": err.msg}, null);
         } else {
             // Call back with response
@@ -641,8 +597,6 @@ api.prototype.getMarginPosition = function(currencyPair, callback) {
  *
  * function closeMarginPosition(currencyPair, callback)
  *
- * TODO: Write me
- *
  */
 api.prototype.closeMarginPosition = function(currencyPair, callback) {
     // Build query options
@@ -653,7 +607,7 @@ api.prototype.closeMarginPosition = function(currencyPair, callback) {
     // Send closeMarginPosition query
     sendQuery(this, "closeMarginPosition", opts, (err, response) => {
         if (err) {
-            // Call back with decoupled error info
+            // Call back with error info
             callback({"msg": err.msg}, null);
         } else {
             // Call back with response
@@ -665,8 +619,6 @@ api.prototype.closeMarginPosition = function(currencyPair, callback) {
 /*
  *
  * function createLoanOffer(currency, amount, duration, autoRenew, lendingRate, callback)
- *
- * TODO: Write me
  *
  */
 api.prototype.createLoanOffer = function(currency, amount, duration, autoRenew, lendingRate, callback) {
@@ -682,7 +634,7 @@ api.prototype.createLoanOffer = function(currency, amount, duration, autoRenew, 
     // Send createLoanOffer query
     sendQuery(this, "createLoanOffer", opts, (err, response) => {
         if (err) {
-            // Call back with decoupled error info
+            // Call back with error info
             callback({"msg": err.msg}, null);
         } else {
             // Call back with response
@@ -695,8 +647,6 @@ api.prototype.createLoanOffer = function(currency, amount, duration, autoRenew, 
  *
  * function cancelLoanOffer(orderNumber, callback)
  *
- * TODO: Write me
- *
  */
 api.prototype.cancelLoanOffer = function(orderNumber, callback) {
     // Build query options
@@ -707,7 +657,7 @@ api.prototype.cancelLoanOffer = function(orderNumber, callback) {
     // Send cancelLoanOffer query
     sendQuery(this, "cancelLoanOffer", opts, (err, response) => {
         if (err) {
-            // Call back with decoupled error info
+            // Call back with error info
             callback({"msg": err.msg}, null);
         } else {
             // Call back with response
@@ -720,14 +670,12 @@ api.prototype.cancelLoanOffer = function(orderNumber, callback) {
  *
  * function returnOpenLoanOffers(callback)
  *
- * TODO: Write me
- *
  */
 api.prototype.returnOpenLoanOffers = function(callback) {
     // Send returnOpenLoanOffers query
     sendQuery(this, "returnOpenLoanOffers", null, (err, response) => {
         if (err) {
-            // Call back with decoupled error info
+            // Call back with error info
             callback({"msg": err.msg}, null);
         } else {
             // Call back with response
@@ -740,14 +688,12 @@ api.prototype.returnOpenLoanOffers = function(callback) {
  *
  * function returnActiveLoans(callback)
  *
- * TODO: Write me
- *
  */
 api.prototype.returnActiveLoans = function(callback) {
     // Send returnActiveLoans query
     sendQuery(this, "returnActiveLoans", null, (err, response) => {
         if (err) {
-            // Call back with decoupled error info
+            // Call back with error info
             callback({"msg": err.msg}, null);
         } else {
             // Call back with response
@@ -760,8 +706,6 @@ api.prototype.returnActiveLoans = function(callback) {
  *
  * function toggleAutoRenew(orderNumber, callback)
  *
- * TODO: Write me
- *
  */
 api.prototype.toggleAutoRenew = function(orderNumber, callback) {
     // Build query options
@@ -772,7 +716,7 @@ api.prototype.toggleAutoRenew = function(orderNumber, callback) {
     // Send toggleAutoRenew query
     sendQuery(this, "toggleAutoRenew", opts, (err, response) => {
         if (err) {
-            // Call back with decoupled error info
+            // Call back with error info
             callback({"msg": err.msg}, null);
         } else {
             // Call back with response

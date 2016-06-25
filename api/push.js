@@ -236,7 +236,7 @@ api.prototype.ticker = function(callback) {
     // Subscribe to ticker feed
     subscribe(this, "ticker", (err, args) => {
         if (err) {
-            // Call back with decoupled error info
+            // Call back with error info
             return callback({"msg": err.msg}, null);
         } else {
             // Call back with ticker data
@@ -285,7 +285,7 @@ api.prototype.orderTrade = function(currencyPair, callback, allowBatches) {
     // Subscribe to currency pair feed (returns both new trades and order book updates)
     subscribe(currencyPair, (err, args) => {
         if (err) {
-            // Call back with decoupled error info
+            // Call back with error info
             return callback({"msg": err.msg}, null);
         } else {
             /*
@@ -372,7 +372,7 @@ api.prototype.trollbox = function(callback) {
     // Subscribe to the trollbox feed
     subscribe(this, "trollbox", (err, args) => {
         if (err) {
-            // Call back with decoupled error info
+            // Call back with error info
             return callback({"msg": err.msg}, null);
         } else {
             // Call back with trollbox data
