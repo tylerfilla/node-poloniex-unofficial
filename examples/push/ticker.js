@@ -18,7 +18,7 @@
 var polo = require("./../../");
 
 // Get access to the push API
-var poloPush = polo.api("push");
+var poloPush = new polo.PushWrapper();
 
 // Receive ticker updates
 poloPush.ticker((err, response) => {
@@ -26,10 +26,10 @@ poloPush.ticker((err, response) => {
         // Log error message
         console.log("An error occurred: " + err.msg);
 
-        // Send kill signal
+        // Disconnect
         return true;
-    } else {
-        // Log response
-        console.log(response);
     }
+
+    // Log raw response
+    console.log(response);
 });

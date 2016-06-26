@@ -22,18 +22,30 @@ var apiKey = process.argv[2];
 var apiSecret = process.argv[3];
 
 // Get access to the trading API
-var poloTrading = polo.api("trading", {
-    "apiKey": apiKey,
-    "apiSecret": apiSecret
-});
+var poloTrading = new polo.TradingWrapper(apiKey, apiSecret);
 
-// Demonstrate the returnCompleteBalances command
+// Demonstrate the returnCompleteBalances command without account parameter
 poloTrading.returnCompleteBalances((err, response) => {
     if (err) {
         // Log error message
         console.log("An error occurred: " + err.msg);
-    } else {
-        // Log response
-        console.log(response);
+
+        return;
     }
+
+    // Log response
+    console.log(response);
+});
+
+// Demonstrate the returnCompleteBalances command with account parameter
+poloTrading.returnCompleteBalances("all", (err, response) => {
+    if (err) {
+        // Log error message
+        console.log("An error occurred: " + err.msg);
+
+        return;
+    }
+
+    // Log response
+    console.log(response);
 });

@@ -18,15 +18,17 @@
 var polo = require("./../../");
 
 // Get access to the public API
-var poloPublic = polo.api("public");
+var poloPublic = new polo.PublicWrapper();
 
 // Demonstrate the return24hVolume command
 poloPublic.return24hVolume((err, response) => {
     if (err) {
         // Log error message
         console.log("An error occurred: " + err.msg);
-    } else {
-        // Log response
-        console.log(response);
+
+        return;
     }
+
+    // Log response
+    console.log(response);
 });

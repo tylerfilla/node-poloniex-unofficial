@@ -1,27 +1,35 @@
 {
-  "name": "poloniex-unofficial",
-  "version": "1.0.3",
-  "description": "Yet another unofficial Node.js wrapper for the Poloniex cryptocurrency exchange APIs",
-  "keywords": [
-    "poloniex",
-    "exchange",
-    "bitcoin",
-    "cryptocurrency"
-  ],
-  "bugs": {
-    "url": "https://github.com/tylerfilla/node-poloniex-unofficial/issues"
-  },
-  "license": "MIT",
-  "author": "Tyler Filla <tylerfilla@gmail.com> (https://github.com/tylerfilla)",
-  "main": "index.js",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/tylerfilla/node-poloniex-unofficial.git"
-  },
-  "dependencies": {
-    "autobahn": "^0.9.9",
-    "crypto": "^0.0.3",
-    "request": "^2.72.0",
-    "url": "^0.11.0"
-  }
+    "name": "poloniex-unofficial",
+    "version": "1.1.0-SNAPSHOT",
+    "description": "Yet another unofficial Node.js wrapper for the Poloniex cryptocurrency exchange APIs",
+    "keywords": [
+        "poloniex",
+        "exchange",
+        "bitcoin",
+        "cryptocurrency"
+    ],
+    "bugs": {
+        "url": "https://github.com/tylerfilla/node-poloniex-unofficial/issues"
+    },
+    "license": "MIT",
+    "author": "Tyler Filla <tylerfilla@gmail.com> (https://github.com/tylerfilla)",
+    "main": "lib/polonode.js",
+    "scripts": {
+        "lint": "eslint .",
+        "pretest": "npm run lint",
+        "test": "echo \"No formal API tests yet\" && exit 0"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/tylerfilla/node-poloniex-unofficial.git"
+    },
+    "dependencies": {
+        "autobahn": "^0.9.9",
+        "crypto": "^0.0.3",
+        "request": "^2.72.0",
+        "url": "^0.11.0"
+    },
+    "devDependencies": {
+        "eslint": "^2.13.1"
+    }
 }
