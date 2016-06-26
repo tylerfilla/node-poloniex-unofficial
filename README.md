@@ -1,11 +1,11 @@
 node-poloniex-unofficial
 ========================
 
+[![npm version](https://badge.fury.io/js/poloniex-unofficial.svg)](https://badge.fury.io/js/poloniex-unofficial)
+[![Build Status](https://travis-ci.org/tylerfilla/node-poloniex-unofficial.svg?branch=master)](https://travis-ci.org/tylerfilla/node-poloniex-unofficial)
+[![Dependency Status](https://david-dm.org/tylerfilla/node-poloniex-unofficial.svg)](https://david-dm.org/tylerfilla/node-poloniex-unofficial)
+
 Yet another unofficial Node.js wrapper for the Poloniex cryptocurrency exchange APIs. I put a lot of thought into the name, can't you tell?
-
-[![NPM](https://nodei.co/npm/poloniex-unofficial.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/poloniex-unofficial/)
-
-[![Build Status](https://travis-ci.org/tylerfilla/node-poloniex-unofficial.svg?branch=dev)](https://travis-ci.org/tylerfilla/node-poloniex-unofficial)
 
 Just a clarification for others, as I've confused myself more than I care to admit:  
 `node-poloniex-unofficial` is the name of the project, repository, and product as a whole.  
