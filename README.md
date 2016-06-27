@@ -165,7 +165,7 @@ var poloTrading = new polo.TradingWrapper("key", "secret");
 // Do some trading
 ```
 
-Worth noting is the fact that Poloniex requires that a unique and ever-increasing [nonce](https://en.wikipedia.org/wiki/Cryptographic_nonce) value be included to prevent an attacker from capturing and/or reusing encrypted traffic containing your credentials. By default, `poloniex-unofficial` simply uses the millisecond-precision UNIX Epoch time provided by `Date.now()`, as it is inherently ever-increasing and is granular enough for the purposes of this library.
+Worth noting is the fact that Poloniex requires that a unique and ever-increasing [nonce](https://en.wikipedia.org/wiki/Cryptographic_nonce) value be included to prevent an attacker from capturing and/or reusing encrypted traffic containing your credentials. By default, the millisecond-precision UNIX Epoch time provided by `Date.now()` is used, as it is inherently ever-increasing and is granular enough for the purposes of this library.
 
 Poloniex stores your latest and greatest nonce value and compares it to each nonce provided by successive trading commands. As a result, it is possible to have incremented your nonce value too far to simply use UNIX time (at least not any time soon). To counter this, you may supply your own function to the trading wrapper constructor as an optional third parameter to outsource nonce generation, like so:
 
