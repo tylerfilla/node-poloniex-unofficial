@@ -25,9 +25,8 @@ poloPublic.returnChartData("BTC_ETH", Math.floor(Date.now() / 1000) - 10*14400, 
     if (err) {
         // Log error message
         console.log("An error occurred: " + err.msg);
-
-        return;
+    } else {
+        // Log response
+        console.log(response);
     }
-    // Log response
-    console.log(response);
 });

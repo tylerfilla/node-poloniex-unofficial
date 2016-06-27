@@ -5,7 +5,7 @@ node-poloniex-unofficial
 [![Build Status](https://travis-ci.org/tylerfilla/node-poloniex-unofficial.svg?branch=master)](https://travis-ci.org/tylerfilla/node-poloniex-unofficial)
 [![Dependency Status](https://david-dm.org/tylerfilla/node-poloniex-unofficial.svg)](https://david-dm.org/tylerfilla/node-poloniex-unofficial)
 
-Yet another unofficial Node.js wrapper for the Poloniex cryptocurrency exchange APIs. I put a lot of thought into the name, can't you tell?
+Yet another unofficial Node.js wrapper for the Poloniex cryptocurrency exchange APIs.
 
 Just a clarification for others, as I've confused myself more than I care to admit:  
 `node-poloniex-unofficial` is the name of the project, repository, and product as a whole.  
@@ -24,9 +24,9 @@ $ npm install poloniex-unofficial
 Usage
 -----
 
-All use of the library starts with the `require` statement.
+All use of the library starts by requiring it.
 
-```javascript
+```js
 var polo = require("poloniex-unofficial");
 ```
 
@@ -43,53 +43,52 @@ Take this one out for a spin:
 var polo = require("poloniex-unofficial");
 
 // Get access to the push API
-var apiPush = polo.api("push");
+var poloPush = new polo.PushWrapper();
 
-// Now let's watch the mayhem of the trollbox from a safe distance
-apiPush.trollbox((err, response) => {
-    // Check for any errors
+// Receive trollbox updates
+poloPush.trollbox((err, response) => {
     if (err) {
-        // Log the error message
+        // Log error message
         console.log("An error occurred: " + err.msg);
 
-        // Send kill signal
+        // Disconnect
         return true;
     }
 
-    // Format and log the chat message
-    console.log(response.username + ": " + response.message);
+    // Log chat message as "[rep] username: message"
+    console.log("    [" + response.reputation + "] " + response.username + ": " + response.message);
 });
 ```
 
-The above code uses the `trollbox` function to subscribe to the "trollbox" [WAMP](https://en.wikipedia.org/wiki/Web_Application_Messaging_Protocol) feed on `wss://api.poloniex.com/`.
+The above code uses the `trollbox` function to subscribe to the "trollbox" [WAMP](https://en.wikipedia.org/wiki/Web_Application_Messaging_Protocol) feed at `wss://api.poloniex.com/`.
 
-Notice the `return true;` on line 15. Returning true from a push API wrapper function callback function (try saying that three times fast) indicates that you no longer wish to receive updates from the respective feed, internally prompting Autobahn|JS to unsubscribe from the respective WAMP feed. The API connection will be maintained by the library as long as there is at least one active subscription (at least one wrapper function receiving data) at any given time. Once the final subscription terminates, the API connection will be closed. The connection can and will be transparently reestablished the moment another feed is requested, but this behavior both saves resources and allows your program to gracefully exit.
+Notice the `return true;` line. Returning true from a push API wrapper callback indicates that you no longer wish to receive updates from that feed, and the callback will cease to be called. Internally, it leads Autobahn|JS to unsubscribe from that WAMP feed. The entire API connection, associated with the wrapper instance, will remain open as long as there is at least one active subscription (at least one wrapper function, such as `trollbox()`, receiving data) at any given time. Once the final subscription terminates, the API connection will be closed. The connection can and will be transparently reestablished the moment another feed is requested on the same wrapper instance, but this shutdown behavior both saves resources and allows your program to gracefully exit.
 
-Arguably more important is the, you know, money-related stuff. The following snippet will monitor the prices of each currency and log them.
+Arguably more important is the money-related stuff. The following script will log the prices of each currency pair traded at Poloniex.
 
 ```js
 // Import the module
 var polo = require("poloniex-unofficial");
 
 // Get access to the push API
-var apiPush = polo.api("push");
+var poloPush = new polo.PushWrapper();
 
-// Get price ticker updates
-apiPush.ticker((err, response) => {
+// Receive ticker updates
+poloPush.ticker((err, response) => {
     if (err) {
         // Log error message
         console.log("An error occurred: " + err.msg);
 
-        // Send kill signal
+        // Disconnect
         return true;
     }
 
-    // Log the last price and what pair it was for
-    console.log(response.currencyPair + ": " + response.last);
+    // Log raw response
+    console.log(response);
 });
 ```
 
-This is using the `ticker` push API wrapper function to stream real-time info like the last price, lowest ask, highest bid, volume, and the 24h high/low for *every* currency pair listed at Poloniex. Neat, huh?
+This is using the `ticker` push API wrapper function to stream real-time info like the last price, lowest ask, highest bid, volume, and the 24h high/low for every listed currency pair.
 
 With a little logic, we can sift through the data and just watch our favorite currencies.
 
@@ -98,24 +97,24 @@ With a little logic, we can sift through the data and just watch our favorite cu
 var polo = require("poloniex-unofficial");
 
 // Get access to the push API
-var apiPush = polo.api("push");
+var poloPush = new polo.PushWrapper();
 
-// Some of my favorites
-var watchList = ["BTC_ETH", "BTC_MAID", "BTC_QORA"];
+// Some currency pairs to watch
+var watchList = ["BTC_ETH", "BTC_XMR"];
 
 // Get price ticker updates
-apiPush.ticker((err, response) => {
+poloPush.ticker((err, response) => {
     if (err) {
         // Log error message
         console.log("An error occurred: " + err.msg);
 
-        // Send kill signal
+        // Disconnect
         return true;
     }
 
-    // Check if this currency is interesting
+    // Check if this currency is in the watch list
     if (watchList.indexOf(response.currencyPair) > -1) {
-        // Log the last price and what pair it was for
+        // Log the currency pair and its last price
         console.log(response.currencyPair + ": " + response.last);
     }
 });
@@ -134,19 +133,17 @@ Each function provided by the public API wrapper corresponds to exactly one comm
 var polo = require("poloniex-unofficial");
 
 // Get access to the public API
-var apiPublic = polo.api("public");
+var poloPublic = new polo.PublicWrapper();
 
 // Return a list of currencies supported by Poloniex
 poloPublic.returnCurrencies((err, response) => {
     if (err) {
         // Log error message
         console.log("An error occurred: " + err.msg);
-
-        return;
+    } else {
+        // Log response
+        console.log(response);
     }
-
-    // Log response
-    console.log(response);
 });
 ```
 
@@ -156,55 +153,43 @@ Read more about the various commands offered in the official [API docs](https://
 
 ### The Trading API ###
 
-The trading API is nearly identical in operation to the public API, with authentication being the real difference. This library aims to make authenticating as painless as possible. When using the selector function to access the trading API wrapper, your Poloniex API key and secret simply need to be bundled into an object and passed in alongside the module name, as in the following snippet.
+The trading API is nearly identical in operation to the public API, with authentication being the real difference. This library aims to make authenticating as painless as possible. Your Poloniex API key and secret simply need to be  passed in as parameters to the trading wrapper constructor when instantiating it, as in the following snippet:
 
 ```js
 // Import the module
 var polo = require("poloniex-unofficial");
 
 // Get access to the trading API
-var apiTrading = polo.api("trading", {
-    "key": "MY-POLONIEX-API-KEY",
-    "secret": "mypoloniexapisecret"
+var poloTrading = new polo.TradingWrapper("key", "secret");
+
+// Do some trading
+```
+
+Worth noting is the fact that Poloniex requires that a unique and ever-increasing [nonce](https://en.wikipedia.org/wiki/Cryptographic_nonce) value be included to prevent an attacker from capturing and/or reusing encrypted traffic containing your credentials. By default, `poloniex-unofficial` simply uses the millisecond-precision UNIX Epoch time provided by `Date.now()`, as it is inherently ever-increasing and is granular enough for the purposes of this library.
+
+Poloniex stores your latest and greatest nonce value and compares it to each nonce provided by successive trading commands. As a result, it is possible to have incremented your nonce value too far to simply use UNIX time (at least not any time soon). To counter this, you may supply your own function to the trading wrapper constructor as an optional third parameter to outsource nonce generation, like so:
+
+```js
+// Import the module
+var polo = require("poloniex-unofficial");
+
+// Get access to the trading API
+var poloTrading = new polo.TradingWrapper("key", "secret", function() {
+    // Tack on a few orders of magnitude (Warning: Don't do this unless you need to!)
+    return Date.now() * 1000;
 });
 
-// TODO: Do stuff with it here
+// Do some trading
 ```
 
-I do not recommend hard-coding your API key and/or secret into your scripts, simply on general security principle. I, personally, recommend providing this info on-demand to your scripts via a user interface or, at the very least, through command-line arguments (which will probably be logged someplace, anyway).
+My recommendation: If you do not need this feature, don't use it. Using the snippet above and executing a trading command will permanently increment Poloniex's expected future nonce and you won't be able to stop using it. This may or may not be negotiable with Poloniex support, but that seems to me like an excellent social engineering opportunity.
 
 Read about the various commands offered in the official [API docs](https://poloniex.com/support/api/).
-
-### Some Nifty Stuff ###
-
-The architecture of this library (particularly for the push API wrapper) makes for some cool one-liners, too.
-
-Read the trollbox from the comfort of your own terminal.
-
-```sh
-$ node --eval "require('poloniex-unofficial').api('push').trollbox((e, r) => console.log(e ? 'Error: ' + e.msg : r.username + ': ' + r.message))"
-```
-
-Log any price changes in the supported currencies.
-
-```sh
-$ node --eval "require('poloniex-unofficial').api('push').ticker((e, r) => console.log(e ? 'Error: ' + e.msg : new Date() + '\t' + r.currencyPair + ' \t' + r.last))"
-```
-
-On a GNU system, the command above can be modified to log to a file, filter for a certain currency pair, or even both.
-
-```sh
-$ node --eval "..." > last.log
-$ node --eval "..." | grep BTC_ETH
-$ node --eval "..." | grep --line-buffered BTC_ETH > eth_last.log
-```
 
 License
 -------
 
 Copyright (c) 2016 Tyler Filla   
 This software may be modified and distributed under the terms of [the MIT license](https://opensource.org/licenses/MIT). See the [LICENSE](https://github.com/tylerfilla/node-poloniex-unofficial/blob/master/LICENSE) file for details.
-
-Disclaimer: I just want to be clear about some of the legalese in the LICENSE file (which shall not be superseded by this loose interpretation). By using this software, you acknowledge that any damages incurred, which most probably means financial loss in this context, are not the responsibility of any contributors to the project. While the entire purpose of the project is to enable access to its users' assets according to strict protocol, things can happen.
 
 The `node-poloniex-unofficial` project is not affiliated in any way with Poloniex. It's literally in the name. "Unofficial."

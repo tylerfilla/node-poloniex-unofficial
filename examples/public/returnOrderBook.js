@@ -25,10 +25,8 @@ poloPublic.returnOrderBook("BTC_ETH", 10, (err, response) => {
     if (err) {
         // Log error message
         console.log("An error occurred: " + err.msg);
-
-        return;
+    } else {
+        // Log response
+        console.log(response);
     }
-
-    // Log response
-    console.log(response);
 });

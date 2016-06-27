@@ -29,12 +29,10 @@ poloTrading.returnCompleteBalances((err, response) => {
     if (err) {
         // Log error message
         console.log("An error occurred: " + err.msg);
-
-        return;
+    } else {
+        // Log response
+        console.log(response);
     }
-
-    // Log response
-    console.log(response);
 });
 
 // Demonstrate the returnCompleteBalances command with account parameter
@@ -42,10 +40,8 @@ poloTrading.returnCompleteBalances("all", (err, response) => {
     if (err) {
         // Log error message
         console.log("An error occurred: " + err.msg);
-
-        return;
+    } else {
+        // Log response
+        console.log(response);
     }
-
-    // Log response
-    console.log(response);
 });
