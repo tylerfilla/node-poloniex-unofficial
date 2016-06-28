@@ -15,7 +15,7 @@
  */
 
 // Import modules
-var polo = require("./../../");
+var polo = require("./../");
 
 // Create a new order book tracker for the bitcoin-monero market
 var book = new polo.OrderBook("BTC_XMR");
