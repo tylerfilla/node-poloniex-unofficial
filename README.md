@@ -193,3 +193,8 @@ Copyright (c) 2016 Tyler Filla
 This software may be modified and distributed under the terms of [the MIT license](https://opensource.org/licenses/MIT). See the [LICENSE](https://github.com/tylerfilla/node-poloniex-unofficial/blob/master/LICENSE) file for details.
 
 The `node-poloniex-unofficial` project is not affiliated in any way with Poloniex. It's literally in the name. "Unofficial."
+
+Support the Project
+-------------------
+
+The best way to build the most useful product for the many is to combine the efforts of the many. This project welcomes contributions of all kinds, whether in Coke or code. Feel free to open a PR or send some BTC to 12xZkQkb7b3ttXNGf2PRmdKje83o4Rx5R8. Either would be tremendously appreciated! [/shameless plea for soft drinks]
