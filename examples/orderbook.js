@@ -23,5 +23,15 @@ var book = new polo.OrderBook("BTC_XMR");
 // Create and use default wrappers
 book.useDefaultWrappers();
 
+book.onStart(() => {
+    console.log("Tracking started");
+});
+book.onStop(() => {
+    console.log("Tracking stopped");
+});
+book.onSync(() => {
+    console.log("(Re-)synchronized");
+});
+
 // Start tracking the market
 book.start();
