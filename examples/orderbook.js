@@ -20,13 +20,15 @@ var polo = require("./../");
 // Create a new order book tracker for the Bitcoin-Ethereum market
 var book = new polo.OrderBook("BTC_ETH");
 
+var syncsLost = 0;
+
 // Lifecycle events
 book.onStart(() => {
     console.log("Start tracking order book for " + book.getCurrencyPair());
 
     // Stop tracking after some time
     setTimeout(function() {
-        book.stop();
+        //book.stop();
     }, 20000);
 });
 book.onStop(() => {
@@ -42,11 +44,19 @@ book.onSyncComplete(() => {
 });
 book.onSyncLost(() => {
     console.log("Lost API synchronization!");
+    syncsLost++;
 });
 
 // Update events
 book.onUpdate(() => {
-    console.log("GOT UPDATE");
+    console.log("--------------------------------------------------------------------------------");
+    console.log("Syncs lost: " + syncsLost);
+    console.log("Sell\t\t\t\t\tBuy");
+
+    // Monitor top 8 rows
+    for (var i = 0; i < 8; i++) {
+        console.log(book._asks[i].rate + " BTC\t" + book._asks[i].amount + " ETH\t\t" + book._bids[i].rate + " BTC\t" + book._bids[i].amount + " ETH\t\t");
+    }
 });
 
 // Start tracking the order book
