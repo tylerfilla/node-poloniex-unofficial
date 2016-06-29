@@ -17,8 +17,8 @@
 // Import modules
 var polo = require("./../");
 
-// Create a new order book tracker for the bitcoin-monero market
-var book = new polo.OrderBook("BTC_XMR");
+// Create a new order book tracker for the Bitcoin-Ethereum market
+var book = new polo.OrderBook("BTC_ETH");
 
 // Create and use default wrappers
 book.useDefaultWrappers();
@@ -32,6 +32,12 @@ book.onStop(() => {
 book.onSync(() => {
     console.log("(Re-)synchronized");
 });
+book.onLoseSync(() => {
+    console.log("Lost synchronization");
+});
 
 // Start tracking the market
 book.start();
+
+// Stop tracking after 10 seconds
+setTimeout(book.stop, 10000);
