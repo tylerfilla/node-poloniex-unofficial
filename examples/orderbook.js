@@ -23,21 +23,24 @@ var book = new polo.OrderBook("BTC_ETH");
 // Create and use default wrappers
 book.useDefaultWrappers();
 
+// Lifecycle events
 book.onStart(() => {
-    console.log("Tracking started");
+    console.log("Started tracking market");
 });
 book.onStop(() => {
     console.log("Tracking stopped");
 });
 book.onSync(() => {
-    console.log("(Re-)synchronized");
+    console.log("Synchronized push API with public API");
 });
 book.onLoseSync(() => {
-    console.log("Lost synchronization");
+    console.log("Lost API synchronization");
 });
 
 // Start tracking the market
 book.start();
 
 // Stop tracking after 10 seconds
-setTimeout(book.stop, 10000);
+setTimeout(function() {
+    book.stop();
+}, 10000);
