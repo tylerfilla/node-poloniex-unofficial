@@ -37,10 +37,14 @@ book.onLoseSync(() => {
     console.log("Lost API synchronization");
 });
 
+// TODO: Subscribe to events regarding updates
+
 // Start tracking the market
 book.start();
+
+// TODO: Get info from book object
 
 // Stop tracking after 10 seconds
 setTimeout(function() {
     book.stop();
-}, 10000);
+}, 15000);
