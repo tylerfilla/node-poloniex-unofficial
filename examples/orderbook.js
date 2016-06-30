@@ -17,10 +17,12 @@
 // Import modules
 var polo = require("./../");
 
-// Create a new order book tracker for the USD-Bitcoin market
-var book = new polo.OrderBook("USDT_BTC");
+// Create a new order book tracker for the Bitcoin-Ethereum market
+var book = new polo.OrderBook("BTC_ETH");
 
+// Stats
 var syncsLost = 0;
+var updates = 0;
 
 // Lifecycle events
 book.onStart(() => {
@@ -43,22 +45,24 @@ book.onSyncComplete(() => {
     console.log("Sync successful! Now tracking " + book.getCurrencyPair() + "...");
 });
 book.onSyncLost(() => {
-    console.log("Lost API synchronization!");
     syncsLost++;
+    console.log("Lost API synchronization!");
 });
 
 // Update events
 book.onUpdate(() => {
+    updates++;
+
     console.log("--------------------------------------------------------------------------------");
-    console.log("Syncs lost: " + syncsLost);
+    console.log("Updates rx'd: " + updates + " / Syncs lost: " + syncsLost);
     console.log("Sell\t\t\t\t\t\tBuy");
 
     // Monitor top 8 rows
-    for (var i = 0; i < 8; i++) {
-        console.log((i + 1) + ". " + book._asks._entries[i].rate.toFixed(8) + " USD\t" + book._asks._entries[i].amount.toFixed(8) + " BTC\t\t" + book._bids._entries[i].rate.toFixed(8) + " USD\t" + book._bids._entries[i].amount.toFixed(8) + " BTC\t\t");
+    for (var i = 0; i < 20; i++) {
+        console.log((i + 1) + ". " + book._asks._entries[i].rate.toFixed(8) + " BTC\t" + book._asks._entries[i].amount.toFixed(8) + " ETH\t\t" + book._bids._entries[i].rate.toFixed(8) + " BTC\t" + book._bids._entries[i].amount.toFixed(8) + " ETH\t\t");
     }
 
-    console.log("Spread: " + Math.abs(book._asks._entries[0].rate - book._bids._entries[0].rate).toFixed(8) + " USD");
+    console.log("Spread: " + Math.abs(book._asks._entries[0].rate - book._bids._entries[0].rate).toFixed(8) + " BTC");
 });
 
 // Start tracking the order book
