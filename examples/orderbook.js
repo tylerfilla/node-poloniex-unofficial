@@ -17,8 +17,8 @@
 // Import modules
 var polo = require("./../");
 
-// Create a new order book tracker for the Bitcoin-Ethereum market
-var book = new polo.OrderBook("BTC_ETH");
+// Create a new order book tracker for the USD-Bitcoin market
+var book = new polo.OrderBook("USDT_BTC");
 
 var syncsLost = 0;
 
@@ -51,12 +51,14 @@ book.onSyncLost(() => {
 book.onUpdate(() => {
     console.log("--------------------------------------------------------------------------------");
     console.log("Syncs lost: " + syncsLost);
-    console.log("Sell\t\t\t\t\tBuy");
+    console.log("Sell\t\t\t\t\t\tBuy");
 
     // Monitor top 8 rows
     for (var i = 0; i < 8; i++) {
-        console.log(book._asks[i].rate + " BTC\t" + book._asks[i].amount + " ETH\t\t" + book._bids[i].rate + " BTC\t" + book._bids[i].amount + " ETH\t\t");
+        console.log((i + 1) + ". " + book._asks._entries[i].rate.toFixed(8) + " USD\t" + book._asks._entries[i].amount.toFixed(8) + " BTC\t\t" + book._bids._entries[i].rate.toFixed(8) + " USD\t" + book._bids._entries[i].amount.toFixed(8) + " BTC\t\t");
     }
+
+    console.log("Spread: " + Math.abs(book._asks._entries[0].rate - book._bids._entries[0].rate).toFixed(8) + " USD");
 });
 
 // Start tracking the order book
