@@ -54,7 +54,7 @@ book.onUpdate(() => {
     updates++;
 
     console.log("--------------------------------------------------------------------------------");
-    console.log("Updates rx'd: " + updates + " / Syncs lost: " + syncsLost);
+    console.log("Updates rx'd: " + updates + " / Buffered: " + book._updateBuffer.length + " / Syncs lost: " + syncsLost);
     console.log("Sell\t\t\t\t\t\tBuy");
 
     // Monitor top 8 rows
