@@ -45,7 +45,7 @@ book.onUpdate(() => {
     if (syncing) {
         console.log("Resynchronizing...");
     } else {
-        console.log("Updates Received: " + updates + " / Updates in Buffer: " + book._updateBuffer.length + " / Total Sync Losses: " + syncsLost);
+        console.log("Updates Received: " + updates + " / Updates in Buffer: " + book.getUpdateBufferSize() + " / Total Sync Losses: " + syncsLost);
     }
 
     console.log("Sell\t\t\t\t\t\tBuy");
