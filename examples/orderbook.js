@@ -25,6 +25,16 @@ var syncsLost = 0;
 var updates = 0;
 var syncing = false;
 
+// Lifecycle events
+book.onStop(err => {
+    // If stop is caused by an error
+    if (err) {
+        console.log("An error occurred: " + err.msg);
+    }
+
+    console.log("Stopping...");
+});
+
 // Sync events
 book.onSyncBegin(() => {
     syncing = true;
@@ -45,7 +55,7 @@ book.onUpdate(() => {
     if (syncing) {
         console.log("Resynchronizing...");
     } else {
-        console.log("Updates Received: " + updates + " / Updates in Buffer: " + book.getUpdateBufferSize() + " / Total Sync Losses: " + syncsLost);
+        console.log("Updates Received: " + updates + " / Updates in Buffer: " + book.getUpdateBufferSize() + " / Total Sync Losses: " + syncsLost + " (" + (100 * syncsLost / (updates + syncsLost)).toFixed(2) + "%)");
     }
 
     console.log("Sell\t\t\t\t\t\tBuy");
