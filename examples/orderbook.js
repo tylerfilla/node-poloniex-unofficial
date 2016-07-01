@@ -71,7 +71,7 @@ book.onUpdate(() => {
 
     var bidSum = 0;
     for (var i = 0; i < book._bids._entries.length; i++) {
-        bidSum += book._bids._entries[i].amount * book._bids._entries[i].rate;
+        bidSum += book._bids._entries[i].total;
     }
 
     console.log("Bids: " + bidSum.toFixed(8) + " ETH");
