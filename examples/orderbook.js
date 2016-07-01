@@ -23,61 +23,57 @@ var book = new polo.OrderBook("BTC_ETH");
 // Stats
 var syncsLost = 0;
 var updates = 0;
-
-// Lifecycle events
-book.onStart(() => {
-    console.log("Start tracking order book for " + book.getCurrencyPair());
-
-    // Stop tracking after some time
-    setTimeout(function() {
-        //book.stop();
-    }, 20000);
-});
-book.onStop(() => {
-    console.log("Order book tracking stopped");
-});
+var syncing = false;
 
 // Sync events
 book.onSyncBegin(() => {
-    console.log("Starting sync between push and public APIs...");
+    syncing = true;
 });
 book.onSyncComplete(() => {
-    console.log("Sync successful! Now tracking " + book.getCurrencyPair() + "...");
+    syncing = false;
 });
 book.onSyncLost(() => {
     syncsLost++;
-    console.log("Lost API synchronization!");
 });
 
-// Update events
+// Update event
 book.onUpdate(() => {
     updates++;
 
+    var askSum = 0;
+    for (var i = 0; i < book.getNumAsks(); i++) {
+        askSum += book.getAskAt(i).amount;
+    }
+
+    var bidTotalSum = 0;
+    for (var i = 0; i < book.getNumBids(); i++) {
+        bidTotalSum += book.getBidAt(i).total;
+    }
+
     console.log("--------------------------------------------------------------------------------");
-    console.log("Updates rx'd: " + updates + " / Buffered: " + book._updateBuffer.length + " / Syncs lost: " + syncsLost);
+
+    if (syncing) {
+        console.log("Resynchronizing...");
+    } else {
+        console.log("Updates Received: " + updates + " / Updates in Buffer: " + book._updateBuffer.length + " / Total Sync Losses: " + syncsLost);
+    }
+
     console.log("Sell\t\t\t\t\t\tBuy");
 
     // Monitor top 8 rows
     for (var i = 0; i < 18; i++) {
-        console.log((i + 1) + ". " + book._asks._entries[i].rate.toFixed(8) + " BTC\t" + book._asks._entries[i].amount.toFixed(8) + " ETH\t\t" + book._bids._entries[i].rate.toFixed(8) + " BTC\t" + book._bids._entries[i].amount.toFixed(8) + " ETH\t\t");
+        var ask = book.getAskAt(i);
+        var bid = book.getBidAt(i);
+
+        console.log((i + 1) + ". " + ask.rate.toFixed(8) + " BTC\t" + ask.amount.toFixed(8) + " ETH\t\t" + bid.rate.toFixed(8) + " BTC\t" + bid.amount.toFixed(8) + " ETH\t\t");
     }
 
-    var askSum = 0;
-    for (var i = 0; i < book._asks._entries.length; i++) {
-        askSum += book._asks._entries[i].amount;
-    }
-
-    console.log("Asks: " + askSum.toFixed(8) + " ETH");
-
-    var bidSum = 0;
-    for (var i = 0; i < book._bids._entries.length; i++) {
-        bidSum += book._bids._entries[i].total;
-    }
-
-    console.log("Bids: " + bidSum.toFixed(8) + " ETH");
-
-    console.log("Spread: " + Math.abs(book._asks._entries[0].rate - book._bids._entries[0].rate).toFixed(8) + " BTC");
+    console.log("Total asks: " + askSum.toFixed(8) + " ETH");
+    console.log("Total bids: " + bidTotalSum.toFixed(8) + " BTC");
+    console.log("Spread: " + book.getMetrics().spread.toFixed(8) + " BTC");
 });
+
+console.log("Please wait...");
 
 // Start tracking the order book
 book.start();
