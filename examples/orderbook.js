@@ -40,16 +40,6 @@ book.onSyncLost(() => {
 book.onUpdate(() => {
     updates++;
 
-    var askSum = 0;
-    for (var i = 0; i < book.getNumAsks(); i++) {
-        askSum += book.getAskAt(i).amount;
-    }
-
-    var bidTotalSum = 0;
-    for (var i = 0; i < book.getNumBids(); i++) {
-        bidTotalSum += book.getBidAt(i).total;
-    }
-
     console.log("--------------------------------------------------------------------------------");
 
     if (syncing) {
@@ -68,9 +58,9 @@ book.onUpdate(() => {
         console.log((i + 1) + ". " + ask.rate.toFixed(8) + " BTC\t" + ask.amount.toFixed(8) + " ETH\t\t" + bid.rate.toFixed(8) + " BTC\t" + bid.amount.toFixed(8) + " ETH\t\t");
     }
 
-    console.log("Total asks: " + askSum.toFixed(8) + " ETH");
-    console.log("Total bids: " + bidTotalSum.toFixed(8) + " BTC");
     console.log("Spread: " + book.getMetrics().spread.toFixed(8) + " BTC");
+    console.log("Total asks: " + book.getMetrics().askSumAmount.toFixed(8) + " ETH");
+    console.log("Total bids: " + book.getMetrics().bidSumTotal.toFixed(8) + " BTC");
 });
 
 console.log("Please wait...");
