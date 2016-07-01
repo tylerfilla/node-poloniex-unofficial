@@ -65,7 +65,7 @@ book.onUpdate(() => {
         var ask = book.getAskAt(i);
         var bid = book.getBidAt(i);
 
-        console.log((i + 1) + ". " + ask.rate.toFixed(8) + " BTC\t" + ask.amount.toFixed(8) + " ETH\t\t" + bid.rate.toFixed(8) + " BTC\t" + bid.amount.toFixed(8) + " ETH\t\t");
+        console.log((i + 1) + ". " + ask.getRate().toFixed(8) + " BTC\t" + ask.getAmount().toFixed(8) + " ETH\t\t" + bid.getRate().toFixed(8) + " BTC\t" + bid.getAmount().toFixed(8) + " ETH\t\t");
     }
 
     console.log("Spread: " + book.getMetrics().spread.toFixed(8) + " BTC");
