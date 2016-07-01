@@ -58,9 +58,23 @@ book.onUpdate(() => {
     console.log("Sell\t\t\t\t\t\tBuy");
 
     // Monitor top 8 rows
-    for (var i = 0; i < 20; i++) {
+    for (var i = 0; i < 18; i++) {
         console.log((i + 1) + ". " + book._asks._entries[i].rate.toFixed(8) + " BTC\t" + book._asks._entries[i].amount.toFixed(8) + " ETH\t\t" + book._bids._entries[i].rate.toFixed(8) + " BTC\t" + book._bids._entries[i].amount.toFixed(8) + " ETH\t\t");
     }
+
+    var askSum = 0;
+    for (var i = 0; i < book._asks._entries.length; i++) {
+        askSum += book._asks._entries[i].amount;
+    }
+
+    console.log("Asks: " + askSum.toFixed(8) + " ETH");
+
+    var bidSum = 0;
+    for (var i = 0; i < book._bids._entries.length; i++) {
+        bidSum += book._bids._entries[i].amount * book._bids._entries[i].rate;
+    }
+
+    console.log("Bids: " + bidSum.toFixed(8) + " ETH");
 
     console.log("Spread: " + Math.abs(book._asks._entries[0].rate - book._bids._entries[0].rate).toFixed(8) + " BTC");
 });
