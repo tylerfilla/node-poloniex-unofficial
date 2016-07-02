@@ -60,7 +60,7 @@ book.onUpdate(() => {
 
     console.log("Sell\t\t\t\t\t\tBuy");
 
-    // Monitor top 8 rows
+    // Monitor top few rows
     for (var i = 0; i < 18; i++) {
         var ask = book.getAskAt(i);
         var bid = book.getBidAt(i);
