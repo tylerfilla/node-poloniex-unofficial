@@ -20,12 +20,10 @@ const polo = require("./../");
 // Create a new order book tracker for the Bitcoin-Ethereum market
 const book = new polo.OrderBook("BTC_ETH");
 
-// Stats
-var syncsLost = 0;
-var updates = 0;
-var syncing = false;
-
 // Lifecycle events
+book.onStart(() => {
+    console.log("Starting up...");
+});
 book.onStop(err => {
     // If stop is caused by an error
     if (err) {
@@ -35,45 +33,24 @@ book.onStop(err => {
     console.log("Stopping...");
 });
 
-// Sync events
-book.onSyncBegin(() => {
-    syncing = true;
-});
-book.onSyncComplete(() => {
-    syncing = false;
-});
-book.onSyncLost(() => {
-    syncsLost++;
-});
-
 // Update event
 book.onUpdate(() => {
-    updates++;
-
+    console.log("Sell\t\t\t\t\tBuy");
     console.log("--------------------------------------------------------------------------------");
 
-    if (syncing) {
-        console.log("Resynchronizing...");
-    } else {
-        console.log("Updates Received: " + updates + " / Updates in Buffer: " + book.getUpdateBufferSize() + " / Total Sync Losses: " + syncsLost + " (" + (100 * syncsLost / (updates + syncsLost)).toFixed(2) + "%)");
-    }
-
-    console.log("Sell\t\t\t\t\t\tBuy");
-
-    // Monitor top few rows
+    // Monitor top few rows to match a standard 80x24 console
     for (var i = 0; i < 18; i++) {
         var ask = book.getAskAt(i);
         var bid = book.getBidAt(i);
 
-        console.log((i + 1) + ". " + ask.getRate().toFixed(8) + " BTC\t" + ask.getAmount().toFixed(8) + " ETH\t\t" + bid.getRate().toFixed(8) + " BTC\t" + bid.getAmount().toFixed(8) + " ETH\t\t");
+        console.log(ask.getRate().toFixed(8) + " BTC\t" + ask.getAmount().toFixed(8) + " ETH\t" + (ask.getAmount().toFixed(8).length > 11 ? "" : "\t") + bid.getRate().toFixed(8) + " BTC\t" + bid.getAmount().toFixed(8) + " ETH\t\t");
     }
 
+    console.log("--------------------------------------------------------------------------------");
     console.log("Spread: " + book.getMetrics().spread.toFixed(8) + " BTC");
     console.log("Total asks: " + book.getMetrics().askSumAmount.toFixed(8) + " ETH");
     console.log("Total bids: " + book.getMetrics().bidSumTotal.toFixed(8) + " BTC");
 });
-
-console.log("Please wait...");
 
 // Start tracking the order book
 book.start();
