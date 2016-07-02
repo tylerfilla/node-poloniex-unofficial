@@ -2,7 +2,6 @@ node-poloniex-unofficial
 ========================
 
 [![Join the chat at https://gitter.im/tylerfilla/node-poloniex-unofficial](https://badges.gitter.im/tylerfilla/node-poloniex-unofficial.svg)](https://gitter.im/tylerfilla/node-poloniex-unofficial?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-
 [![npm version](https://badge.fury.io/js/poloniex-unofficial.svg)](https://badge.fury.io/js/poloniex-unofficial)
 [![Build Status](https://travis-ci.org/tylerfilla/node-poloniex-unofficial.svg?branch=master)](https://travis-ci.org/tylerfilla/node-poloniex-unofficial)
 [![Dependency Status](https://david-dm.org/tylerfilla/node-poloniex-unofficial.svg)](https://david-dm.org/tylerfilla/node-poloniex-unofficial)
