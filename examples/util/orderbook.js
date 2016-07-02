@@ -15,7 +15,7 @@
  */
 
 // Import modules
-const polo = require("./../");
+const polo = require("./../../");
 
 // Create a new order book tracker for the Bitcoin-Ethereum market
 const book = new polo.OrderBook("BTC_ETH");

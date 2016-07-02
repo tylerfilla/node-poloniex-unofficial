@@ -15,7 +15,7 @@
  */
 
 // Import modules
-var polo = require("./../../");
+var polo = require("./../../../");
 
 // Get API key and secret from command-line arguments
 var apiKey = process.argv[2];
