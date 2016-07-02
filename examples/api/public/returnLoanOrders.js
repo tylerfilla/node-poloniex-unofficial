@@ -15,10 +15,10 @@
  */
 
 // Import modules
-var polo = require("./../../../");
+const polo = require("./../../../");
 
 // Get access to the public API
-var poloPublic = new polo.PublicWrapper();
+const poloPublic = new polo.PublicWrapper();
 
 // Demonstrate the returnLoanOrders command
 poloPublic.returnLoanOrders("BTC", (err, response) => {

@@ -15,10 +15,10 @@
  */
 
 // Import modules
-var polo = require("./../../../");
+const polo = require("./../../../");
 
 // Get access to the public API
-var poloPublic = new polo.PublicWrapper();
+const poloPublic = new polo.PublicWrapper();
 
 // Demonstrate the returnChartData command
 poloPublic.returnChartData("BTC_ETH", Math.floor(Date.now() / 1000) - 10*14400, Math.floor(Date.now() / 1000), 14400, (err, response) => {
