@@ -17,14 +17,23 @@
 // Import modules
 const polo = require("./../../");
 
+// Localize functions
+const CurrencyPair = polo.CurrencyPair;
+
 // Create a new currency pair for the Bitcoin-Ethereum market
-const pair = new polo.CurrencyPair("BTC", "ETH");
+const pair1 = new CurrencyPair("BTC", "ETH");
 
 // Get its base currency (should be "BTC")
-console.log(pair.getBase());
+console.log(pair1.getBase());
 
 // Get its quote currency (should be "ETH")
-console.log(pair.getQuote());
+console.log(pair1.getQuote());
 
-// Get its Poloniex pair string (should be "BTC_ETH")
-console.log(pair.getPairString());
+// Get it as a string
+console.log(pair1.toString());
+
+// Create another currency pair from string
+const pair2 = CurrencyPair.fromString("BTC_ETH");
+
+// Compare them (should be equal)
+console.log(pair1.equals(pair2));
