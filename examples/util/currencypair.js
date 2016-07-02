@@ -17,6 +17,7 @@
 // Import modules
 const polo = require("./../../");
 
+<<<<<<< 2658eafd0eaf693e397f386925d0f10016f9a0a6
 // Localize functions
 const CurrencyPair = polo.CurrencyPair;
 
@@ -37,3 +38,16 @@ const pair2 = CurrencyPair.fromString("BTC_ETH");
 
 // Compare them (should be equal)
 console.log(pair1.equals(pair2));
+=======
+// Create a new currency pair for the Bitcoin-Ethereum market
+const pair = new polo.CurrencyPair("BTC", "ETH");
+
+// Get its base currency (should be "BTC")
+console.log(pair.getBase());
+
+// Get its quote currency (should be "ETH")
+console.log(pair.getQuote());
+
+// Get its Poloniex pair string (should be "BTC_ETH")
+console.log(pair.getPairString());
+>>>>>>> Renamed TradingPair.js to CurrencyPair.js and made immutable
