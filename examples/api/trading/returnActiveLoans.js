@@ -15,21 +15,22 @@
  */
 
 // Import modules
-var polo = require("./../../");
+const polo = require("./../../../");
 
-// Get access to the push API
-var poloPush = new polo.PushWrapper();
+// Get API key and secret from command-line arguments
+const apiKey = process.argv[2];
+const apiSecret = process.argv[3];
 
-// Receive ticker updates
-poloPush.ticker((err, response) => {
+// Get access to the trading API
+const poloTrading = new polo.TradingWrapper(apiKey, apiSecret);
+
+// Demonstrate the returnActiveLoans command
+poloTrading.returnActiveLoans((err, response) => {
     if (err) {
         // Log error message
         console.log("An error occurred: " + err.msg);
-
-        // Disconnect
-        return true;
+    } else {
+        // Log response
+        console.log(response);
     }
-
-    // Log raw response
-    console.log(response);
 });

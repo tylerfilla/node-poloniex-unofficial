@@ -15,13 +15,13 @@
  */
 
 // Import modules
-var polo = require("./../../");
+const polo = require("./../../../");
 
 // Get access to the public API
-var poloPublic = new polo.PublicWrapper();
+const poloPublic = new polo.PublicWrapper();
 
-// Demonstrate the returnOrderBook command
-poloPublic.returnOrderBook("BTC_ETH", 10, (err, response) => {
+// Demonstrate the returnTicker command
+poloPublic.returnTicker((err, response) => {
     if (err) {
         // Log error message
         console.log("An error occurred: " + err.msg);

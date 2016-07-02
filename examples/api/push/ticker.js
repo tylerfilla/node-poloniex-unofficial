@@ -15,18 +15,21 @@
  */
 
 // Import modules
-var polo = require("./../../");
+const polo = require("./../../../");
 
-// Get access to the public API
-var poloPublic = new polo.PublicWrapper();
+// Get access to the push API
+const poloPush = new polo.PushWrapper();
 
-// Demonstrate the returnCurrencies command
-poloPublic.returnCurrencies((err, response) => {
+// Receive ticker updates
+poloPush.ticker((err, response) => {
     if (err) {
         // Log error message
         console.log("An error occurred: " + err.msg);
-    } else {
-        // Log response
-        console.log(response);
+
+        // Disconnect
+        return true;
     }
+
+    // Log raw response
+    console.log(response);
 });

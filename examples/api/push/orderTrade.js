@@ -15,18 +15,21 @@
  */
 
 // Import modules
-var polo = require("./../../");
+const polo = require("./../../../");
 
-// Get access to the public API
-var poloPublic = new polo.PublicWrapper();
+// Get access to the push API
+const poloPush = new polo.PushWrapper();
 
-// Demonstrate the returnChartData command
-poloPublic.returnChartData("BTC_ETH", Math.floor(Date.now() / 1000) - 10*14400, Math.floor(Date.now() / 1000), 14400, (err, response) => {
+// Receive order book and trade updates for BTC_ETH
+poloPush.orderTrade("BTC_ETH", (err, response) => {
     if (err) {
         // Log error message
         console.log("An error occurred: " + err.msg);
-    } else {
-        // Log response
-        console.log(response);
+
+        // Disconnect
+        return true;
     }
+
+    // Log raw response
+    console.log(response);
 });

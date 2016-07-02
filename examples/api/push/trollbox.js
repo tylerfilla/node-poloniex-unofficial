@@ -15,18 +15,21 @@
  */
 
 // Import modules
-var polo = require("./../../");
+const polo = require("./../../../");
 
-// Get access to the public API
-var poloPublic = new polo.PublicWrapper();
+// Get access to the push API
+const poloPush = new polo.PushWrapper();
 
-// Demonstrate the returnTradeHistory command
-poloPublic.returnTradeHistory("BTC_ETH", Math.floor(Date.now() / 1000) - 3600, Math.floor(Date.now() / 1000), (err, response) => {
+// Receive trollbox updates
+poloPush.trollbox((err, response) => {
     if (err) {
         // Log error message
         console.log("An error occurred: " + err.msg);
-    } else {
-        // Log response
-        console.log(response);
+
+        // Disconnect
+        return true;
     }
+
+    // Log chat message as "[rep] username: message"
+    console.log("    [" + response.reputation + "] " + response.username + ": " + response.message);
 });

@@ -15,17 +15,17 @@
  */
 
 // Import modules
-var polo = require("./../../");
+const polo = require("./../../../");
 
 // Get API key and secret from command-line arguments
-var apiKey = process.argv[2];
-var apiSecret = process.argv[3];
+const apiKey = process.argv[2];
+const apiSecret = process.argv[3];
 
 // Get access to the trading API
-var poloTrading = new polo.TradingWrapper(apiKey, apiSecret);
+const poloTrading = new polo.TradingWrapper(apiKey, apiSecret);
 
-// Demonstrate the returnOpenLoanOffers command
-poloTrading.returnOpenLoanOffers((err, response) => {
+// Demonstrate the returnDepositAddresses command
+poloTrading.returnDepositAddresses((err, response) => {
     if (err) {
         // Log error message
         console.log("An error occurred: " + err.msg);

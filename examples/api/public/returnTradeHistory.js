@@ -15,17 +15,13 @@
  */
 
 // Import modules
-var polo = require("./../../");
+const polo = require("./../../../");
 
-// Get API key and secret from command-line arguments
-var apiKey = process.argv[2];
-var apiSecret = process.argv[3];
+// Get access to the public API
+const poloPublic = new polo.PublicWrapper();
 
-// Get access to the trading API
-var poloTrading = new polo.TradingWrapper(apiKey, apiSecret);
-
-// Demonstrate the returnTradableBalances command
-poloTrading.returnTradableBalances((err, response) => {
+// Demonstrate the returnTradeHistory command
+poloPublic.returnTradeHistory("BTC_ETH", Math.floor(Date.now() / 1000) - 3600, Math.floor(Date.now() / 1000), (err, response) => {
     if (err) {
         // Log error message
         console.log("An error occurred: " + err.msg);

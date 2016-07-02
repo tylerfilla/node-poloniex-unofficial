@@ -15,21 +15,18 @@
  */
 
 // Import modules
-var polo = require("./../../");
+const polo = require("./../../../");
 
-// Get access to the push API
-var poloPush = new polo.PushWrapper();
+// Get access to the public API
+const poloPublic = new polo.PublicWrapper();
 
-// Receive trollbox updates
-poloPush.trollbox((err, response) => {
+// Demonstrate the returnOrderBook command
+poloPublic.returnOrderBook("BTC_ETH", 10, (err, response) => {
     if (err) {
         // Log error message
         console.log("An error occurred: " + err.msg);
-
-        // Disconnect
-        return true;
+    } else {
+        // Log response
+        console.log(response);
     }
-
-    // Log chat message as "[rep] username: message"
-    console.log("    [" + response.reputation + "] " + response.username + ": " + response.message);
 });

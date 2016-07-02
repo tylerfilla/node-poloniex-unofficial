@@ -15,13 +15,17 @@
  */
 
 // Import modules
-var polo = require("./../../");
+const polo = require("./../../../");
 
-// Get access to the public API
-var poloPublic = new polo.PublicWrapper();
+// Get API key and secret from command-line arguments
+const apiKey = process.argv[2];
+const apiSecret = process.argv[3];
 
-// Demonstrate the returnTicker command
-poloPublic.returnTicker((err, response) => {
+// Get access to the trading API
+const poloTrading = new polo.TradingWrapper(apiKey, apiSecret);
+
+// Demonstrate the returnBalances command
+poloTrading.returnBalances((err, response) => {
     if (err) {
         // Log error message
         console.log("An error occurred: " + err.msg);
