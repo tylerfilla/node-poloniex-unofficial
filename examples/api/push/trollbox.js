@@ -15,10 +15,10 @@
  */
 
 // Import modules
-var polo = require("./../../../");
+const polo = require("./../../../");
 
 // Get access to the push API
-var poloPush = new polo.PushWrapper();
+const poloPush = new polo.PushWrapper();
 
 // Receive trollbox updates
 poloPush.trollbox((err, response) => {
