@@ -20,13 +20,19 @@ const polo = require("./../../../");
 // Get access to the public API
 const poloPublic = new polo.PublicWrapper();
 
+// Command parameters
+var params = {
+    currencyPair: "BTC_ETH",
+    start: Math.floor(Date.now() / 1000) - 10 * 14400,
+    end: Math.floor(Date.now() / 1000),
+    period: 14400
+};
+
 // Demonstrate the returnChartData command
-poloPublic.returnChartData("BTC_ETH", Math.floor(Date.now() / 1000) - 10*14400, Math.floor(Date.now() / 1000), 14400, (err, response) => {
+poloPublic.returnChartData(params, (err, response) => {
     if (err) {
-        // Log error message
-        console.log("An error occurred: " + err.msg);
-    } else {
-        // Log response
-        console.log(response);
+        throw err.msg;
     }
+
+    console.log(response);
 });
