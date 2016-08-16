@@ -14,14 +14,22 @@
  *
  */
 
-// Import modules
+// Import main module
 const polo = require("./../../../");
+
+// Import local modules
+const CurrencyPair = require("./../../../lib/util/CurrencyPair.js");
 
 // Get access to the push API
 const poloPush = new polo.PushWrapper();
 
+// Feed parameters
+var params = {
+    currencyPair: new CurrencyPair("BTC", "ETH")
+};
+
 // Receive order book and trade updates for BTC_ETH
-poloPush.orderTrade("BTC_ETH", (err, response) => {
+poloPush.orderTrade(params, (err, response) => {
     if (err) {
         // Log error message
         console.log("An error occurred: " + err.msg);

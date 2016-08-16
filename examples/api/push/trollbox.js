@@ -14,7 +14,7 @@
  *
  */
 
-// Import modules
+// Import main module
 const polo = require("./../../../");
 
 // Get access to the push API
