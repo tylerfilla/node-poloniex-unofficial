@@ -26,21 +26,18 @@ const apiSecret = process.env.POLONIEX_API_TEST_NOP_SECRET;
 // Create authenticated trading API wrapper
 const poloTrading = new polo.TradingWrapper(apiKey, apiSecret);
 
-console.log("Without account parameter:");
-
 // Demonstrate the returnCompleteBalances command without account parameter
 poloTrading.returnCompleteBalances((err, response) => {
     if (err) {
         throw err.msg;
     }
 
+    console.log("Without account parameter:");
     console.log(response);
 });
 
-console.log("With account parameter set to \"all\":");
-
 // Command parameters (with optional parameter)
-var params2 = {
+let params2 = {
     account: "all"
 };
 
@@ -50,5 +47,6 @@ poloTrading.returnCompleteBalances(params2, (err, response) => {
         throw err.msg;
     }
 
+    console.log("With account parameter set to \"all\":");
     console.log(response);
 });

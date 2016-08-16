@@ -23,7 +23,7 @@ const polo = require("./../../../");
 const poloPush = new polo.PushWrapper();
 
 // Feed parameters
-var params = {
+let params = {
     currencyPair: new polo.CurrencyPair("BTC", "ETH")
 };
 
