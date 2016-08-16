@@ -1,4 +1,4 @@
-
+#!/usr/bin/env node
 /*
  *
  * poloniex-unofficial
@@ -14,22 +14,25 @@
  *
  */
 
-// Import modules
+// Import main module
 const polo = require("./../../../");
 
-// Get access to the push API
+// Create push API wrapper
 const poloPush = new polo.PushWrapper();
 
-// Receive order book and trade updates for BTC_ETH
-poloPush.orderTrade("BTC_ETH", (err, response) => {
+// Feed parameters
+var params = {
+    currencyPair: new polo.CurrencyPair("BTC", "ETH")
+};
+
+// Demonstrate the orderTrade feed
+poloPush.orderTrade(params, (err, response) => {
     if (err) {
-        // Log error message
         console.log("An error occurred: " + err.msg);
 
-        // Disconnect
+        // Disconnect from feed
         return true;
     }
 
-    // Log raw response
     console.log(response);
 });

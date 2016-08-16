@@ -1,4 +1,4 @@
-
+#!/usr/bin/env node
 /*
  *
  * poloniex-unofficial
@@ -14,19 +14,17 @@
  *
  */
 
-// Import modules
+// Import main module
 const polo = require("./../../../");
 
-// Get access to the public API
+// Create public API wrapper
 const poloPublic = new polo.PublicWrapper();
 
 // Demonstrate the return24hVolume command
 poloPublic.return24hVolume((err, response) => {
     if (err) {
-        // Log error message
-        console.log("An error occurred: " + err.msg);
-    } else {
-        // Log response
-        console.log(response);
+        throw err.msg;
     }
+
+    console.log(response);
 });

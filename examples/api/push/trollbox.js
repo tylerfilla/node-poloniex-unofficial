@@ -1,4 +1,4 @@
-
+#!/usr/bin/env node
 /*
  *
  * poloniex-unofficial
@@ -14,19 +14,18 @@
  *
  */
 
-// Import modules
+// Import main module
 const polo = require("./../../../");
 
-// Get access to the push API
+// Create push API wrapper
 const poloPush = new polo.PushWrapper();
 
-// Receive trollbox updates
+// Demonstrate the trollbox feed
 poloPush.trollbox((err, response) => {
     if (err) {
-        // Log error message
         console.log("An error occurred: " + err.msg);
 
-        // Disconnect
+        // Disconnect from feed
         return true;
     }
 

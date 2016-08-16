@@ -1,4 +1,4 @@
-
+#!/usr/bin/env node
 /*
  *
  * poloniex-unofficial
@@ -14,19 +14,22 @@
  *
  */
 
-// Import modules
+// Import main module
 const polo = require("./../../../");
 
-// Get access to the public API
+// Create public API wrapper
 const poloPublic = new polo.PublicWrapper();
 
+// Command parameters
+var params = {
+    currency: "BTC"
+};
+
 // Demonstrate the returnLoanOrders command
-poloPublic.returnLoanOrders("BTC", (err, response) => {
+poloPublic.returnLoanOrders(params, (err, response) => {
     if (err) {
-        // Log error message
-        console.log("An error occurred: " + err.msg);
-    } else {
-        // Log response
-        console.log(response);
+        throw err.msg;
     }
+
+    console.log(response);
 });
