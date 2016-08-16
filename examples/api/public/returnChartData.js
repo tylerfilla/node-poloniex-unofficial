@@ -1,4 +1,4 @@
-
+#!/usr/bin/env node
 /*
  *
  * poloniex-unofficial
@@ -14,15 +14,15 @@
  *
  */
 
-// Import modules
+// Import main module
 const polo = require("./../../../");
 
-// Get access to the public API
+// Create public API wrapper
 const poloPublic = new polo.PublicWrapper();
 
 // Command parameters
 var params = {
-    currencyPair: "BTC_ETH",
+    currencyPair: new polo.CurrencyPair("BTC", "ETH"),
     start: Math.floor(Date.now() / 1000) - 10 * 14400,
     end: Math.floor(Date.now() / 1000),
     period: 14400

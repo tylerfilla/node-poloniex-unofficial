@@ -1,4 +1,4 @@
-
+#!/usr/bin/env node
 /*
  *
  * poloniex-unofficial
@@ -14,34 +14,39 @@
  *
  */
 
-// Import modules
+// Import main module
 const polo = require("./../../../");
 
-// Get API key and secret from command-line arguments
-const apiKey = process.argv[2];
-const apiSecret = process.argv[3];
+// Obtain API credentials from environment
+const apiKey = process.env.POLONIEX_API_TEST_NOP_KEY;
+const apiSecret = process.env.POLONIEX_API_TEST_NOP_SECRET;
 
-// Get access to the trading API
+// Create authenticated trading API wrapper
 const poloTrading = new polo.TradingWrapper(apiKey, apiSecret);
+
+console.log("Without account parameter:")
 
 // Demonstrate the returnCompleteBalances command without account parameter
 poloTrading.returnCompleteBalances((err, response) => {
     if (err) {
-        // Log error message
-        console.log("An error occurred: " + err.msg);
-    } else {
-        // Log response
-        console.log(response);
+        throw err.msg;
     }
+
+    console.log(response);
 });
 
+console.log("With account parameter set to \"all\":");
+
+// Command parameters (with optional parameter)
+var params2 = {
+    account: "all"
+};
+
 // Demonstrate the returnCompleteBalances command with account parameter
-poloTrading.returnCompleteBalances("all", (err, response) => {
+poloTrading.returnCompleteBalances(params2, (err, response) => {
     if (err) {
-        // Log error message
-        console.log("An error occurred: " + err.msg);
-    } else {
-        // Log response
-        console.log(response);
+        throw err.msg;
     }
+
+    console.log(response);
 });

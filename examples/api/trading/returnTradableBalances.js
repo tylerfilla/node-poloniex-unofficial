@@ -1,4 +1,4 @@
-
+#!/usr/bin/env node
 /*
  *
  * poloniex-unofficial
@@ -14,23 +14,21 @@
  *
  */
 
-// Import modules
+// Import main module
 const polo = require("./../../../");
 
-// Get API key and secret from command-line arguments
-const apiKey = process.argv[2];
-const apiSecret = process.argv[3];
+// Obtain API credentials from environment
+const apiKey = process.env.POLONIEX_API_TEST_NOP_KEY;
+const apiSecret = process.env.POLONIEX_API_TEST_NOP_SECRET;
 
-// Get access to the trading API
+// Create authenticated trading API wrapper
 const poloTrading = new polo.TradingWrapper(apiKey, apiSecret);
 
 // Demonstrate the returnTradableBalances command
 poloTrading.returnTradableBalances((err, response) => {
     if (err) {
-        // Log error message
-        console.log("An error occurred: " + err.msg);
-    } else {
-        // Log response
-        console.log(response);
+        throw err.msg;
     }
+
+    console.log(response);
 });
