@@ -14,6 +14,8 @@
  *
  */
 
+"use strict";
+
 // Import main module
 const polo = require("./../../");
 
