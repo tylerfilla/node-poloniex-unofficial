@@ -41,5 +41,5 @@ poloTrading.returnActiveLoans().then(res => {
     console.log("Using promise:");
     console.log(res);
 }).catch(err => {
-    console.error(err);;
+    console.error(err);
 });

@@ -37,5 +37,5 @@ poloPublic.return24hVolume().then(res => {
     console.log("Using promise:");
     console.log(res);
 }).catch(err => {
-    throw err.msg;
+    console.error(err);
 });
