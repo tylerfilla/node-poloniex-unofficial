@@ -22,11 +22,20 @@ const polo = require("./../../../");
 // Create public API wrapper
 const poloPublic = new polo.PublicWrapper();
 
-// Demonstrate the return24hVolume command
+// Demonstrate the return24hVolume command (callback-style)
 poloPublic.return24hVolume((err, response) => {
     if (err) {
         throw err.msg;
     }
 
+    console.log("Using callback:");
     console.log(response);
+});
+
+// Demonstrate the return24hVolume command (promise-style)
+poloPublic.return24hVolume().then(res => {
+    console.log("Using promise:");
+    console.log(res);
+}).catch(err => {
+    throw err.msg;
 });
