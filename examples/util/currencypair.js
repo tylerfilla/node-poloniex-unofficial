@@ -1,4 +1,4 @@
-
+#!/usr/bin/env node
 /*
  *
  * poloniex-unofficial
@@ -14,7 +14,7 @@
  *
  */
 
-// Import modules
+// Import main module
 const polo = require("./../../");
 
 // Localize functions
