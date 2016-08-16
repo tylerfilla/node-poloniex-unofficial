@@ -24,7 +24,7 @@ const apiSecret = process.env.POLONIEX_API_TEST_NOP_SECRET;
 // Create authenticated trading API wrapper
 const poloTrading = new polo.TradingWrapper(apiKey, apiSecret);
 
-console.log("Without account parameter:")
+console.log("Without account parameter:");
 
 // Demonstrate the returnCompleteBalances command without account parameter
 poloTrading.returnCompleteBalances((err, response) => {

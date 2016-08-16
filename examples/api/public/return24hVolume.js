@@ -23,7 +23,7 @@ const poloPublic = new polo.PublicWrapper();
 // Demonstrate the return24hVolume command
 poloPublic.return24hVolume((err, response) => {
     if (err) {
-        throw err.msg
+        throw err.msg;
     }
 
     console.log(response);
