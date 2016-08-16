@@ -21,7 +21,7 @@ const polo = require("./../../");
 const CurrencyPair = polo.CurrencyPair;
 
 // Create a new order book tracker for the Bitcoin-Ethereum market
-const book = new polo.OrderBook(new CurrencyPair("BTC_ETH"));
+const book = new polo.OrderBook("BTC_ETH");
 
 // Lifecycle events
 book.onStart(() => {
