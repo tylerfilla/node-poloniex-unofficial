@@ -24,7 +24,7 @@ const apiKey = process.env.POLONIEX_API_TEST_NOP_KEY;
 const apiSecret = process.env.POLONIEX_API_TEST_NOP_SECRET;
 
 // Create authenticated trading API wrapper
-const poloTrading = new polo.TradingWrapper(apiKey, apiSecret);
+const poloTrading = new polo.TradingWrapper(apiKey, apiSecret, () => 55);
 
 // Demonstrate the returnActiveLoans command (callback-style)
 poloTrading.returnActiveLoans((err, response) => {
@@ -41,5 +41,5 @@ poloTrading.returnActiveLoans().then(res => {
     console.log("Using promise:");
     console.log(res);
 }).catch(err => {
-    throw err.msg;
+    console.error(err);;
 });
