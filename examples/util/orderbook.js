@@ -19,9 +19,6 @@
 // Import main module
 const polo = require("./../../");
 
-// Localize functions
-const CurrencyPair = polo.CurrencyPair;
-
 // Create a new order book tracker for the Bitcoin-Ethereum market
 const book = new polo.OrderBook("BTC_ETH");
 
