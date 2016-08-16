@@ -17,15 +17,12 @@
 // Import main module
 const polo = require("./../../../");
 
-// Import local modules
-const CurrencyPair = require("./../../../lib/util/CurrencyPair.js");
-
 // Get access to the push API
 const poloPush = new polo.PushWrapper();
 
 // Feed parameters
 var params = {
-    currencyPair: new CurrencyPair("BTC", "ETH")
+    currencyPair: new polo.CurrencyPair("BTC", "ETH")
 };
 
 // Receive order book and trade updates for BTC_ETH
