@@ -25,7 +25,7 @@ var params = {
     currencyPair: new polo.CurrencyPair("BTC", "ETH"),
     start: Math.floor(Date.now() / 1000) - 10 * 14400,
     end: Math.floor(Date.now() / 1000),
-    period: 14400
+    period: "14400"
 };
 
 // Demonstrate the returnChartData command
