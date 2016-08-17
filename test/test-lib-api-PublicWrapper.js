@@ -63,19 +63,75 @@ describe("PublicWrapper", function() {
         assert(typeof poloPublic.returnLoanOrders !== "undefined");
         done();
     });
-    describe("online (involves Poloniex servers!)", function() {
+    describe(`online (involves Poloniex servers with ${DELAY_ONLINE_TESTS}ms delays)`, function() {
+        // Redefine "slow" for Internet communication
+        this.slow(500);
+
+        // General checks for any public API response
+        function checkGeneral(res) {
+            assert(typeof res !== "undefined");
+            assert(typeof res.error === "undefined");
+            return res;
+        }
+
+        // Specific checks for any one response (may be redefined)
+        let checkSpecific = function(res) {
+            return res;
+        };
+
+        // General function for promise testing
+        function testPromise(res) {
+            return checkGeneral(res) && checkSpecific(res);
+        }
+
+        // General function for callback testing
+        function testCallback(done) {
+            return function(err, res) {
+                if (err) {
+                    throw err;
+                }
+                checkGeneral(res);
+                checkSpecific(res);
+                done();
+            };
+        }
+
+        // Apply a delay before each test (to avoid overtaxing Poloniex servers)
         beforeEach(function(done) {
             setTimeout(done, DELAY_ONLINE_TESTS);
         });
+
         describe("returnTicker", function() {
-            it("should return ticker for all markets", function(done) {
-                done();
+            it("should return ticker for all markets (via promise)", function() {
+                return poloPublic.returnTicker().then(testPromise);
+            });
+            it("should return ticker for all markets (via callback)", function(done) {
+                poloPublic.returnTicker(testCallback(done));
             });
         });
         describe("return24hVolume", function() {
-            it("should return 24-hour volume for all markets", function(done) {
-                done();
+            it("should return 24-hour volume for all markets (via promise)", function() {
+                return poloPublic.return24hVolume().then(testPromise);
             });
+            it("should return 24-hour volume for all markets (via callback)", function(done) {
+                poloPublic.return24hVolume(testCallback(done));
+            });
+        });
+        describe("returnOrderBook", function() {
+        });
+        describe("returnTradeHistory", function() {
+        });
+        describe("returnChartData", function() {
+        });
+        describe("returnCurrencies", function() {
+            it("should return all currencies (via promise)", function() {
+                return poloPublic.returnCurrencies().then(testPromise);
+            });
+            it("should return all currencies (via callback)", function(done) {
+                poloPublic.return24hVolume(testCallback(done));
+            });
+        });
+        describe("returnLoanOrders", function() {
         });
     });
 });

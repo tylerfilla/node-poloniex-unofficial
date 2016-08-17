@@ -18,3 +18,6 @@
 
 // Import standard assertion module
 global.assert = require("assert");
+
+// Simplify JSON stringification
+global.json = JSON.stringify;

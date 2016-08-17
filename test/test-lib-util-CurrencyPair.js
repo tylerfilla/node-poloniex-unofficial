@@ -14,7 +14,7 @@
  *
  */
 
-/*global assert describe it*/
+/*global assert json describe it*/
 
 "use strict";
 
@@ -23,9 +23,6 @@ const polo = require("./../");
 
 // Get CurrencyPair class
 const CurrencyPair = polo.CurrencyPair;
-
-// Simplify JSON stringification
-const json = JSON.stringify;
 
 describe("CurrencyPair", function() {
     it("should be a function", function(done) {
