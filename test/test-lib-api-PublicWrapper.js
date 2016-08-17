@@ -63,7 +63,7 @@ describe("PublicWrapper", function() {
         assert(typeof poloPublic.returnLoanOrders !== "undefined");
         done();
     });
-    describe(`online (involves Poloniex servers with ${DELAY_ONLINE_TESTS}ms delays)`, function() {
+    describe(`online (${DELAY_ONLINE_TESTS}ms delays)`, function() {
         // Redefine "slow" for Internet communication
         this.slow(500);
 
