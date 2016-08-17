@@ -14,12 +14,9 @@
  *
  */
 
-/*global describe it*/
+/*global assert describe it*/
 
 "use strict";
-
-// Import third-party modules
-const assert = require("assert");
 
 // Import main module
 const polo = require("./../");
@@ -31,25 +28,25 @@ const CurrencyPair = polo.CurrencyPair;
 const json = JSON.stringify;
 
 describe("CurrencyPair", function() {
-    it("should be a function", done => {
-        assert(typeof CurrencyPair !== "undefined");
+    it("should be a function", function(done) {
+        assert(typeof CurrencyPair === "function");
         done();
     });
-    it("should return base currency correctly", done => {
+    it("should return base currency correctly", function(done) {
         let base = "USDT";
         let quote = "BTC";
         let pair = new CurrencyPair(base, quote);
         assert(pair.getBase() === base, `"${pair.getBase()}" != "${base}"`);
         done();
     });
-    it("should return quote currency correctly", done => {
+    it("should return quote currency correctly", function(done) {
         let base = "USDT";
         let quote = "BTC";
         let pair = new CurrencyPair(base, quote);
         assert(pair.getQuote() === quote, `"${pair.getQuote()}" != "${quote}"`);
         done();
     });
-    it("should mutually accept equal objects in equals()", done => {
+    it("should mutually accept equal objects in equals()", function(done) {
         let base = "USDT";
         let quote = "BTC";
         let pair1 = new CurrencyPair(base, quote);
@@ -58,7 +55,7 @@ describe("CurrencyPair", function() {
         assert(pair1.equals(pair2) && pair2.equals(pair1), `${json(pair1)} != ${json(pair2)}`);
         done();
     });
-    it("should mutually reject non-equal objects in equals()", done => {
+    it("should mutually reject non-equal objects in equals()", function(done) {
         let base1 = "USDT";
         let quote1 = "BTC";
         let base2 = "BTC";
@@ -70,14 +67,14 @@ describe("CurrencyPair", function() {
         assert(!pair1.equals("dog"), "hopefully things never get this bad");
         done();
     });
-    it("should provide string->pair->string equivalence", done => {
+    it("should provide string->pair->string equivalence", function(done) {
         let pairStr = "USDT_BTC";
         let pair = CurrencyPair.fromString(pairStr);
         let pairStrNew = pair.toString();
         assert(pairStrNew === pairStr, `"${pairStr}" -> ${json(pair)} -> "${pairStrNew}"`);
         done();
     });
-    it("should provide pair->string->pair equivalence", done => {
+    it("should provide pair->string->pair equivalence", function(done) {
         let pair = new CurrencyPair("USDT", "BTC");
         let pairStr = pair.toString();
         let pairNew = CurrencyPair.fromString(pairStr);

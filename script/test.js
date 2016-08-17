@@ -22,7 +22,7 @@ const child_process = require("child_process");
 // List of test commands to run
 const TEST_COMMANDS = [
     "eslint .",
-    "mocha"
+    "mocha --require test/setup"
 ];
 
 // Iterate over each command sequentially
