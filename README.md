@@ -8,11 +8,6 @@ node-poloniex-unofficial
 
 Yet another unofficial Node.js wrapper for the Poloniex cryptocurrency exchange APIs.
 
-Just a clarification for others, as I've confused myself more than I care to admit:  
-`node-poloniex-unofficial` is the name of the project, repository, and product as a whole.  
-`poloniex-unofficial` is the name of the Node.js package (a subset thereof).  
-`polonode` (as in https://git.io/polonode) is an acceptable alternative to `node-poloniex-unofficial`.
-
 Installation
 ------------
 
