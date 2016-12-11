@@ -24,7 +24,8 @@
   "dependencies": {
     "autobahn": "^0.10.1",
     "crypto": "^0.0.3",
-    "request": "^2.72.0",
+    "hyperquest": "^2.1.2",
+    "hypersponse": "^1.0.3",
     "url": "^0.11.0"
   },
   "devDependencies": {
