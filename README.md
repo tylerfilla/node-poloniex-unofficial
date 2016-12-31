@@ -1,5 +1,19 @@
-node-poloniex-unofficial
-========================
+[DISCONTINUED] node-poloniex-unofficial
+=======================================
+
+Unfortunately, I am unable to keep up with this project, and I would rather put it down now than let it wither away. I am declaring it discontinued as of December 30, 2016. I have learned a lot from the project, but the maintenence effort is disproportionate to the return. Do not use this software for new projects. If you are using this software, I will be happy to assist in any way possible with a transition to another library (though I strongly doubt this will be needed by anyone, but I'm putting it out there).
+
+That said, there are myriad other clients for the Poloniex APIs for Node.js from far more reputable sources than myself. In particular, please consider one of these great projects (not sorted in any way):
+- [plnx by @rferro](https://github.com/rferro/plnx)
+- [poloniex.js by @premasagar](https://github.com/premasagar/poloniex.js)
+- [node-poloniex by @you21979](https://github.com/you21979/node-poloniex)
+- And many more I haven't mentioned
+
+The above projects were sampled from https://github.com/search?l=JavaScript&q=poloniex&type=Repositories.
+
+I am not endorsing the use of any of the above libraries, nor any of the libraries indexed in the search results link as of the time of the commit which introduces this discontinuation notice.
+
+--
 
 [![Join the chat at https://gitter.im/tylerfilla/node-poloniex-unofficial](https://badges.gitter.im/tylerfilla/node-poloniex-unofficial.svg)](https://gitter.im/tylerfilla/node-poloniex-unofficial?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![npm version](https://badge.fury.io/js/poloniex-unofficial.svg)](https://badge.fury.io/js/poloniex-unofficial)
