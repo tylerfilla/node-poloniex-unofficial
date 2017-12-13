@@ -1,34 +1,25 @@
-[DISCONTINUED] node-poloniex-unofficial
+node-poloniex-unofficial
 =======================================
 
-Unfortunately, I am unable to keep up with this project, and I would rather put it down now than let it wither away. I am declaring it discontinued as of December 30, 2016. I have learned a lot from the project, but the maintenence effort is disproportionate to the return. Do not use this software for new projects. If you are using this software, I will be happy to assist in any way possible with a transition to another library (though I strongly doubt this will be needed by anyone, but I'm putting it out there).
+Not supported at the moment. Check out one of these projects:
 
-That said, there are myriad other clients for the Poloniex APIs for Node.js from far more reputable sources than myself. In particular, please consider one of these great projects (not sorted in any way):
 - [plnx by @rferro](https://github.com/rferro/plnx)
 - [poloniex.js by @premasagar](https://github.com/premasagar/poloniex.js)
 - [node-poloniex by @you21979](https://github.com/you21979/node-poloniex)
-- And many more I haven't mentioned
-
-The above projects were sampled from https://github.com/search?l=JavaScript&q=poloniex&type=Repositories.
-
-I am not endorsing the use of any of the above libraries, nor any of the libraries indexed in the search results link as of the time of the commit which introduces this discontinuation notice.
 
 --
 
-[![Join the chat at https://gitter.im/tylerfilla/node-poloniex-unofficial](https://badges.gitter.im/tylerfilla/node-poloniex-unofficial.svg)](https://gitter.im/tylerfilla/node-poloniex-unofficial?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![npm version](https://badge.fury.io/js/poloniex-unofficial.svg)](https://badge.fury.io/js/poloniex-unofficial)
 [![Build Status](https://travis-ci.org/tylerfilla/node-poloniex-unofficial.svg?branch=master)](https://travis-ci.org/tylerfilla/node-poloniex-unofficial)
 [![Dependency Status](https://david-dm.org/tylerfilla/node-poloniex-unofficial.svg)](https://david-dm.org/tylerfilla/node-poloniex-unofficial)
 
-Yet another unofficial Node.js wrapper for the Poloniex cryptocurrency exchange APIs.
+A JavaScript API wrapper for Poloniex, a cryptocurrency exchange.
 
 Installation
 ------------
 
-This project is available on npm. Just run the following and be on your merry way.
-
 ```sh
-$ npm install poloniex-unofficial
+$ npm i poloniex-unofficial
 ```
 
 Usage
@@ -192,7 +183,7 @@ var poloTrading = new polo.TradingWrapper("key", "secret", function() {
 // Do some trading
 ```
 
-My recommendation: If you do not need this feature, don't use it. Using the snippet above and executing a trading command will permanently increment Poloniex's expected future nonce and you won't be able to stop using it. This may or may not be negotiable with Poloniex support, but that seems to me like an excellent social engineering opportunity.
+Don't use this feature if you don't need it.
 
 Read about the various commands offered in the official [API docs](https://poloniex.com/support/api/).
 
@@ -202,4 +193,4 @@ License
 Copyright (c) 2016 Tyler Filla   
 This software may be modified and distributed under the terms of [the MIT license](https://opensource.org/licenses/MIT). See the [LICENSE](https://github.com/tylerfilla/node-poloniex-unofficial/blob/master/LICENSE) file for details.
 
-The `node-poloniex-unofficial` project is not affiliated in any way with Poloniex. It's literally in the name. "Unofficial."
+The `node-poloniex-unofficial` project is not affiliated in any way with Poloniex.
