@@ -123,7 +123,7 @@ poloPush.ticker((err, response) => {
 
 ### The Public API ###
 
-The public API comes in handy when you need to retrieve large chunks of data for analysis, or when setting up a baseline before switching to the push API in a trading bot, for instance. The communication is not as fast, as all data must be explicitly requested, with each request yielding exactly one response. As of writing this document, Poloniex allows a maximum average of three public API calls per second in any one-minute period.
+The public API comes in handy when you need to retrieve large chunks of data for analysis, or when setting up a baseline before switching to the push API in a trading bot, for instance. The communication is not as fast, as all data must be explicitly requested, with each request yielding exactly one response. As of writing this document, Poloniex allows a maximum average of six public API calls per second in any one-minute period.
 
 Poloniex's responses from the public API are provided in JSON, so there isn't much the wrapper needs to do other than handle communication. I therefore recommend reading Poloniex's official [API docs](https://poloniex.com/support/api/) for information on how to interpret the responses.
 
